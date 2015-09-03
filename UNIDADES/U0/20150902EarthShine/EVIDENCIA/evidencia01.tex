@@ -1,0 +1,29 @@
+\documentclass{article}
+%Preamble
+\def\Centrar#1{
+\begin{center}
+#1
+\end{center}
+}
+
+%#1: Numero de evidencia, #2 Descripcion de la evidencia, #3: Fecha.
+\def\Evidencia#1#2#3{
+\Centrar{
+\begin{tabular}{|l|p{4in}|}
+\hline
+{\large\bf EVIDENCIA #1}&\\\hline
+{\large\bf DESCRIPCION}&#2\\\hline
+{\large\bf FECHA}&#3\\\hline
+\end{tabular}
+}}%end \Evidencia
+
+\begin{document}
+\Evidencia{0}
+{Indagar el signif\/icado de las extensiones 
+$\_$CRTIMP y $\_\_$cdecl 
+(que reconoce el preprocesador
+que usa el IDE DevC). 
+Adem\'{a}s de indagar c\'{o}mo lograr (con directivas del preprocesador) 
+que el archivo conio.h sea incluido solo si estamos 
+compilando en Windows.}{20150902}
+\end{document}
