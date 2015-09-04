@@ -2,9 +2,9 @@
 
 
 
-#ifndef __unix__
+#ifndef _WIN32
 #include <conio.h>
-#endif /* __unix__ */
+#endif /* _WIN32 */
 
 //GNU=GNU Not Unix
 
@@ -13,8 +13,8 @@
   */
 int main(void){
   printf("HOLA MUNDO UPIITA");
-#ifndef __unix__
+#ifndef _WIN32
   getch();
-#endif /* __unix__ */
+#endif /* _WIN32 */
   return 0;
 }
