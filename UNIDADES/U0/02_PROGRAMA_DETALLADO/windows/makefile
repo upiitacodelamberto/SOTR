@@ -1,7 +1,7 @@
 #makefile para compilar:
-#temario_sotr.exe
-CC = gcc
-RM = rm
+#temario_sotr.exe y temario_vision.exe
+CC = gcc.exe
+RM = rm.exe
 all:temario_sotr.exe temario_vision.exe
 
 temario_sotr.exe:main.o progdetallado.o sotr.o
