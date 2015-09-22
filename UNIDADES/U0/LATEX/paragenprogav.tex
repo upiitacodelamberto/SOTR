@@ -139,4 +139,30 @@ paragenprogav.tex disponible en
 
 https://github.com/upiitacodelamberto/SOTR/UNIDADES/U0/LATEX/ */
 
+
+\section{La intenci\'on de este documento}
+Por supuesto que la idea de este documento es para tratar de documentar el uso del archivo de 
+cabecera tddprogdetallado.h. Ya que la experiencia me ha demostrado que es dificil de usar. 
+inclusive para mi que escribi el archivo y la biblioteca. Esencialmente lo que ahora 
+quiero agregar es que se necesita definir hasta los nombres de los subtemas aun cuando el 
+tema del que se trate no tenga subtemas. En este caso lo que se debe hacer es definir la 
+variable nombresdsubtemasdu1t1 (que es un arreglo de apuntadores a wchar$\_$t). Por ejemplo, el 
+tema 1.1 (Clases) del temario de programaci\'on avanzada no tiene subtemas. Aun as\'i es necesario 
+definir ese arreglo como sigue:
+\begin{verbatim}
+wchar_t *nombresdsubtemasdu1t1[]={NULL};
+\end{verbatim}
+Y tambien es necesario definir los arreglos siguientes:
+\begin{verbatim}
+wchar_t ***nombresdsubtemas[]={nombresdsubtemasdu1, nombresdsubtemasdu2, 
+    nombresdsubtemasdu3, nombresdsubtemasdu4, nombresdsubtemasdu5};
+
+int *numdsubtemas[] = {numdsubtemasdu1, numdsubtemasdu2, 
+    numdsubtemasdu3, numdsubtemasdu4, numdsubtemasdu5};
+\end{verbatim}
+En linux una posible alternativa es poner estas definiciones como s\'imbolos d\'ebiles usando 
+la extenci\'on de gcc $\_\_$attribute$\_\_$((weak)) en el archivo de cabecera tddprogdetallado.h 
+o en otro archivo para que as\'i si el usuario del archivo de cabecera no lo define pues el 
+compilador use esas definiciones y no se generen problemas al compilar por haber omitido la 
+definicion antes mencionada como s\'imbolo fuerte en el archivo progavanzada.c
 \end{document}
