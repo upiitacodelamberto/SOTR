@@ -1,0 +1,34 @@
+\documentclass{article}
+%Preamble
+\newcount\UnidadCounter\UnidadCounter=0
+\def\CreateUnidad#1{
+\global\advance\UnidadCounter by 1
+unidad(wchar, t) unidad(Unidad, \the\UnidadCounter)=\\
+L''#1'';
+}
+
+\def\CreateUA#1{
+unidad(wchar, t) *unidaddaprendizaje[ ]=\\
+L''#1'';
+}
+\begin{document}
+\CreateUnidad{Programacion Orientada a Objetos}
+
+\CreateUnidad{Entorno de Desarrollo}
+
+\CreateUnidad{Interfaz grafica de usuario (GUI)}
+
+\CreateUnidad{Puertos y comunicaciones}
+
+\CreateUnidad{Vision}
+
+\ \par
+\CreateUA{PROGRAMACION AVANZADA}
+
+int numdunidades=\the\UnidadCounter;
+
+unidad(wchar, t) *unit[ ]=\\
+$\{$unidad(Unidad, 1), unidad(Unidad, 2), 
+    unidad(Unidad, 3), unidad(Unidad, 4), unidad(Unidad, 5)$\}$;
+
+\end{document}

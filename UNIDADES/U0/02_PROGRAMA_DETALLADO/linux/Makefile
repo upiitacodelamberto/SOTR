@@ -15,4 +15,4 @@ temario_progavanzada:main.o progdetallado.o progavanzada.o
 
 #.PHONY
 clean:
-	${RM} *.o temario_sotr temario_vision
+	${RM} -vf *.o temario_sotr temario_vision temario_progavanzada

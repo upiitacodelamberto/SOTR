@@ -2,40 +2,72 @@
 #define NULL ((void *)0)
 #include <wchar.h> /* wchar_t */
 
-wchar_t unidaddaprendizaje[] = L"SISTEMAS OPERATIVOS EN TIEMPO REAL"; /* Nombre de la Unidad de Aprendizaje (UA) */
-int numdunidades = 4; /* numero de unidades de la UA */
+//<!--INFORMACION UNIDAD 1
+/* Unidad 1 */
 wchar_t Unidad_1[] = L"Introduccion a los sistemas operativos en tiempo real";
 
+/* Temas Unidad 1 */
 wchar_t Tema_1_1[] = L"Definicion de un sistema operativo en tiempo real";
+wchar_t Tema_1_2[] = L"Diferencias entre un kernel de tiempo real y un kernel normal";
+wchar_t Tema_1_3[] = L"Conociendo sistemas operativos en tiempo real";
+wchar_t Tema_1_4[] = L"Instalacion de un sistema operativo en tiempo real";
+wchar_t *nombresdtemasdu1[] = { Tema_1_1, Tema_1_2, Tema_1_3, Tema_1_4 };
 
+/* Subtemas Unidad 1 */
 wchar_t Subtema_1_1_1[] = L"Clasificacion";
-
 wchar_t Subtema_1_1_2[] = L"Caracteristicas";
 
-wchar_t Tema_1_2[] = L"Diferencias entre un kernel de tiempo real y un kernel normal";
 wchar_t Subtema_1_2_1[] = L"Ejemplos de sistemas de tiempo real";
-wchar_t Tema_1_3[] = L"Conociendo sistemas operativos en tiempo real";
+
 wchar_t Subtema_1_3_1[] = L"Ejemplos de sistemas operativos en tiempo real";
 
-wchar_t Tema_1_4[] = L"Instalacion de un sistema operativo en tiempo real";
+wchar_t *nombresdsubtemasdu1t1[] = { Subtema_1_1_1, Subtema_1_1_2 };
+wchar_t *nombresdsubtemasdu1t2[] = { Subtema_1_2_1 };
+wchar_t *nombresdsubtemasdu1t3[] = { Subtema_1_3_1 };
+wchar_t *nombresdsubtemasdu1t4[] = { NULL };
+wchar_t **nombresdsubtemasdu1[] = { nombresdsubtemasdu1t1, nombresdsubtemasdu1t2, 
+    nombresdsubtemasdu1t3, nombresdsubtemasdu1t4 };
 
+/*cantidades de subtemas de los temas de u1*/
+int   numdsubtemasdu1[] = {2, 1, 1, 0};
+//-->
+
+//<!--INFORMACION UNIDAD 2
+/* Unidad 1 */
 wchar_t Unidad_2[] = L"Programacion Concurrente";
+
+/* Temas Unidad 2 */
 wchar_t Tema_2_1[] = L"Concepto de procesos";
+wchar_t Tema_2_2[] = L"Concepto de concurrencia";
+wchar_t Tema_2_3[] = L"Exclusion mutua";
+wchar_t Tema_2_4[] = L"Semaforos";
+wchar_t Tema_2_5[] = L"Mensajes";
+wchar_t *nombresdtemasdu2[]={Tema_2_1, Tema_2_2, Tema_2_3, Tema_2_4, Tema_2_5};
+
+/* Subtemas Unidad 2 */
 wchar_t Subtema_2_1_1[] = L"Estados de los procesos";
 wchar_t Subtema_2_1_2[] = L"Bloque de control de procesos";
-wchar_t Tema_2_2[] = L"Concepto de concurrencia";
 
 wchar_t Subtema_2_2_1[] = L"Procesos sincronos y asincronos";
 
-wchar_t Tema_2_3[] = L"Exclusion mutua";
 wchar_t Subtema_2_3_1[] = L"Region critica";
 wchar_t Subtema_2_3_2[] = L"Algoritmo de Dekker";
 wchar_t Subtema_2_3_3[] = L"Algoritmo de Peterson";
 
-wchar_t Tema_2_4[] = L"Semaforos";
 wchar_t Subtema_2_4_1[] = L"Sincronizacion de procesos con semaforos";
-wchar_t Tema_2_5[] = L"Mensajes";
 wchar_t Subtema_2_5_1[] = L"Comunicacion de procesos con mensajes";
+
+wchar_t *nombresdsubtemasdu2t1[] = { Subtema_2_1_1, Subtema_2_1_2 };
+wchar_t *nombresdsubtemasdu2t2[] = { Subtema_2_2_1 };
+wchar_t *nombresdsubtemasdu2t3[] = { Subtema_2_3_1, Subtema_2_3_2, Subtema_2_3_3 };
+wchar_t *nombresdsubtemasdu2t4[] = { Subtema_2_4_1 };
+wchar_t *nombresdsubtemasdu2t5[] = { Subtema_2_5_1 };
+wchar_t **nombresdsubtemasdu2[]={nombresdsubtemasdu2t1, nombresdsubtemasdu2t2, 
+    nombresdsubtemasdu2t3, nombresdsubtemasdu2t4, nombresdsubtemasdu2t5 };
+
+/*cantidades de subtemas de los temas de u1*/
+int   numdsubtemasdu2[] = {2, 1, 3, 1, 1};
+//-->
 
 wchar_t Unidad_3[] = L"Las tareas, interrupciones y el reloj en tiempo real";
 wchar_t Tema_3_1[] = L"Tareas en tiempo real";
@@ -62,29 +94,11 @@ wchar_t Tema_4_4[] = L"Procesos esporadicos y aperiodicos";
 wchar_t Tema_4_5[] = L"Interaccion de procesos y bloqueo";
 
 
-wchar_t Unidad_5[] = L"";
-
-wchar_t *unit[] = {Unidad_1, Unidad_2, Unidad_3, Unidad_4};
-int numdtemas[] = {4, 5, 3, 5};
 
 
-wchar_t *nombresdtemasdu1[] = { Tema_1_1, Tema_1_2, Tema_1_3, Tema_1_4 };
-int   numdsubtemasdu1[] = {2, 1, 1, 0};
-wchar_t *nombresdsubtemasdu1t1[] = { Subtema_1_1_1, Subtema_1_1_2 };
-wchar_t *nombresdsubtemasdu1t2[] = { Subtema_1_2_1 };
-wchar_t *nombresdsubtemasdu1t3[] = { Subtema_1_3_1 };
-wchar_t *nombresdsubtemasdu1t4[] = { NULL };
-wchar_t **nombresdsubtemasdu1[] = { nombresdsubtemasdu1t1, nombresdsubtemasdu1t2, nombresdsubtemasdu1t3, nombresdsubtemasdu1t4 };
 
 
-wchar_t *nombresdtemasdu2[] = { Tema_2_1, Tema_2_2, Tema_2_3, Tema_2_4, Tema_2_5 };
-int   numdsubtemasdu2[] = {2, 1, 3, 1, 1};
-wchar_t *nombresdsubtemasdu2t1[] = { Subtema_2_1_1, Subtema_2_1_2 };
-wchar_t *nombresdsubtemasdu2t2[] = { Subtema_2_2_1 };
-wchar_t *nombresdsubtemasdu2t3[] = { Subtema_2_3_1, Subtema_2_3_2, Subtema_2_3_3 };
-wchar_t *nombresdsubtemasdu2t4[] = { Subtema_2_4_1 };
-wchar_t *nombresdsubtemasdu2t5[] = { Subtema_2_5_1 };
-wchar_t **nombresdsubtemasdu2[] =  { nombresdsubtemasdu2t1, nombresdsubtemasdu2t2, nombresdsubtemasdu2t3, nombresdsubtemasdu2t4, nombresdsubtemasdu2t5 };
+
 
 wchar_t *nombresdtemasdu3[] = { Tema_3_1, Tema_3_2, Tema_3_3 };
 int   numdsubtemasdu3[] = {1, 3, 3};
@@ -102,8 +116,18 @@ wchar_t *nombresdsubtemasdu4t4[] = { NULL };
 wchar_t *nombresdsubtemasdu4t5[] = { NULL };
 wchar_t **nombresdsubtemasdu4[] = { nombresdsubtemasdu4t1, nombresdsubtemasdu4t2, nombresdsubtemasdu4t3, nombresdsubtemasdu4t4, nombresdsubtemasdu4t5 };
 
-wchar_t *nombresdtemasdu5[] = { NULL };
+wchar_t Unidad_5[] = L"";
+wchar_t *nombresdtemasdu5[]={NULL};
 
 
+//<!--INFORMACION GLOBAL DE LA UA SISTEMAS OPERATIVOS EN TIEMPO REAL
+/* Nombre de la Unidad de Aprendizaje (UA) */
+wchar_t unidaddaprendizaje[] = L"SISTEMAS OPERATIVOS EN TIEMPO REAL"; 
+int numdunidades = 4; /* numero de unidades de la UA */
+
+wchar_t *unit[] = {Unidad_1, Unidad_2, Unidad_3, Unidad_4};
+int numdtemas[] = {4, 5, 3, 5};
+wchar_t ***nombresdsubtemas[] = {
+    nombresdsubtemasdu1, nombresdsubtemasdu2, nombresdsubtemasdu3, nombresdsubtemasdu4 };
 int *numdsubtemas[] = { numdsubtemasdu1, numdsubtemasdu2, numdsubtemasdu3, numdsubtemasdu4};
-wchar_t ***nombresdsubtemas[] = { nombresdsubtemasdu1, nombresdsubtemasdu2, nombresdsubtemasdu3, nombresdsubtemasdu4 };
+//-->

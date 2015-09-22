@@ -27,15 +27,11 @@ void set_prog_detallado(struct prog_detallado *pd){
 	/* coloco los nombres de los temas en un arreglo de dimensiones 
 	   adecuadas */
 	wchar_t ***nombresdtemas = (wchar_t ***)malloc(numdunidades * sizeof(wchar_t **));
-//#if(CANTIDADDUNIDADES == 1)	
-//	*(nombresdtemas + 0) = nombresdtemasdu1;
-//#endif
-//#if(CANTIDADDUNIDADES == 4)
 	*(nombresdtemas + 0) = nombresdtemasdu1;
 	*(nombresdtemas + 1) = nombresdtemasdu2;
 	*(nombresdtemas + 2) = nombresdtemasdu3;
 	*(nombresdtemas + 3) = nombresdtemasdu4;
-//#endif
+	*(nombresdtemas + 4) = nombresdtemasdu5;
 
 	for(i = 0; i < numdunidades; ++i){
 		/* guardamos los numeros de temas de cada unidad */
