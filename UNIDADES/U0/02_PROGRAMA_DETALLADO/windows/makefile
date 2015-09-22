@@ -10,6 +10,10 @@ temario_sotr.exe:main.o progdetallado.o sotr.o
 temario_vision.exe:main.o progdetallado.o visionartificial.o
 	${CC} main.o progdetallado.o visionartificial.o -o $@
 
+temario_progavanzada.exe:main.o progdetallado.o progavanzada.o
+	${CC} main.o progdetallado.o progavanzada.o -o $@
+
+
 #.PHONY
 clean:
-	${RM} *.o temario_sotr.exe temario_vision.exe
+	${RM} *.o temario_sotr.exe temario_vision.exe temario_progavanzada.exe
