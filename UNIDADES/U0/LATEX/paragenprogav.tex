@@ -1,5 +1,10 @@
 \documentclass{article}
 %Preamble
+%Cabe mencionar que en el archivo tddprogdetallado.h
+%la macro unidad(m,n) esta definida como
+%#define unidad(m,n)	m##_##n
+%Por lo cual al escribir unidad(wchar, t), despues del 
+%preprocesamiento tendremos wchar_t.
 \newcount\UnidadCounter\UnidadCounter=0
 \def\CreateUnidad#1{
 \global\advance\UnidadCounter by 1
@@ -7,22 +12,116 @@ unidad(wchar, t) unidad(Unidad, \the\UnidadCounter)=\\
 L''#1'';
 }
 
+\newcount\TemaDUnidUNOCounter\TemaDUnidUNOCounter=0
+%Ejemplo de uso:\CreateTemaDUnidUNO{1}{Clases}
+\def\CreateTemaDUnidUNO#1#2{
+\global\advance\TemaDUnidUNOCounter by 1
+unidad(wchar, t) tema(Tema, 1, #1)[ ]=L''#2'';
+}
+
+\newcount\TemaDUnidDOSCounter\TemaDUnidDOSCounter=0
+%Ejemplo de uso:\CreateTemaDUnidDOS{1}{Ambiente de desarrollo}
+\def\CreateTemaDUnidDOS#1#2{
+\global\advance\TemaDUnidDOSCounter by 1
+unidad(wchar, t) tema(Tema, 2, #1)[ ]=L''#2'';
+}
+
+\newcount\TemaDUnidTRESCounter\TemaDUnidTRESCounter=0
+\def\CreateTemaDUnidTRES#1#2{
+\global\advance\TemaDUnidTRESCounter by 1
+unidad(wchar, t) tema(Tema, 3, #1)[ ]=L''#2'';
+}
+
+\newcount\TemaDUnidCUATROCounter\TemaDUnidCUATROCounter=0
+\def\CreateTemaDUnidCUATRO#1#2{
+\global\advance\TemaDUnidCUATROCounter by 1
+unidad(wchar, t) tema(Tema, 4, #1)[ ]=L''#2'';
+}
+
+\newcount\TemaDUnidCINCOCounter\TemaDUnidCINCOCounter=0
+\def\CreateTemaDUnidCINCO#1#2{
+\global\advance\TemaDUnidCINCOCounter by 1
+unidad(wchar, t) tema(Tema, 5, #1)[ ]=L''#2'';
+}
+
 \def\CreateUA#1{
 unidad(wchar, t) *unidaddaprendizaje[ ]=\\
 L''#1'';
 }
 \begin{document}
+\section{Introducci\'on}
+Este documento pretende servir como ayuda para la futura 
+documentaci\'on sobre c\'omo usar el archivo de cabecera 
+{\tt tddprogdetallado.h} de mi biblioteca {\tt progdetallado.c}. 
+La raz\'on por la que estoy buscando documentar en este archivo 
+es porque usando macros de tex es facil contar la cantidad de 
+veces que se usa una macro y por lo tanto si hay una macro 
+para ``agregar una unidad'' es facil contar el n\'umero de 
+unidades que se han agregado a un temario cuando se usa la 
+biblioteca {\tt progdetallado.c}\par 
+Ahora bien, si los temas de la unidad 1 se agregan tambi\'en con una 
+macro, pues tambi\'en es facil contar los temas de la unidad 1.
+
 \CreateUnidad{Programacion Orientada a Objetos}
+
+\CreateTemaDUnidUNO{1}{Clases}
+
+\CreateTemaDUnidUNO{2}{Objetos}
+
+\CreateTemaDUnidUNO{3}{Herencia}
+
+\CreateTemaDUnidUNO{4}{Polimorfismo}
+
+\CreateTemaDUnidUNO{5}{Abstraccion}
+
+
+
+
 
 \CreateUnidad{Entorno de Desarrollo}
 
+\CreateTemaDUnidDOS{1}{Ambiente de desarrollo}
+
+\CreateTemaDUnidDOS{2}{Proyecto}
+
+
+
+
+
+
 \CreateUnidad{Interfaz grafica de usuario (GUI)}
+
+\CreateTemaDUnidTRES{1}{Controles basicos}
+
+\CreateTemaDUnidTRES{2}{Controles avanzados}
+
+\CreateTemaDUnidTRES{3}{Eventos}
+
+
+
+
 
 \CreateUnidad{Puertos y comunicaciones}
 
+\CreateTemaDUnidCUATRO{1}{Puerto serie}
+
+\CreateTemaDUnidCUATRO{2}{Puerto USB}
+
+\CreateTemaDUnidCUATRO{3}{Comunicacion TCP/IP}
+
+
+
+
+
 \CreateUnidad{Vision}
 
-\ \par
+\CreateTemaDUnidCINCO{1}{Vision}
+
+
+
+
+
+\eject
 \CreateUA{PROGRAMACION AVANZADA}
 
 int numdunidades=\the\UnidadCounter;
@@ -30,5 +129,14 @@ int numdunidades=\the\UnidadCounter;
 unidad(wchar, t) *unit[ ]=\\
 $\{$unidad(Unidad, 1), unidad(Unidad, 2), 
     unidad(Unidad, 3), unidad(Unidad, 4), unidad(Unidad, 5)$\}$;
+
+
+int numdtemas[ ]=$\{$\the\TemaDUnidUNOCounter, \the\TemaDUnidDOSCounter, 
+\the\TemaDUnidTRESCounter, \the\TemaDUnidCUATROCounter, \the\TemaDUnidCINCOCounter$\}$;\\
+/* Las cantidades de temas de las unidades se estan calculando mediante 
+macros de \TeX. La def\/inicion de estas macros puede ser vista en el archivo 
+paragenprogav.tex disponible en
+
+https://github.com/upiitacodelamberto/SOTR/UNIDADES/U0/LATEX/ */
 
 \end{document}
