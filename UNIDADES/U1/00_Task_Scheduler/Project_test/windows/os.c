@@ -1,4 +1,9 @@
 #include "osHeader.h"
+struct TaskTable arrTaskTable[3];
+int iTaskcount;
+int PriorityTable[3];
+int iHighPriorityTask;
+int iIndexPriority;
 
 void startOS(){
   //Call Sched
