@@ -44,7 +44,7 @@ void createTask(void (*ptrTask)(void), int iPriority, int iTaskId){
 
   //Increment iTaskcount
   iTaskcount ++;
-}
+}//end createTask()
 
 void waitTask(){
   arrTaskTable[iIndexPriority].Ready = 0;

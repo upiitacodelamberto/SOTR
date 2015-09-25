@@ -9,15 +9,20 @@ struct TaskTable{
   int Priority;
   int Ready;
   int TaskId;
-}arrTaskTable[3];
+//}arrTaskTable[3];
+};
 
-int iTaskcount;
+//int iTaskcount;
 
-int PriorityTable[3];
-int iHighPriorityTask;
-int iIndexPriority;
+//int PriorityTable[3];
+//int iHighPriorityTask;
+//int iIndexPriority;
 
 void Sched();
 void Task1();
 void Task2();
+void createTask(void (*ptrTask)(void), int iPriority, int iTaskId);
+void startOS();
+void waitTask();
+void startTask(int TaskId);
 #endif /* OSHEADER_H_ */

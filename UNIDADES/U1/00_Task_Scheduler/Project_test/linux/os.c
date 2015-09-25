@@ -1,4 +1,9 @@
 #include "osHeader.h"
+struct TaskTable arrTaskTable[3];
+int iTaskcount;
+int PriorityTable[3];
+int iHighPriorityTask;
+int iIndexPriority;
 
 void startOS(){
   //Call Sched
@@ -39,7 +44,7 @@ void createTask(void (*ptrTask)(void), int iPriority, int iTaskId){
 
   //Increment iTaskcount
   iTaskcount ++;
-}
+}//end createTask()
 
 void waitTask(){
   arrTaskTable[iIndexPriority].Ready = 0;
