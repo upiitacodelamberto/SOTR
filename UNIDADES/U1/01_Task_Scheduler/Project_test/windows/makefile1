@@ -1,7 +1,7 @@
-CC=gcc
-RM=rm
+CC=gcc.exe
+RM=rm.exe
 os_test.exe: os.o Project_test.o
 	${CC} os.o Project_test.o -o $@
 
 clean:
-	${RM} *.o os_test.exe
+	${RM} *.o os_test
