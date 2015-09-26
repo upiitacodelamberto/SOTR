@@ -68,9 +68,9 @@ void startTask(int TaskId){
   int iIndex;
 
   for(iIndex = 0; iIndex < iTaskcount; iIndex++){
-/*    if(TaskId == arrTaskTable[iIndex].TaskId){*/
+    if(TaskId == arrTaskTable[iIndex].TaskId){
       arrTaskTable[iIndex].Ready = 1;
-/*    }*/
+    }
   }
 
   //Call Sched

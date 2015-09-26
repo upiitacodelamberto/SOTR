@@ -31,18 +31,11 @@ Lista de asistencia del dia: #1\ #2.\\
 }
 
 %Primero una macro por cada discente
-\newcount\ErickAsistenciaCounter\ErickAsistenciaCounter=0
-\def\OrtizTorresErick{
-\global\advance\ErickAsistenciaCounter by 1
+\newcount\DanielDeJesusAsistenciaCounter\DanielDeJesusAsistenciaCounter=0
+\def\AntonioCoutinioDanielDeJesus{
+\global\advance\DanielDeJesusAsistenciaCounter by 1
 \StepOneGenCounter\the\GenCounter\ &
-2012640134&Torres Ortiz Erick
-}
-
-\newcount\JavierAsistenciaCounter\JavierAsistenciaCounter=0
-\def\LeonJuanJavier{
-\global\advance\JavierAsistenciaCounter by 1
-\StepOneGenCounter\the\GenCounter\ &
-2012640092&Le\'on Juan Javier
+?????&Antonio Couti\~{n}o Daniel De Jes\'us
 }
 
 \newcount\DanielAsistenciaCounter\DanielAsistenciaCounter=0
@@ -52,25 +45,37 @@ Lista de asistencia del dia: #1\ #2.\\
 2011330027&Cadena Diaz Daniel Alberto
 }
 
+\newcount\VictorAsistenciaCounter\VictorAsistenciaCounter=0
+\def\ChavezCortesVictor{
+\global\advance\VictorAsistenciaCounter by 1
+\StepOneGenCounter\the\GenCounter\ &
+?????&Chavez Cortes Victor
+}
+
+\newcount\OmarAsistenciaCounter\OmarAsistenciaCounter=0
+\def\DiazDuranOmar{
+\global\advance\OmarAsistenciaCounter by 1
+\StepOneGenCounter\the\GenCounter\ &
+?????&Diaz Duran Omar
+}
+
 \newcount\EnriqueAsistenciaCounter\EnriqueAsistenciaCounter=0
 \def\IslasSanchezEnrique{
 \global\advance\EnriqueAsistenciaCounter by 1
 \StepOneGenCounter\the\GenCounter\ &
 2011300480&Islas S\'anchez Enrique
 }
-
-\newcount\MiguelAsistenciaCounter\MiguelAsistenciaCounter=0
-\def\RomoGarciaMiguelAngel{
-\global\advance\MiguelAsistenciaCounter by 1
+\def\IslasSanchezEnriqueAlberto{
+\global\advance\EnriqueAsistenciaCounter by 1
 \StepOneGenCounter\the\GenCounter\ &
-2011360568&Romo Garcia Miguel Angel
+2011300480&Islas S\'anchez Enrique Alberto
 }
 
-\newcount\JoseAsistenciaCounter\JoseAsistenciaCounter=0
-\def\SolanoJuarezJoseSantiago{
-\global\advance\JoseAsistenciaCounter by 1
+\newcount\JavierAsistenciaCounter\JavierAsistenciaCounter=0
+\def\LeonJuanJavier{
+\global\advance\JavierAsistenciaCounter by 1
 \StepOneGenCounter\the\GenCounter\ &
-2011360627&Solano Juarez Jos\'e Santiago
+2012640092&Le\'on Juan Javier
 }
 
 \newcount\ErickServandoAsistenciaCounter\ErickServandoAsistenciaCounter=0
@@ -80,9 +85,16 @@ Lista de asistencia del dia: #1\ #2.\\
 2011301766&Gij\'on Leyva Erick Servando
 }
 
-\newcount\VictorAsistenciaCounter\VictorAsistenciaCounter=0
+\newcount\ErickAsistenciaCounter\ErickAsistenciaCounter=0
+\def\OrtizTorresErick{
+\global\advance\ErickAsistenciaCounter by 1
+\StepOneGenCounter\the\GenCounter\ &
+2012640134&Ortiz Torres Erick
+}
+
+\newcount\VictorManuelAsistenciaCounter\VictorManuelAsistenciaCounter=0
 \def\ParraHernandezVictorManuel{
-\global\advance\VictorAsistenciaCounter by 1
+\global\advance\VictorManuelAsistenciaCounter by 1
 \StepOneGenCounter\the\GenCounter\ &
 2012301636&Parra Hern\'andez Victor Manuel
 }
@@ -94,6 +106,28 @@ Lista de asistencia del dia: #1\ #2.\\
 2011300302&Gallegos Sanlucar Jonathan Daniel
 }
 
+\newcount\MiguelAsistenciaCounter\MiguelAsistenciaCounter=0
+\def\RomoGarciaMiguelAngel{
+\global\advance\MiguelAsistenciaCounter by 1
+\StepOneGenCounter\the\GenCounter\ &
+2011360568&Romo Garcia Miguel Angel
+}
+
+\newcount\JoseTlacaelelAsistenciaCounter\JoseTlacaelelAsistenciaCounter=0
+\def\SanchezRangelJoseTlacaelel{
+\global\advance\JoseTlacaelelAsistenciaCounter by 1
+\StepOneGenCounter\the\GenCounter\ &
+??????&Sanchez Rangel Jose Tlacaelel
+}
+
+\newcount\JoseAsistenciaCounter\JoseAsistenciaCounter=0
+\def\SolanoJuarezJoseSantiago{
+\global\advance\JoseAsistenciaCounter by 1
+\StepOneGenCounter\the\GenCounter\ &
+2011360627&Solano Juarez Jos\'e Santiago
+}
+
+
 
 %Macro para presentar reporte:
 \def\Resumen#1{
@@ -103,9 +137,34 @@ Total de sesiones: \the\SesionSOTRCounter\\
 \end{tabular}
 }
 
+\def\AntonioCoutinioDanielDeJesusResumen{
+\StepOneGenCounter\the\GenCounter\ &
+?????&Antonio Couti\~{n}o Daniel De Jes\'us&\the\DanielDeJesusAsistenciaCounter/\the\SesionSOTRCounter
+}
+
+\def\CadenaDiazDanielAlbertoResumen{
+\StepOneGenCounter\the\GenCounter\ &
+2011330027&Cadena Diaz Daniel Alberto&\the\DanielAsistenciaCounter/\the\SesionSOTRCounter
+}
+
+\def\ChavezCortesVictorResumen{
+\StepOneGenCounter\the\GenCounter\ &
+?????&Chavez Cortes Victor&\the\VictorAsistenciaCounter/\the\SesionSOTRCounter
+}
+
+\def\DiazDuranOmarResumen{
+\StepOneGenCounter\the\GenCounter\ &
+?????&Diaz Duran Omar&\the\OmarAsistenciaCounter/\the\SesionSOTRCounter
+}
+
 \def\OrtizTorresErickResumen{
 \StepOneGenCounter\the\GenCounter\ &
-2012640134&Torres Ortiz Erick&\the\ErickAsistenciaCounter/\the\SesionSOTRCounter
+2012640134&Ortiz Torres Erick&\the\ErickAsistenciaCounter/\the\SesionSOTRCounter
+}
+
+\def\GijonLeyvaErickServandoResumen{
+\StepOneGenCounter\the\GenCounter\ &
+2011301766&Gij\'on Leyva Erick Servando&\the\ErickServandoAsistenciaCounter/\the\SesionSOTRCounter
 }
 
 \def\LeonJuanJavierResumen{
@@ -113,9 +172,9 @@ Total de sesiones: \the\SesionSOTRCounter\\
 2012640092&Le\'on Juan Javier&\the\JavierAsistenciaCounter/\the\SesionSOTRCounter
 }
 
-\def\CadenaDiazDanielAlbertoResumen{
+\def\GallegosSanlucarJonathanDanielResumen{
 \StepOneGenCounter\the\GenCounter\ &
-2011330027&Cadena Diaz Daniel Alberto&\the\DanielAsistenciaCounter/\the\SesionSOTRCounter
+2011300302&Gallegos Sanlucar Jonathan Daniel&\the\JonathanAsistenciaCounter/\the\SesionSOTRCounter
 }
 
 \def\IslasSanchezEnriqueResumen{
@@ -128,22 +187,18 @@ Total de sesiones: \the\SesionSOTRCounter\\
 2011360568&Romo Garcia Miguel Angel&\the\MiguelAsistenciaCounter/\the\SesionSOTRCounter
 }
 
+\def\SanchezRangelJoseTlacaelelResumen{
+\StepOneGenCounter\the\GenCounter\ &
+???&Sanchez Rangel Jos\'e Tlacaelel&\the\JoseTlacaelelAsistenciaCounter/\the\SesionSOTRCounter
+}
+
 \def\SolanoJuarezJoseSantiagoResumen{
 \StepOneGenCounter\the\GenCounter\ &
 2011360627&Solano Juarez Jos\'e Santiago&\the\JoseAsistenciaCounter/\the\SesionSOTRCounter
 }
 
-\def\GijonLeyvaErickServandoResumen{
-\StepOneGenCounter\the\GenCounter\ &
-2011301766&Gij\'on Leyva Erick Servando&\the\ErickServandoAsistenciaCounter/\the\SesionSOTRCounter
-}
-
 \def\ParraHernandezVictorManuelResumen{
 \StepOneGenCounter\the\GenCounter\ &
-2012301636&Parra Hern\'andez Victor Manuel&\the\VictorAsistenciaCounter/\the\SesionSOTRCounter
+2012301636&Parra Hern\'andez Victor Manuel&\the\VictorManuelAsistenciaCounter/\the\SesionSOTRCounter
 }
 
-\def\GallegosSanlucarJonathanDanielResumen{
-\StepOneGenCounter\the\GenCounter\ &
-2011300302&Gallegos Sanlucar Jonathan Daniel&\the\JonathanAsistenciaCounter/\the\SesionSOTRCounter
-}
