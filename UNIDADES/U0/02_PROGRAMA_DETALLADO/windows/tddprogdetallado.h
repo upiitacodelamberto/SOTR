@@ -75,11 +75,17 @@ extern wchar_t subtema(Subtema, 4, 3, 3)[];
 
 /* arrays de wchar_t* que debben contener los nombres de los temas de las 
    unidades 1, 2, 3 y 4 */
-extern wchar_t *nombresdtemasdu1[];
+wchar_t *nombresdtemasdu1[] __attribute__((weak));
 extern wchar_t *nombresdtemasdu2[];
 extern wchar_t *nombresdtemasdu3[];
 extern wchar_t *nombresdtemasdu4[];
 extern wchar_t *nombresdtemasdu5[];
+
+//extern const wchar_t *nomdtmsdu1defaultvalue[]={((wchar_t *)0)};
+//#pragma comment(linker,"/
+//alternatename:_nombresdtemasdu1=_nomdtmsdu1defaultvalue)
+
+
 
 extern int *numdsubtemas[];
 extern wchar_t ***nombresdsubtemas[];
@@ -111,10 +117,11 @@ struct subtema {
 void copy(wchar_t to[], wchar_t from[]);
 
 void prog_detallado(struct prog_detallado *pd);
-void EXT_WEAK 
-set_prog_detallado(struct prog_detallado *pd);
-void EXT_WEAK 
-mostrar_prog_detallado(struct prog_detallado *pd);
+void set_prog_detallado(struct prog_detallado *pd);
+void mostrar_prog_detallado(struct prog_detallado *pd);
+
+
+
 #endif /* _TDDPROGDETALLADO_ */
 
 

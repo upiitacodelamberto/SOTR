@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h> /* malloc() */
 #include "tddprogdetallado.h"
-
+wchar_t *nombresdtemasdu1[]={((wchar_t *)0)};
 void copy(wchar_t to[], wchar_t from[]){
 	int i = 0;
 	while((to[i] = from[i]) != L'\0') i++; 
