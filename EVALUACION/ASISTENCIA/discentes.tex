@@ -49,14 +49,21 @@ Lista de asistencia del dia: #1\ #2.\\
 \def\ChavezCortesVictor{
 \global\advance\VictorAsistenciaCounter by 1
 \StepOneGenCounter\the\GenCounter\ &
-?????&Chavez Cortes Victor
+2010640035&Chavez Cortes Victor
 }
 
 \newcount\OmarAsistenciaCounter\OmarAsistenciaCounter=0
 \def\DiazDuranOmar{
 \global\advance\OmarAsistenciaCounter by 1
 \StepOneGenCounter\the\GenCounter\ &
-?????&Diaz Duran Omar
+2012640229&Diaz Duran Omar
+}
+
+\newcount\OswaldoIgnacioAsistenciaCounter\OswaldoIgnacioAsistenciaCounter=0
+\def\FrancoGarciaOswaldoIgnacio{
+\global\advance\OswaldoIgnacioAsistenciaCounter by 1
+\StepOneGenCounter\the\GenCounter\ &
+2011300292&Franco Garc\'ia Oswaldo Ignacio
 }
 
 \newcount\EnriqueAsistenciaCounter\EnriqueAsistenciaCounter=0
@@ -149,12 +156,17 @@ Total de sesiones: \the\SesionSOTRCounter\\
 
 \def\ChavezCortesVictorResumen{
 \StepOneGenCounter\the\GenCounter\ &
-?????&Chavez Cortes Victor&\the\VictorAsistenciaCounter/\the\SesionSOTRCounter
+2010640035&Chavez Cortes Victor&\the\VictorAsistenciaCounter/\the\SesionSOTRCounter
 }
 
 \def\DiazDuranOmarResumen{
 \StepOneGenCounter\the\GenCounter\ &
-?????&Diaz Duran Omar&\the\OmarAsistenciaCounter/\the\SesionSOTRCounter
+2012640229&Diaz Duran Omar&\the\OmarAsistenciaCounter/\the\SesionSOTRCounter
+}
+
+\def\FrancoGarciaResumen{
+\StepOneGenCounter\the\GenCounter\ &
+2011300292&Franco Garc\'ia Oswaldo Ignacio&\the\OswaldoIgnacioAsistenciaCounter/\the\SesionSOTRCounter
 }
 
 \def\OrtizTorresErickResumen{

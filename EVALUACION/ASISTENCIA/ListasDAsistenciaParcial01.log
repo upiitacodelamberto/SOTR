@@ -1,15 +1,23 @@
-This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012/Debian) (format=pdflatex 2015.1.28)  25 SEP 2015 19:40
+This is pdfTeX, Version 3.1415926-2.4-1.40.13 (MiKTeX 2.9) (preloaded format=pdflatex 2014.12.16)  2 OCT 2015 17:28
 entering extended mode
- restricted \write18 enabled.
- %&-line parsing enabled.
 **ListasDAsistenciaParcial01.tex
-(./ListasDAsistenciaParcial01.tex
+
+(C:\Users\ARQUIMEDES\Documents\GitHub\20151002\SOTR\EVALUACION\ASISTENCIA\Lista
+sDAsistenciaParcial01.tex
 LaTeX2e <2011/06/27>
-Babel <v3.8m> and hyphenation patterns for english, dumylang, nohyphenation, lo
-aded.
-(/usr/share/texlive/texmf-dist/tex/latex/base/article.cls
+Babel <v3.8m> and hyphenation patterns for english, afrikaans, ancientgreek, ar
+abic, armenian, assamese, basque, bengali, bokmal, bulgarian, catalan, coptic, 
+croatian, czech, danish, dutch, esperanto, estonian, farsi, finnish, french, ga
+lician, german, german-x-2012-05-30, greek, gujarati, hindi, hungarian, iceland
+ic, indonesian, interlingua, irish, italian, kannada, kurmanji, latin, latvian,
+ lithuanian, malayalam, marathi, mongolian, mongolianlmc, monogreek, ngerman, n
+german-x-2012-05-30, nynorsk, oriya, panjabi, pinyin, polish, portuguese, roman
+ian, russian, sanskrit, serbian, slovak, slovenian, spanish, swedish, swissgerm
+an, tamil, telugu, turkish, turkmen, ukenglish, ukrainian, uppersorbian, usengl
+ishmax, welsh, loaded.
+("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\base\article.cls"
 Document Class: article 2007/10/19 v1.4h Standard LaTeX document class
-(/usr/share/texlive/texmf-dist/tex/latex/base/size12.clo
+("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\base\size12.clo"
 File: size12.clo 2007/10/19 v1.4h Standard LaTeX file (size option)
 )
 \c@part=\count79
@@ -23,26 +31,28 @@ File: size12.clo 2007/10/19 v1.4h Standard LaTeX file (size option)
 \abovecaptionskip=\skip41
 \belowcaptionskip=\skip42
 \bibindent=\dimen102
-) (./discentes.tex
+)
+(C:\Users\ARQUIMEDES\Documents\GitHub\20151002\SOTR\EVALUACION\ASISTENCIA\disce
+ntes.tex
 \GenCounter=\count87
 \SesionSOTRCounter=\count88
 \DanielDeJesusAsistenciaCounter=\count89
 \DanielAsistenciaCounter=\count90
 \VictorAsistenciaCounter=\count91
 \OmarAsistenciaCounter=\count92
-\EnriqueAsistenciaCounter=\count93
-\JavierAsistenciaCounter=\count94
-\ErickServandoAsistenciaCounter=\count95
-\ErickAsistenciaCounter=\count96
-\VictorManuelAsistenciaCounter=\count97
-\JonathanAsistenciaCounter=\count98
-\MiguelAsistenciaCounter=\count99
-\JoseTlacaelelAsistenciaCounter=\count100
-\JoseAsistenciaCounter=\count101
+\OswaldoIgnacioAsistenciaCounter=\count93
+\EnriqueAsistenciaCounter=\count94
+\JavierAsistenciaCounter=\count95
+\ErickServandoAsistenciaCounter=\count96
+\ErickAsistenciaCounter=\count97
+\VictorManuelAsistenciaCounter=\count98
+\JonathanAsistenciaCounter=\count99
+\MiguelAsistenciaCounter=\count100
+\JoseTlacaelelAsistenciaCounter=\count101
+\JoseAsistenciaCounter=\count102
 )
-(./ListasDAsistenciaParcial01.aux)
-\openout1 = `ListasDAsistenciaParcial01.aux'.
-
+(C:\Users\ARQUIMEDES\Documents\GitHub\20151002\SOTR\EVALUACION\ASISTENCIA\Lista
+sDAsistenciaParcial01.aux)
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 3.
 LaTeX Font Info:    ... okay on input line 3.
 LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 3.
@@ -73,7 +83,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 28--28
 
 [1
 
-{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}]
+{C:/ProgramData/MiKTeX/2.9/pdftex/config/pdftex.map}]
 Underfull \hbox (badness 10000) in paragraph at lines 46--46
 
  []
@@ -83,22 +93,38 @@ Underfull \hbox (badness 10000) in paragraph at lines 59--59
 
  []
 
-[2] [3] (./ListasDAsistenciaParcial01.aux) ) 
+[2]
+Underfull \hbox (badness 10000) in paragraph at lines 78--78
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 94--94
+
+ []
+
+[3]
+Underfull \hbox (badness 10000) in paragraph at lines 108--108
+
+ []
+
+[4] [5]
+(C:\Users\ARQUIMEDES\Documents\GitHub\20151002\SOTR\EVALUACION\ASISTENCIA\Lista
+sDAsistenciaParcial01.aux) ) 
 Here is how much of TeX's memory you used:
- 276 strings out of 495059
- 3708 string characters out of 3182030
- 50885 words of memory out of 3000000
- 3533 multiletter control sequences out of 15000+200000
+ 282 strings out of 493921
+ 4433 string characters out of 3144860
+ 53031 words of memory out of 3000000
+ 3649 multiletter control sequences out of 15000+200000
  6683 words of font info for 24 fonts, out of 3000000 for 9000
- 14 hyphenation exceptions out of 8191
- 22i,7n,19p,178b,107s stack positions out of 5000i,500n,10000p,200000b,50000s
-</usr/share/texlive/texmf-dist/font
-s/type1/public/amsfonts/cm/cmbx12.pfb></usr/share/texlive/texmf-dist/fonts/type
-1/public/amsfonts/cm/cmr12.pfb>
-Output written on ListasDAsistenciaParcial01.pdf (3 pages, 31161 bytes).
+ 841 hyphenation exceptions out of 8191
+ 22i,7n,19p,179b,107s stack positions out of 5000i,500n,10000p,200000b,50000s
+<C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/publ
+ic/amsfonts/cm/cmbx12.pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public
+/amsfonts/cm/cmr12.pfb>
+Output written on ListasDAsistenciaParcial01.pdf (5 pages, 35491 bytes).
 PDF statistics:
- 22 PDF objects out of 1000 (max. 8388607)
- 14 compressed objects within 1 object stream
+ 26 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
  1 words of extra memory for PDF output out of 10000 (max. 10000000)
 

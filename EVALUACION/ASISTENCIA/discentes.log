@@ -1,0 +1,49 @@
+This is pdfTeX, Version 3.1415926-2.4-1.40.13 (MiKTeX 2.9) (preloaded format=pdflatex 2014.12.16)  2 OCT 2015 17:21
+entering extended mode
+**discentes.tex
+
+(C:\Users\ARQUIMEDES\Documents\GitHub\20151002\SOTR\EVALUACION\ASISTENCIA\disce
+ntes.tex
+LaTeX2e <2011/06/27>
+Babel <v3.8m> and hyphenation patterns for english, afrikaans, ancientgreek, ar
+abic, armenian, assamese, basque, bengali, bokmal, bulgarian, catalan, coptic, 
+croatian, czech, danish, dutch, esperanto, estonian, farsi, finnish, french, ga
+lician, german, german-x-2012-05-30, greek, gujarati, hindi, hungarian, iceland
+ic, indonesian, interlingua, irish, italian, kannada, kurmanji, latin, latvian,
+ lithuanian, malayalam, marathi, mongolian, mongolianlmc, monogreek, ngerman, n
+german-x-2012-05-30, nynorsk, oriya, panjabi, pinyin, polish, portuguese, roman
+ian, russian, sanskrit, serbian, slovak, slovenian, spanish, swedish, swissgerm
+an, tamil, telugu, turkish, turkmen, ukenglish, ukrainian, uppersorbian, usengl
+ishmax, welsh, loaded.
+\GenCounter=\count79
+\SesionSOTRCounter=\count80
+\DanielDeJesusAsistenciaCounter=\count81
+\DanielAsistenciaCounter=\count82
+\VictorAsistenciaCounter=\count83
+\OmarAsistenciaCounter=\count84
+\OswaldoIgnacioAsistenciaCounter=\count85
+\EnriqueAsistenciaCounter=\count86
+\JavierAsistenciaCounter=\count87
+\ErickServandoAsistenciaCounter=\count88
+\ErickAsistenciaCounter=\count89
+\VictorManuelAsistenciaCounter=\count90
+\JonathanAsistenciaCounter=\count91
+\MiguelAsistenciaCounter=\count92
+\JoseTlacaelelAsistenciaCounter=\count93
+\JoseAsistenciaCounter=\count94
+)
+! Emergency stop.
+<*> discentes.tex
+                 
+*** (job aborted, no legal \end found)
+
+ 
+Here is how much of TeX's memory you used:
+ 56 strings out of 493921
+ 1460 string characters out of 3144860
+ 49031 words of memory out of 3000000
+ 3449 multiletter control sequences out of 15000+200000
+ 3640 words of font info for 14 fonts, out of 3000000 for 9000
+ 841 hyphenation exceptions out of 8191
+ 5i,0n,8p,119b,8s stack positions out of 5000i,500n,10000p,200000b,50000s
+!  ==> Fatal error occurred, no output PDF file produced!
