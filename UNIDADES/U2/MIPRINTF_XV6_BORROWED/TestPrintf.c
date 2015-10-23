@@ -3,7 +3,6 @@
   void printf(int, char*, ...)
  */
 
-#include <stdio.h>
 int main(){
   char A[]="Las cosas que no se cumplieron de \"Volver al Futuro III\"\n";
   printf(1, A);
