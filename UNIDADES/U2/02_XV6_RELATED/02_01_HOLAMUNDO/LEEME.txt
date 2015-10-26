@@ -1,0 +1,5 @@
+En el archivo Makefile del repositorio xv6-public se agrega en la variable 
+UPROGS la linea:
+	_HolaMundo\
+
+para agregar el programa de usuario HolaMundo sobre el SO xv6.
