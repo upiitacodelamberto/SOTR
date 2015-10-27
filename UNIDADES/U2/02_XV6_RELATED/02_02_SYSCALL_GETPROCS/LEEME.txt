@@ -1,0 +1,19 @@
+En el archivo Makefile del repositorio mit-pdos se agrega en la variable 
+UPROGS la linea:
+	_ContProcs\
+
+para usar la syscall getprocs que se agrega al kernel xv6. Para ello se 
+modificaron los archivos:
+ContProcs.c
+defs.h
+HolaMundo.c
+LEEME.txt
+Makefile
+mit-pdos
+proc.c
+syscall.c
+syscall.h
+sysproc.c
+user.h
+usys.S
+
