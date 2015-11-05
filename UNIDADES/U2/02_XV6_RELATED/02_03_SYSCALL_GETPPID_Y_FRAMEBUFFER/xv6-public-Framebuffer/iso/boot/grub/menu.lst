@@ -1,0 +1,5 @@
+default=0
+timeout=15
+
+title xv6_os
+kernel /boot/kernel

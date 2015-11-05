@@ -1,0 +1,13 @@
+Archivos agregados (2015.11.02)
+fb.c fb.h
+io.h io.S        Solo los dejo temporalmente para comparar 
+                 la sintaxis del ensamblador nasm usada en 
+                 io.S y la sintaxis del dialecto de gcc para 
+                 incluir ensamblador en linea --utilizado en 
+                 x86.h--. es interesante observar: (como se hace 
+                 en little os, que se puede llamar a una funcion 
+                 escrita en ensamblador como inb y outb incluyendo 
+                 sus prototipos como en io.h y enlazar usando ld y 
+                 el script link.ld)
+
+device.c device.h
