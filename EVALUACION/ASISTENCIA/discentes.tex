@@ -134,6 +134,13 @@ Lista de asistencia del dia: #1\ #2.\\
 2011360627&Solano Juarez Jos\'e Santiago
 }
 
+\newcount\CarlosOmarAsistenciaCounter\CarlosOmarAsistenciaCounter=0
+\def\HernandezHernandezCarlosOmar{
+\global\advance\CarlosOmarAsistenciaCounter by 1
+\StepOneGenCounter\the\GenCounter\ &
+2011640071&Hern\'andez Hern\'andez Carlos Omar
+}
+
 
 
 %Macro para presentar reporte:
@@ -214,3 +221,7 @@ Total de sesiones: \the\SesionSOTRCounter\\
 2012301636&Parra Hern\'andez Victor Manuel&\the\VictorManuelAsistenciaCounter/\the\SesionSOTRCounter
 }
 
+\def\HernandezHernandezCarlosOmarResumen{
+\StepOneGenCounter\the\GenCounter\ &
+2011640071&Hern\'andez Hern\'andez Carlos Omar&\the\CarlosOmarAsistenciaCounter/\the\SesionSOTRCounter
+}
