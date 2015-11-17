@@ -1,0 +1,68 @@
+2015.11.17
+Primero hay que decir que en el Makefile se definio la variable CC commo sigue:
+CC=/root/2015_08_A_2015_12/ARM_TIVAC_related_work_in_linux/gcc-arm-none-eabi-4_9-2015q3/bin/arm-none-eabi-gcc
+
+Despues, cuando marcaba el error de que no se reconocia la opcion -mcpu=cortex-m4, sucede que el error lo marcaba 
+el ensamblador as, despues de buscar un rato en google y sobre todo razonar un poco (lastima que eso me tomo algunas horas) 
+sobre experiencias anteriores, llego a la conclusion de que el problema es que el ensamblador que estaba invocando la 
+herramienta make era el archivo /usr/bin/as, el cual es el ensamblador para x86. En efecto si se teclea el comando:
+whereis as
+se obtiene como respuesta:
+/usr/bin/as
+En este caso, sin embargo, el ensamblador que se necesita para completar la compilacion es el que se obtiene de 
+descomprimir el archivo gcc-arm-none-eabi-4_9-2015q3-20150921-linux.tar.bz2 con el comando:
+tar xvjf gcc-arm-none-eabi-4_9-2015q3-20150921-linux.tar.bz2
+Despues de esto se obtiene el directorio
+gcc-arm-none-eabi-4_9-2015q3/
+Dentro de este directorio hay un directorio llamado bin/ dentro del cual estan los archivos 
+arm-none-eabi-gcc, arm-none-eabi-as, arm-none-eabi-ld
+y muchos archivos mas cuyos nombres  tambien empiezan con arm-none-eabi-. 
+arm-none-eabi-gcc es el compilador de C para el micro ARM, arm-none-eabi-as es el ensamblador para el micro ARM, 
+arm-none-eabi-ld es el enlazador para el micro ARM. La forma en que solucione el problema es la siguiente: Si se 
+teclea el comando:
+echo $PATH
+se obtiene:
+/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+Lo cual nos indica que cuando se busca un comando ejecutable en el sistema primero se busca en el directorio
+/usr/local/sbin, despues se busca en el directorio /usr/local/bin, despues en /usr/sbin, despues en /usr/bin, 
+despues en /sbin, y por ultimo en /bin.
+Asi que para hacer que se invoque al ensamblador 
+/root/2015_08_A_2015_12/ARM_TIVAC_related_work_in_linux/gcc-arm-none-eabi-4_9-2015q3/bin/arm-none-eabi-as
+debemos colocar un enlace simbolico en un directorio que se encuentre en la variable PATH antes que el directorio
+/usr/bin. Para ello tecleamos el comando
+ln -s /root/2015_08_A_2015_12/ARM_TIVAC_related_work_in_linux/gcc-arm-none-eabi-4_9-2015q3/bin/arm-none-eabi-as /usr/local/bin/as
+Con esto se corrije el error de opcion desconocida -mcpu=cortex-m4.
+
+Despues se presentaba el error:
+
+/root/2015_08_A_2015_12/ARM_TIVAC_related_work_in_linux/gcc-arm-none-eabi-4_9-2015q3/bin/arm-none-eabi-gcc -mthumb -mcpu=cortex-m4 -mfloat-abi=hard -mfpu=fpv4-sp-d16 -g -Wall -Ldevice -Tgcc_arm.ld objects/*.o  -o salida.elf
+ld: /root/2015_08_A_2015_12/ARM_TIVAC_related_work_in_linux/gcc-arm-none-eabi-4_9-2015q3/bin/../lib/gcc/arm-none-eabi/4.9.3/liblto_plugin.so: error loading plugin: /root/2015_08_A_2015_12/ARM_TIVAC_related_work_in_linux/gcc-arm-none-eabi-4_9-2015q3/bin/../lib/gcc/arm-none-eabi/4.9.3/liblto_plugin.so: clase ELF errónea: ELFCLASS32
+Makefile:28: recipe for target 'salida.elf' failed
+make: *** [salida.elf] Error 1
+
+Podemos notar que el linker que esta corriendo se queja del atributo ELFCLASS32 de la biblioteca compartida que por default  
+esta buscando en el directorio 
+/root/2015_08_A_2015_12/ARM_TIVAC_related_work_in_linux/gcc-arm-none-eabi-4_9-2015q3/bin/../lib/gcc/arm-none-eabi/4.9.3/
+Y marca el error:
+ clase ELF errónea: ELFCLASS32
+
+Esto se debe a que el linker que se esta usando nuevamente no es el correcto pra el ARM. Ya que el comando 
+whereis ld
+nos devuelve:
+ld: /usr/bin/ld /usr/bin/ld.bfd /usr/bin/ld.gold /usr/share/man/man1/ld.1.gz
+
+Para correggir este error nuevamente hay que crear un enlace llamado ld en el directorio /usr/local/bin que apunte al 
+linker que necesitamos, esto es, que apunte a 
+/root/2015_08_A_2015_12/ARM_TIVAC_related_work_in_linux/gcc-arm-none-eabi-4_9-2015q3/bin/arm-none-eabi-ld
+Por lo tanto tecleamos:
+ln -s /root/2015_08_A_2015_12/ARM_TIVAC_related_work_in_linux/gcc-arm-none-eabi-4_9-2015q3/bin/arm-none-eabi-ld /usr/local/bin/ld
+
+Despues de eso se arreglaron los errores de ensamblado y enlazado, y se logra construir el archivo salida.elf. Si ejecutamos
+file salida.elf
+obtenemos:
+salida.elf: ELF 32-bit LSB executable, ARM, EABI5 version 1 (SYSV), statically linked, not stripped
+Es decir, construimos un ejecutable para el microprocesador ARM cortex M4 de la tarjeta ek-tm4c123gxl.
+El siguiente paso es pasar este archivo al micro ARM para ver corriendo nuestro programa.
+Vease el archivo: SesionTelnetProgramarLaunchpad.txt
+Happy Hackings
+The End :)

@@ -1,0 +1,51 @@
+ openocd -f board/ek-tm4c123gxl.cfg
+Open On-Chip Debugger 0.8.0 (2014-10-20-21:48)
+Licensed under GNU GPL v2
+For bug reports, read
+	http://openocd.sourceforge.net/doc/doxygen/bugs.html
+Info : This adapter doesn't support configurable speed
+Info : ICDI Firmware version: 9270
+Info : tm4c123gh6pm.cpu: hardware has 6 breakpoints, 4 watchpoints
+
+
+
+
+
+EN OTRA TERMINAL:
+ telnet localhost 4444
+
+Trying ::1...
+Trying 127.0.0.1...
+Connected to localhost.
+Escape character is '^]'.
+Open On-Chip Debugger
+> reset
+> reset halt
+
+
+> pwd
+/home/lamberto/SistemasOperativosEnTiempoReal_AG_DIC_2014/SST_PORT_ARM/sst_arm/example1/gcc
+> help flash      
+flash
+      NOR flash command group (command valid any time)
+  flash bank bank_id driver_name base_address size_bytes chip_width_bytes
+            bus_width_bytes target [driver_options ...]
+............
+
+
+
+> flash write_image erase salida.elf 0x00 elf
+auto erase enabled
+target state: halted
+target halted due to breakpoint, current mode: Thread 
+xPSR: 0x61000000 pc: 0x20000042 msp: 0x20000268
+wrote 5120 bytes from file salida.elf in 0.764746s (6.538 KiB/s)
+> reset
+> shutdown
+shutdown command invoked
+> Connection closed by foreign host.
+
+
+
+
+

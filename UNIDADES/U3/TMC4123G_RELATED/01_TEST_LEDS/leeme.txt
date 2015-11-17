@@ -1,0 +1,19 @@
+TIVAC Stellaris LaunchPad  (aprox 15 USD)   20150123
+o la tarjeta
+Tiva C series LaunchPad, TivaC Series TM4C123G  (20150209)
+EK-TM4C123GXL
+
+
+Descargar de https://github.com
+git clone https://github.com/upiitacode/sst_arm.git
+
+Para actualizar
+git pull origin master
+
+Para deshacer cambios
+git clean -df
+
+Para desacer cambios en los archivos originales del repositorio
+git reset --hard
+
+
