@@ -16,7 +16,10 @@ Despues de esto se obtiene el directorio
 gcc-arm-none-eabi-4_9-2015q3/
 Dentro de este directorio hay un directorio llamado bin/ dentro del cual estan los archivos 
 arm-none-eabi-gcc, arm-none-eabi-as, arm-none-eabi-ld
-y muchos archivos mas cuyos nombres  tambien empiezan con arm-none-eabi-. 
+y muchos archivos mas cuyos nombres  tambien empiezan con arm-none-eabi-. Es posible que estos archivos debamos 
+hacerlos ejecutable con el comando 
+chmod u+x arm-none-eabi-*
+
 arm-none-eabi-gcc es el compilador de C para el micro ARM, arm-none-eabi-as es el ensamblador para el micro ARM, 
 arm-none-eabi-ld es el enlazador para el micro ARM. La forma en que solucione el problema es la siguiente: Si se 
 teclea el comando:
