@@ -33,7 +33,42 @@ debemos colocar un enlace simbolico en un directorio que se encuentre en la vari
 ln -s /root/2015_08_A_2015_12/ARM_TIVAC_related_work_in_linux/gcc-arm-none-eabi-4_9-2015q3/bin/arm-none-eabi-as /usr/local/bin/as
 Con esto se corrije el error de opcion desconocida -mcpu=cortex-m4.
 
-Despues se presentaba el error:
+Para corregir el error:
+/root/2015_08_A_2015_12/ARM_TIVAC_related_work_in_linux/gcc-arm-none-eabi-4_9-2015q3/bin/arm-none-eabi-gcc -mthumb -mcpu=cortex-m4 -mfloat-abi=hard -mfpu=fpv4-sp-d16 -g -Wall -Ldevice -Tgcc_arm.ld objects/*.o  -o salida.elf
+arm-none-eabi-gcc: fatal error: -fuse-linker-plugin, but liblto_plugin.so not found
+compilation terminated.
+Makefile:28: recipe for target 'salida.elf' failed
+make: *** [salida.elf] Error 1
+
+Utilice informacion de la pagina:
+https://www.lpcware.com/content/forum/libltopluginso-not-found
+"
+Sat, 2014-03-22 10:50
+fancypants
+Offline
+Joined: 2013-02-01
+Posts: 17
+
+Posting for LPCXpresso support awareness, as well as a work-around solution for anyone 
+else who needs a solution to this, unless this is specific to my installation only:
+
+I'm running LPCXpresso 7.0.2 on OSX 10.9.2 and when I "enable link-time optimization (-flto)
+" I get a "error loading liblto_plugin.so" at the end of the link process. It seems that "liblto_plugin.so" 
+in the tools/lib/gcc/arm-none-eabi/4.8.3 should be pointing to "liblto_plugin.0.so" in the same folder, 
+but isn't. Forcing "liblto_plugin.so" to point to "liblto_plugin.0.so" didn't work for me so just making 
+a copy of "liblto_plugin.0.so" and renaming it to "liblto_plugin.so" solved it.
+
+Hope this helps.
+"
+Efectivamente el error mencionado antes de esta cita textual 
+(arm-none-eabi-gcc: fatal error: -fuse-linker-plugin, but liblto_plugin.so not found)
+se corrije haciendo una copia de forma similar a como se describe en la cita textual. En este caso tuve que hacer:
+cd /root/2015_08_A_2015_12/ARM_TIVAC_related_work_in_linux/gcc-arm-none-eabi-4_9-2015q3/lib/gcc/arm-none-eabi/4.9.3/
+Una vez ahi ejecute el comando
+cp liblto_plugin.so.0.0.0 liblto_plugin.so
+Regreso al directorio del proyecto y nuevamente ejecuto make, con la copia del archivo .so anterior ya no se presenta 
+el error (arm-none-eabi-gcc: fatal error: -fuse-linker-plugin, but liblto_plugin.so not found). Pero se presentaba 
+el siguiente: Despues se presentaba el error:
 
 /root/2015_08_A_2015_12/ARM_TIVAC_related_work_in_linux/gcc-arm-none-eabi-4_9-2015q3/bin/arm-none-eabi-gcc -mthumb -mcpu=cortex-m4 -mfloat-abi=hard -mfpu=fpv4-sp-d16 -g -Wall -Ldevice -Tgcc_arm.ld objects/*.o  -o salida.elf
 ld: /root/2015_08_A_2015_12/ARM_TIVAC_related_work_in_linux/gcc-arm-none-eabi-4_9-2015q3/bin/../lib/gcc/arm-none-eabi/4.9.3/liblto_plugin.so: error loading plugin: /root/2015_08_A_2015_12/ARM_TIVAC_related_work_in_linux/gcc-arm-none-eabi-4_9-2015q3/bin/../lib/gcc/arm-none-eabi/4.9.3/liblto_plugin.so: clase ELF errónea: ELFCLASS32
