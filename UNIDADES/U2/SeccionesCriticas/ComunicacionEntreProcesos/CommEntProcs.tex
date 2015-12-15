@@ -382,6 +382,136 @@ oportunidad de salir de su regi\'on cr\'itica, y H permanece en un
 ciclo infinito. Esta situaci\'on se conoce como {\bf problema de 
 inversi\'on de prioridad}. V\'ease \cite{Tanenbaum} pag. 64.
 
+Examinemos ahora algunas primitivas de comunicaci\'on entre procesos 
+que se bloquean (se duermen) en lugar de desperdiciar tiempo de CPU 
+cuando no se les permite entrar en sus regiones cr\'iticas. Una de las 
+m\'as sencillas es el par {\tt SLEEP} y {\tt WAKEUP}. {\tt SLEEP} 
+(dormir) es una llamada al sistema que hace que el invocador se 
+bloquee, es decir, se suspenda hasta que otro proceso lo despierte. 
+La llamada {\tt WAKEUP} (despertar) tiene un par\'ametro, el proceso 
+que se debe despertar. Como alternativa, tanto {\tt SLEEP} como 
+{\tt WAKEUP} pueden tener un par\'ametro cada uno, una direcci\'on de 
+memoria que sirve para enlazar los {\tt SLEEP} con los {\tt WAKEUP}.
+
+\noindent{\bf El problema productor-consumidor}\\
+Como ejemplo de uso de estas primitivas, consideremos el problema de 
+{\bf productor-consumidor} (tambi\'en conocido como problema de 
+{\bf buffer limitado}). Dos procesos comparten un mismo {\it buffer} 
+sw tama\~no fijo. Uno de ellos, el productor, coloca informaci\'on en 
+el {\it buffer}, y el otro, el consumidor, la saca.
+
+Surgen problemas cuando el productor quiere colocar un nuevo elemento 
+en el {\it buffer}, pero este ya est\'a lleno. La soluci\'on es que el 
+productor se duerma y sea despertado cuando el consumidor haya 
+retirado uno o m\'as elementos. De forma similar, si el consumidor 
+desea sacar un elemento del {\it buffer} y ve que est\'a vacio, se 
+duerme hasta que el productor pone algo en el {\it buffer} y lo despierta.
+
+Este enfoque parece muy sencillo, pero da lugar a los mismos tipos de 
+condiciones de carrera que se han mencionado antes. Para seguir la pista 
+al n\'umeor de elementos contenidos en el {\it buffer}, necesitaremos una 
+variable, {\it count}. Si el n\'umero m\'aximo de elementos que el 
+{\it buffer} puede contener es $N$, el c\'odigo del productor primero 
+verificar\'a si {\it count} es igual a $N$. Si es as\'i, el productor 
+se dormir\'a, si no, el productor agregar\'a un elemento e incrementar\'a 
+{\it count}.
+
+El c\'odigo del consumidor es similar: primero se prueba {\it count} 
+para ver si es 0. Si es as\'i, el consumidor se duerme; si no, el 
+consumidor saca un elemento y decrementa {\it count}. Cada uno de estos 
+procesos verifica tambi\'en si el otro deber\'ia estar durmiendo, y si 
+no es as\'i, lo despierta. El c\'odigo del productor y del consumidor 
+se muestra en la siguiente figura
+\begin{verbatim}
+#define N 100            /* numero de ranuras en el buffer */
+int count=0;             /* numerod de elementos ene l buffer */
+
+void producer(void){
+  while(TRUE){
+    produce_item();      /* generar el siguiente elemento */
+    if(count==N)sleep(); /* si el buffer esta lleno, dormir */
+    enter_item();        /* colocar elemento en el buffer */
+    count=count+1;       /* incrementar la cuenta de elementos */
+
+    if(count==1)wakeup(consumer);
+  }
+}
+
+void consumer(void){
+  while(TRUE){
+    if(count==0)sleep(); /* si el buffer esta vacio, dormir */
+    remove_item();       /* remover elemento del buffer */
+    count=count-1;       /* decrementar la cuenta de elementos */
+
+    if(count==N-1)wakeup(producer);/* estaba lleno el buffer? */
+    consume_item();      /* imprimir elemento */
+  }
+}
+\end{verbatim}
+Volvamos ahora a la condici\'on de carrera. \'Esta puede ocurrir 
+porque el acceso a {\it count} es irrestricto, y podr\'ia presentarse 
+la siguiente situaci\'on. El {'it buffer} est\'a vacio y el consumidor 
+acaba de leer {\it count} para ver si es 0. En ese instante, el 
+planificador decide dejar de ejecutar el consumidor temporalmente y 
+comenzar a ejecutar el productor. \'Este coloca un elemento en el 
+{\it buffer}, incrementa {\it count}, y observa que ahora vale 1. 
+Esto implica que antes {\it count} val\'ia 0, y por ende que el 
+consumidor est\'a durmiendo, as\'i que el productor invoca {\it wakeup} 
+para despertar al consumidor.
+
+Desafortunadamente, el consumidor todav\'ia no estaba dormido 
+l\'ogicamente, de modo que la se\~nal de despertar se pierde. Cuando el 
+consumidor reanuda su ejecuci\'on, prueba el valor de {\it count} que 
+hab\'ia leido previamente, ve que es 0 y se duerme. Tarde o temprano 
+el productor llenar\'a el {\it buffer} y se dormir\'a. Ambos seguir\'an 
+durmiendo eternamente. 
+
+La esencia del problema aqu\'i es que se perdi\'o una llamada enviada 
+para despertar a un proceso que (todav\'ia) no estaba dormido. Si no 
+se perdiera, todo funcionar\'ia. Una compostura r\'apida consiste en 
+modificar las reglas y agregar un {\bf bit de espera de despertar} a 
+la escena. Cuando se env\'ia una llamada de despertar a un proceso que 
+est\'a despierto, se enciende este bit. Despu\'es, cuando el proceso 
+trata de dormirse, si el bit de espera de despertar est\'a encendido, 
+se apagar\'a pero el proceso seguir\'a despierto. El bit de espera 
+de despertar act\'ua como una alcancia de se\~nales de despertar.
+
+Lamentablemente, si existen tres o m\'as procesos, un bit de espera de 
+despertar es insuficiente. Se podr\'ia crear otro ``parche'' y agregar 
+un segundo bit de espera de despertar, o quiz\'a 8 o 32, pero en 
+principio el problema sigue ah\'i.
+
+\noindent{\bf Sem\'aforos}\\
+En 1965, E, W. Dijkstra introdujo un nuevo tipo de variable llamada 
+{\bf sem\'aforo}. Un sem\'aforo podr\'ia tener el valor 0, indicando 
+que no hab\'ia se\~nales de despertar guardadas, o alg''un valor positivo 
+si hab\'ia una o m\'as se\~nales de despertar pendientes. 
+
+Dijkstra propuso tener dos operaciones {\tt DOWN} y {\tt UP} 
+(generalizaciones de sleep y wakeup, respectivamente). La operaci\'on 
+{\tt DOWN} aplicada a un sem\'aforo verifica si el valor es mayor que 
+0; de ser as\'i, decrementa el valor (esto es, gasta una se\~nal de 
+despertar almacenada) y contin\'ua. Si el valor es 0, el proceso se 
+pone a dormir sin completar la operaci\'on {\tt DOWN} por el momento. 
+La verificaci\'on del valor, su modificaci\'on y la acci\'on de dormirse,  
+si es necesaria, se realizan como una sola {acci\'on at\'omica} indivisible. 
+Se garantiza que una vez que una operaci\'on de sem\'aforo se ha iniciado, 
+ning\'un otro proceso podr\'a acceder al sem\'aforo hasta que la operaci\'on 
+se haya completado o bloqueado. Esta atomicidad es absolutamente indispensable 
+para resolver los problemas de sincronizaci\'on y evitar las condiciones de 
+carrera.
+
+La operaci\'on {\tt UP} incrementa el valor del sem\'aforo direccionado. Si uno 
+o m\'as procesos est\'an durmiendo en espera de ese sem\'aforo, imposibilitados 
+de completar una operaci\'on {\tt DOWN} previa, el sistema escoge uno de 
+ellos (p.ej. al azar) y le permite completar su {\tt DOWN}. As\'i, despu\'es de 
+un {\tt UP} con un sem\'aforo que tiene procesos durmiendo esperando, el 
+sem\'aforo seguir\'a siendo 0, pero habr\'a un proceso menos que se halle 
+en fase de durmiendo esperando. La operaci\'on de incrementar el sem\'aforo 
+y despertar un proceso tambi\'en es indivisible. Ning\'un proceso se bloquea 
+durante un {\tt UP}.
+
+
 \eject
 \begin{thebibliography}{9}
 \bibitem{Brey}Barry B. Brey, ``Los Microprocesadores Intel, 
