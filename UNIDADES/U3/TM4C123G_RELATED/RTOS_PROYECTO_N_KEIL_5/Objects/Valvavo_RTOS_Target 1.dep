@@ -1,0 +1,20 @@
+Dependencies for Project 'Valvavo_RTOS', Target 'Target 1': (DO NOT MODIFY !)
+F (.\RTE\Device\TM4C123GH6PM\osasm.s)(0x56704FE0)(--cpu Cortex-M4.fp --pd "__EVAL SETA 1" -g --apcs=interwork -I D:\Usuario\2015_08_A_2015_12\TIVAC\RTOS_INTE_06\RTE-I C:\Keil_v5\ARM\PACK\ARM\CMSIS\4.5.0\CMSIS\Include-I C:\Keil_v5\ARM\PACK\Keil\TM4C_DFP\1.0.0\Device\Include\TM4C123--pd "__UVISION_VERSION SETA 516" --pd "_RTE_ SETA 1" --pd "TM4C123GH6PM SETA 1"--list .\listings\osasm.lst --xref -o .\objects\osasm.o --depend .\objects\osasm.d)
+F (.\RTE\Device\TM4C123GH6PM\startup.s)(0x56705C19)(--cpu Cortex-M4.fp --pd "__EVAL SETA 1" -g --apcs=interwork -I D:\Usuario\2015_08_A_2015_12\TIVAC\RTOS_INTE_06\RTE-I C:\Keil_v5\ARM\PACK\ARM\CMSIS\4.5.0\CMSIS\Include-I C:\Keil_v5\ARM\PACK\Keil\TM4C_DFP\1.0.0\Device\Include\TM4C123--pd "__UVISION_VERSION SETA 516" --pd "_RTE_ SETA 1" --pd "TM4C123GH6PM SETA 1"--list .\listings\startup.lst --xref -o .\objects\startup.o --depend .\objects\startup.d)
+F (.\RTE\Device\TM4C123GH6PM\os.c)(0x567067A5)(--c99 -c --cpu Cortex-M4.fp -D__EVAL -g -O0 --apcs=interwork --split_sections-I D:\Usuario\2015_08_A_2015_12\TIVAC\RTOS_INTE_06\RTE-I C:\Keil_v5\ARM\PACK\ARM\CMSIS\4.5.0\CMSIS\Include-I C:\Keil_v5\ARM\PACK\Keil\TM4C_DFP\1.0.0\Device\Include\TM4C123-D__UVISION_VERSION="516" -D_RTE_ -DTM4C123GH6PM-o .\objects\os.o --omf_browse .\objects\os.crf --depend .\objects\os.d)
+I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x55AFACC2)
+I (RTE\Device\TM4C123GH6PM\os.h)(0x56704FE0)
+I (RTE\Device\TM4C123GH6PM\PLL.h)(0x56704FE0)
+F (.\RTE\Device\TM4C123GH6PM\PLL.c)(0x56704FE0)(--c99 -c --cpu Cortex-M4.fp -D__EVAL -g -O0 --apcs=interwork --split_sections-I D:\Usuario\2015_08_A_2015_12\TIVAC\RTOS_INTE_06\RTE-I C:\Keil_v5\ARM\PACK\ARM\CMSIS\4.5.0\CMSIS\Include-I C:\Keil_v5\ARM\PACK\Keil\TM4C_DFP\1.0.0\Device\Include\TM4C123-D__UVISION_VERSION="516" -D_RTE_ -DTM4C123GH6PM-o .\objects\pll.o --omf_browse .\objects\pll.crf --depend .\objects\pll.d)
+I (RTE\Device\TM4C123GH6PM\PLL.h)(0x56704FE0)
+I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x55AFACC2)
+I (RTE\Device\TM4C123GH6PM\TM4C123GH6PM.h)(0x56704FE0)
+I (RTE\Device\TM4C123GH6PM\core_cm4.h)(0x56704FE0)
+I (C:\Keil_v5\ARM\PACK\ARM\CMSIS\4.5.0\CMSIS\Include\core_cmInstr.h)(0x56265A20)
+I (C:\Keil_v5\ARM\PACK\ARM\CMSIS\4.5.0\CMSIS\Include\cmsis_armcc.h)(0x56265A20)
+I (C:\Keil_v5\ARM\PACK\ARM\CMSIS\4.5.0\CMSIS\Include\core_cmFunc.h)(0x56265A20)
+I (C:\Keil_v5\ARM\PACK\ARM\CMSIS\4.5.0\CMSIS\Include\core_cmSimd.h)(0x56265A20)
+I (C:\Keil_v5\ARM\PACK\Keil\TM4C_DFP\1.0.0\Device\Include\TM4C123\system_TM4C123.h)(0x51B74676)
+F (.\RTE\Device\TM4C123GH6PM\user.c)(0x5670625A)(--c99 -c --cpu Cortex-M4.fp -D__EVAL -g -O0 --apcs=interwork --split_sections-I D:\Usuario\2015_08_A_2015_12\TIVAC\RTOS_INTE_06\RTE-I C:\Keil_v5\ARM\PACK\ARM\CMSIS\4.5.0\CMSIS\Include-I C:\Keil_v5\ARM\PACK\Keil\TM4C_DFP\1.0.0\Device\Include\TM4C123-D__UVISION_VERSION="516" -D_RTE_ -DTM4C123GH6PM-o .\objects\user.o --omf_browse .\objects\user.crf --depend .\objects\user.d)
+I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x55AFACC2)
+I (RTE\Device\TM4C123GH6PM\os.h)(0x56704FE0)
