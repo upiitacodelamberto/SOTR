@@ -511,6 +511,83 @@ en fase de durmiendo esperando. La operaci\'on de incrementar el sem\'aforo
 y despertar un proceso tambi\'en es indivisible. Ning\'un proceso se bloquea 
 durante un {\tt UP}.
 
+\noindent{\bf Resoluci\'on del problema de productor-consumidor usando sem\'aforos}\\
+Los sem\'aforos resuelven el problema de la se\~nal de despertar perdida, una 
+posible soluci\'on se muestra en el siguiente listado de c\'odigo. Es indispensable 
+que las funciones {\tt UP} y {\tt DOWN} se implementen de modo que sean indivisibles. 
+El m\'etodo normal consiste en implementar {\tt UP} y {\tt DOWN} como llamadas al 
+sistema, para que el sistema operativo inhabilite brevemente todas las interrupciones 
+mientras prueba el sem\'aforo, lo actualiza y pone el proceso a dormir, si es necesario. 
+Todas estas acciones requieren s\'olo unas cuantas instrucciones, as\'i que la 
+inhabilitaci\'on de las interrupciones no tiene consecuencias adversas. Si se est\'an 
+usando m\'ultiples CPU, cada sem\'aforo debe estar protegido con una variable de 
+candado (por ejemplo un spinlock), usando la instrucci\'on {\tt TSL} para asegurarse 
+de que s\'olo una CPU a la vez examine el sem\'aforo. El empleo de una instrucci\'on 
+{\tt TSL} para evitar que varias CPU accedan al sem\'aforo al mismo tiempo es muy 
+diferente de la espera activa del productor o el consumidor cuando esperan que el 
+otro proceso vac\'ie o llene el {\it buffer}. La operaci\'on del sem\'aforo solo toma 
+unos cuantos microsegundos, mientras que si se usa espera activa el productor o el 
+consumidor podr\'ian tardar un tiempo arbitrariamente largo.
+\begin{verbatim}
+/* El problema productor-consumidor usando semaforos */
+#define N 100                        /* numero de ranuras del buffer */
+typedef int semaphore;               /* los semaforos son un tipo especial de int */
+
+semaphore mutex=1;                   /* controla el acceso a la region critica */
+semaphore empty=N;                   /* cuenta las ranuras del buffer vacias */
+semaphore full=0;                    /* cuenta las ranuras de buffer llenas */
+
+void producer(void){
+  int item;
+  while(TRUE){                       /* TRUE es la constante 1 */
+    produce_item(&item);             /* generar algo para ponerlo en el buffer */
+    down(&empty);                    /* decrementar el contador empty */
+    down(&mutex);                    /* entrar en la region critica */
+    enter_item(item);                /* colocar el nuevo elemento en el buffer */
+    up(&mutex);                      /* salir de la region critica */
+    up(&full);
+  }
+
+void consumer(void){
+  int item;
+  while(TRUE){                        /* ciclo infinito */
+    down(&full);                      /* decrementar el contador full */
+    down(&mutex);                     /* entrar en la region critica */
+    remove_item(&item);               /* sacar elemento del buffer */
+    up(&mutex);                       /* salir de la region critica */
+    up(&empty);                       /* incrementar el contador de ranuras vacias */
+    consume_item(item);               /* hacer algo con el elemento */
+  }
+}
+\end{verbatim}
+Esta soluci\'on usa tres sem\'aforos: uno llamado {\tt full} para contar el n\'umero 
+de ranuras que est\'an llenas, uno llamado {\tt empty} para contar el n\'umeor de ranuras 
+que est\'an vacias, y otro llamado {\tt mutex} para asegurarse de que el productor y el 
+consumidor no accedan al buffer al mismo tiempo. {\tt full} inicialmentevale 0, 
+{\tt empty} inicialmente es igual al numero de ranuras del {\tt buffer} y {\tt mutex} 
+inicialmente es 1. Los sem\'aforos a los que se asigna 1 como valor inicial y son 
+utilizados por dos o m\'as procesos para asegurar que s\'olo uno de ellos pueda entrar 
+en su regi\'on cr\'itica al mismo tiempo se denominan {\bf sem\'aforos binarios}. Si 
+cada proceso ejecuta {\tt DOWN} justo antes de entrar en su regi\'on cr\'itica, y {\tt UP} 
+justo despu\'es de salir de ella, la exclusi\'on mutua est\'a garantizada. (V\'ease 
+\cite{Tanenbaum}, pag. 68 para una indicaci\'on sobre c\'omo usar los sem\'aforos 
+para ``ocultar'' las interrupciones). 
+
+En el ejemplo del c\'odigo anterior realmente se usan los sem\'aforos de dos formas 
+distintas. Esta diferencia es lo siguiente: el sem\'aforo {\tt mutex} se usa para 
+exclusi\'on mutua: est\'a dise\~nado para garantizar que solo un proceso a la vez estar\'a 
+leyendo o escribiendo el buffer y las variables asociadas a \'el. Esta eclusi\'on mutua es 
+necesaria para evitar el caos.
+
+El otro uso de los sem\'aforos es la {\bf sincronizaci\'on}. Los sem\'aforos {\tt full} y 
+{\tt empty} se necesitan para garantizar que ciertas secuencias de sucesos ocurran o no 
+ocurran. En este caso, los sem\'aforos aseguran que el productor dejar\'a de ejecutarse 
+cuando el buffer est\'e lleno y que el consumidor dejar\'a de ejecutarse cuando el buffer 
+est\'e vacio. Este uso es diferente de la exclusi\'on mutua. Aunque los sem\'aforos se han 
+usado desde 1965, aun se siguen efectuando investigaciones sobre su uso y en la actualidad 
+se pueden encontrar en kernels de sistemas operativos ya sade tiempo real o no, podemos 
+verlos por ejemplo en el kernel linux.
+
 
 \eject
 \begin{thebibliography}{9}
