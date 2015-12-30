@@ -1,0 +1,15 @@
+--cpu Cortex-M3
+".\objects\os.o"
+".\objects\user.o"
+".\objects\osasm.o"
+".\objects\cpu.o"
+".\objects\gpio.o"
+".\objects\interrupt.o"
+".\objects\output.o"
+".\objects\rit128x96x4.o"
+".\objects\ssi.o"
+".\objects\sysctl.o"
+".\objects\startup.o"
+--library_type=microlib --ro-base 0x00000000 --entry 0x00000000 --rw-base 0x20000000 --entry Reset_Handler --first __Vectors --strict --summary_stderr --info summarysizes --map --xref --callgraph --symbols
+--info sizes --info totals --info unused --info veneers
+--list ".\Listings\RTOS_LM3S_1968_blocking_semaphore_limbuf.map" -o .\Objects\RTOS_LM3S_1968_blocking_semaphore_limbuf.axf

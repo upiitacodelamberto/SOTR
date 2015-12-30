@@ -1,0 +1,257 @@
+
+
+
+ARM Macro Assembler    Page 1 
+
+
+    1 00000000         ;/******************************************************
+                       ***********************/
+    2 00000000         ;/* OSasm.s: low-level OS commands, written in assembly 
+                                             */
+    3 00000000         ;// Real Time Operating System 
+    4 00000000         
+    5 00000000         ; This example accompanies the book
+    6 00000000         ;  "Embedded Systems: Real Time Interfacing to the Arm C
+                       ortex M3",
+    7 00000000         ;  ISBN: 978-1463590154, Jonathan Valvano, copyright (c)
+                        2011
+    8 00000000         ;
+    9 00000000         ;  Programs 6.4 through 6.12, section 6.2
+   10 00000000         ;
+   11 00000000         ;Copyright 2011 by Jonathan W. Valvano, valvano@mail.ute
+                       xas.edu
+   12 00000000         ;    You may use, edit, run or distribute this file
+   13 00000000         ;    as long as the above copyright notice remains
+   14 00000000         ; THIS SOFTWARE IS PROVIDED "AS IS".  NO WARRANTIES, WHE
+                       THER EXPRESS, IMPLIED
+   15 00000000         ; OR STATUTORY, INCLUDING, BUT NOT LIMITED TO, IMPLIED W
+                       ARRANTIES OF
+   16 00000000         ; MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE A
+                       PPLY TO THIS SOFTWARE.
+   17 00000000         ; VALVANO SHALL NOT, IN ANY CIRCUMSTANCES, BE LIABLE FOR
+                        SPECIAL, INCIDENTAL,
+   18 00000000         ; OR CONSEQUENTIAL DAMAGES, FOR ANY REASON WHATSOEVER.
+   19 00000000         ; For more information about my classes, my research, an
+                       d my books, see
+   20 00000000         ; http://users.ece.utexas.edu/~valvano/
+   21 00000000         ; */
+   22 00000000         
+   23 00000000                 AREA             |.text|, CODE, READONLY, ALIGN=
+2
+   24 00000000                 THUMB
+   25 00000000                 REQUIRE8
+   26 00000000                 PRESERVE8
+   27 00000000         
+   28 00000000                 EXTERN           RunPt       ; currently running
+                                                             thread
+   29 00000000                 EXPORT           OS_DisableInterrupts
+   30 00000000                 EXPORT           OS_EnableInterrupts
+   31 00000000                 EXPORT           StartCritical
+   32 00000000                 EXPORT           EndCritical
+   33 00000000                 EXPORT           StartOS
+   34 00000000         
+   35 00000000                 EXPORT           SysTick_Handler
+   36 00000000         
+   37 00000000         
+   38 00000000         OS_DisableInterrupts
+   39 00000000 B672            CPSID            I
+   40 00000002 4770            BX               LR
+   41 00000004         
+   42 00000004         
+   43 00000004         OS_EnableInterrupts
+   44 00000004 B662            CPSIE            I
+   45 00000006 4770            BX               LR
+   46 00000008         
+   47 00000008         ;*********** StartCritical************************
+
+
+
+ARM Macro Assembler    Page 2 
+
+
+   48 00000008         ; make a copy of previous I bit, disable interrupts
+   49 00000008         ; inputs:  none
+   50 00000008         ; outputs: previous I bit
+   51 00000008         StartCritical
+   52 00000008 F3EF 8010       MRS              R0, PRIMASK ; Set prio int mask
+                                                             to mask all (excep
+                                                            t faults)
+   53 0000000C B672            CPSID            I
+   54 0000000E 4770            BX               LR
+   55 00000010         
+   56 00000010         
+   57 00000010         ;*********** EndCritical************************
+   58 00000010         ; using the copy of previous I bit, restore I bit to pre
+                       vious value
+   59 00000010         ; inputs:  previous I bit
+   60 00000010         ; outputs: none
+   61 00000010         EndCritical
+   62 00000010 F380 8810       MSR              PRIMASK, R0
+   63 00000014 4770            BX               LR
+   64 00000016         
+   65 00000016         
+   66 00000016         SysTick_Handler                      ; 1) Saves R0-R3,R1
+                                                            2,LR,PC,PSR
+   67 00000016 B672            CPSID            I           ; 2) Prevent interr
+                                                            upt during switch
+   68 00000018 E92D 0FF0       PUSH             {R4-R11}    ; 3) Save remaining
+                                                             regs r4-11
+   69 0000001C 480F            LDR              R0, =RunPt  ; 4) R0=pointer to 
+                                                            RunPt, old thread
+   70 0000001E 6801            LDR              R1, [R0]    ;    R1 = RunPt
+   71 00000020 F8C1 D000       STR              SP, [R1]    ; 5) Save SP into T
+                                                            CB
+   72 00000024         NotBSearch                           ; Not Blocked Searc
+                                                            h
+   73 00000024 6849            LDR              R1, [R1,#4] ; 6) R1 = RunPt->ne
+                                                            xt
+   74 00000026 688A            LDR              R2, [R1,#8] ;    R2=RunPt->stat
+                                                            us
+   75 00000028 2A00            CMP              R2, #0
+   76 0000002A D1FB            BNE              NotBSearch  ;    Branch if thre
+                                                            ad is blocked by a 
+                                                            semaphore 
+   77 0000002C 6001            STR              R1, [R0]    ;    RunPt = R1
+   78 0000002E F8D1 D000       LDR              SP, [R1]    ; 7) new thread SP;
+                                                             SP = RunPt->sp;
+   79 00000032 E8BD 0FF0       POP              {R4-R11}    ; 8) restore regs r
+                                                            4-11
+   80 00000036 B662            CPSIE            I           ; 9) tasks run with
+                                                             interrupts enabled
+                                                            
+   81 00000038 4770            BX               LR          ; 10) restore R0-R3
+                                                            ,R12,LR,PC,PSR
+   82 0000003A         
+   83 0000003A         StartOS
+   84 0000003A 4808            LDR              R0, =RunPt  ; currently running
+                                                             thread
+   85 0000003C 6802            LDR              R2, [R0]    ; R2 = value of Run
+                                                            Pt
+   86 0000003E F8D2 D000       LDR              SP, [R2]    ; new thread SP; SP
+
+
+
+ARM Macro Assembler    Page 3 
+
+
+                                                             = RunPt->stackPoin
+                                                            ter;
+   87 00000042 E8BD 0FF0       POP              {R4-R11}    ; restore regs r4-1
+                                                            1
+   88 00000046 BC0F            POP              {R0-R3}     ; restore regs r0-3
+                                                            
+   89 00000048 F85D CB04       POP              {R12}
+   90 0000004C F85D EB04       POP              {LR}        ; discard LR from i
+                                                            nitial stack
+   91 00000050 F85D EB04       POP              {LR}        ; start location
+   92 00000054 BC02            POP              {R1}        ; discard PSR
+   93 00000056 B662            CPSIE            I           ; Enable interrupts
+                                                             at processor level
+                                                            
+   94 00000058 4770            BX               LR          ; start first threa
+                                                            d
+   95 0000005A         
+   96 0000005A 00 00           ALIGN
+   97 0000005C                 END
+              00000000 
+Command Line: --debug --xref --diag_suppress=9931 --cpu=Cortex-M3 --apcs=interw
+ork --depend=.\objects\osasm.d -o.\objects\osasm.o -ID:\Usuario\2015_08_A_2015_
+12\LM3S1968\RTOS_LM3S_blocking_semaphore_limbuf\RTE -IC:\Keil_v5\ARM\PACK\ARM\C
+MSIS\4.5.0\CMSIS\Include -IC:\Keil_v5\ARM\PACK\Keil\LM3S_DFP\1.1.0\Device\Inclu
+de --predefine="__EVAL SETA 1" --predefine="__MICROLIB SETA 1" --predefine="__U
+VISION_VERSION SETA 516" --predefine="_RTE_ SETA 1" --predefine="LM3S1968 SETA 
+1" --list=.\listings\osasm.lst RTE\Device\LM3S1968\osasm.s
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+Relocatable symbols
+
+.text 00000000
+
+Symbol: .text
+   Definitions
+      At line 23 in file RTE\Device\LM3S1968\osasm.s
+   Uses
+      None
+Comment: .text unused
+EndCritical 00000010
+
+Symbol: EndCritical
+   Definitions
+      At line 61 in file RTE\Device\LM3S1968\osasm.s
+   Uses
+      At line 32 in file RTE\Device\LM3S1968\osasm.s
+Comment: EndCritical used once
+NotBSearch 00000024
+
+Symbol: NotBSearch
+   Definitions
+      At line 72 in file RTE\Device\LM3S1968\osasm.s
+   Uses
+      At line 76 in file RTE\Device\LM3S1968\osasm.s
+Comment: NotBSearch used once
+OS_DisableInterrupts 00000000
+
+Symbol: OS_DisableInterrupts
+   Definitions
+      At line 38 in file RTE\Device\LM3S1968\osasm.s
+   Uses
+      At line 29 in file RTE\Device\LM3S1968\osasm.s
+Comment: OS_DisableInterrupts used once
+OS_EnableInterrupts 00000004
+
+Symbol: OS_EnableInterrupts
+   Definitions
+      At line 43 in file RTE\Device\LM3S1968\osasm.s
+   Uses
+      At line 30 in file RTE\Device\LM3S1968\osasm.s
+Comment: OS_EnableInterrupts used once
+StartCritical 00000008
+
+Symbol: StartCritical
+   Definitions
+      At line 51 in file RTE\Device\LM3S1968\osasm.s
+   Uses
+      At line 31 in file RTE\Device\LM3S1968\osasm.s
+Comment: StartCritical used once
+StartOS 0000003A
+
+Symbol: StartOS
+   Definitions
+      At line 83 in file RTE\Device\LM3S1968\osasm.s
+   Uses
+      At line 33 in file RTE\Device\LM3S1968\osasm.s
+Comment: StartOS used once
+SysTick_Handler 00000016
+
+Symbol: SysTick_Handler
+
+
+
+ARM Macro Assembler    Page 2 Alphabetic symbol ordering
+Relocatable symbols
+
+   Definitions
+      At line 66 in file RTE\Device\LM3S1968\osasm.s
+   Uses
+      At line 35 in file RTE\Device\LM3S1968\osasm.s
+Comment: SysTick_Handler used once
+8 symbols
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+External symbols
+
+RunPt 00000000
+
+Symbol: RunPt
+   Definitions
+      At line 28 in file RTE\Device\LM3S1968\osasm.s
+   Uses
+      At line 69 in file RTE\Device\LM3S1968\osasm.s
+      At line 84 in file RTE\Device\LM3S1968\osasm.s
+
+1 symbol
+346 symbols in table

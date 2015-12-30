@@ -1,0 +1,10 @@
+.\objects\rit128x96x4.o: RTE\Device\LM3S1968\rit128x96x4.c
+.\objects\rit128x96x4.o: RTE\Device\LM3S1968\inc/hw_ssi.h
+.\objects\rit128x96x4.o: RTE\Device\LM3S1968\inc/hw_memmap.h
+.\objects\rit128x96x4.o: RTE\Device\LM3S1968\inc/hw_sysctl.h
+.\objects\rit128x96x4.o: RTE\Device\LM3S1968\inc/hw_types.h
+.\objects\rit128x96x4.o: RTE\Device\LM3S1968\driverlib/debug.h
+.\objects\rit128x96x4.o: RTE\Device\LM3S1968\driverlib/gpio.h
+.\objects\rit128x96x4.o: RTE\Device\LM3S1968\driverlib/ssi.h
+.\objects\rit128x96x4.o: RTE\Device\LM3S1968\driverlib/sysctl.h
+.\objects\rit128x96x4.o: RTE\Device\LM3S1968\rit128x96x4.h
