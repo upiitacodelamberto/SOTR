@@ -1,0 +1,55 @@
+<project name="JSSC_test_quinos_115200" basedir="." default="main">
+
+    <property name="src.dir"     value="src"/>
+
+    <property name="build.dir"   value="Build"/>
+    <property name="classes.dir" value="${build.dir}/classes"/>
+    <property name="imagenes.dir" value="${classes.dir}/Imagenes"/>
+    <property name="jar.dir"     value="${build.dir}/jar"/>
+
+    <property name="main-class"  value="guisendreceive.Ventana"/>
+
+    <target name="clean">
+        <delete dir="${build.dir}"/>
+    </target>
+
+    <target name="compile">
+        <mkdir dir="${classes.dir}"/>
+        <javac srcdir="${src.dir}" destdir="${classes.dir}"/>
+<!--
+	<copy todir="${imagenes.dir}">
+		<fileset dir="${src.dir}/images"/>
+	</copy>
+-->
+    </target>
+
+    <target name="jar" depends="compile">
+        <mkdir dir="${jar.dir}"/>	
+        <jar destfile="${jar.dir}/${ant.project.name}.jar" basedir="${classes.dir}">
+            <manifest>
+                <attribute name="Main-Class" value="${main-class}"/>
+            </manifest>
+        </jar>
+    </target>
+
+    <target name="run" depends="jar">
+        <java jar="${jar.dir}/${ant.project.name}.jar" fork="true"/>
+<!--
+cd Build/classes/
+java -Djava.library.path=/home/lamberto/workspace/UsoDSocketsEnJava/ Chat
+En el directorio /home/lamberto/workspace/UsoDSocketsEnJava/ debe estar el archivo libMyCJavaInterface.so
+-->
+    </target>
+
+    <target name="clean-build" depends="clean,jar"/>
+
+    <target name="main" depends="clean,run"/>
+	
+	<path id="classpath">
+	    <pathelement location="./Build/classes"/>
+	    <fileset dir="./lib">
+	        <include name="**/*.jar"/>
+	    </fileset>
+	</path>
+
+</project>
