@@ -1,0 +1,7 @@
+(2016.01.01) Proyectos en Java que presenta una pequenia interfaz grafica con la que se puede hacer 
+escritura y/o lectura en un puerto serie, utiliza la biblioteca jssc.jar (incluida en el directorio 
+lib/ de cada proyecto). Dado que ambos proyectos estan escritos en Java, se pueden compilar tanto 
+en Windows como en linux (aunque hasta ahora solo he probado en Windows --2016.01.01--13:36). Se 
+incluye tambien un archivo build.xml con el que se puede compilar cada proyecto desde la linea de 
+comandos usando la herramienta ant. (En Windows/Linux se puede usar ant instalando WinAnt/ant 
+respectivamente. En ambos casos se debe tener instalado al menos el JDK).
