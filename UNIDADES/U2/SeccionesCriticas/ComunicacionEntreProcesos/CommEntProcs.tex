@@ -640,8 +640,9 @@ verlos por ejemplo en el kernel linux.
 \eject
 \subsection{Implementaci\'on de sem\'aforos bloqueantes}
 En esta secci\'on se muestra una implementaci\'on de sem\'aforos bloqueantes para un 
-sistema operativo simple. La implementaci\'on se describe a partir de los bloques de 
-control de Tarea (Task Control Block) que se utilizan en el sistema:
+sistema operativo simple. En este caso los sem\'aforos se implementan usando tan solo una 
+variable global de tipo {\tt long}. La implementaci\'on se describe a partir de los bloques 
+de control de Tarea (Task Control Block) que se utilizan en el sistema:
 \begin{verbatim}
 #define NUMTHREADS   3    // maximun number of threads
 #define STACKSIZE    100  // number of 32-bit words in stack
