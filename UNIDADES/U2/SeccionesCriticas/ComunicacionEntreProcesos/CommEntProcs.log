@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2015/dev/Debian) (preloaded format=pdflatex 2015.9.27)  16 DEC 2015 20:40
+This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2015/dev/Debian) (preloaded format=pdflatex 2015.9.27)  11 JAN 2016 16:54
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -22,175 +22,330 @@ File: size10.clo 2014/09/29 v1.4h Standard LaTeX file (size option)
 \abovecaptionskip=\skip41
 \belowcaptionskip=\skip42
 \bibindent=\dimen102
-) (./CommEntProcs.aux)
+)
+(/usr/share/texlive/texmf-dist/tex/latex/graphics/graphicx.sty
+Package: graphicx 2014/04/25 v1.0g Enhanced LaTeX Graphics (DPC,SPQR)
+
+(/usr/share/texlive/texmf-dist/tex/latex/graphics/keyval.sty
+Package: keyval 2014/05/08 v1.15 key=value parser (DPC)
+\KV@toks@=\toks14
+)
+(/usr/share/texlive/texmf-dist/tex/latex/graphics/graphics.sty
+Package: graphics 2009/02/05 v1.0o Standard LaTeX Graphics (DPC,SPQR)
+
+(/usr/share/texlive/texmf-dist/tex/latex/graphics/trig.sty
+Package: trig 1999/03/16 v1.09 sin cos tan (DPC)
+)
+(/usr/share/texlive/texmf-dist/tex/latex/latexconfig/graphics.cfg
+File: graphics.cfg 2010/04/23 v1.9 graphics configuration of TeX Live
+)
+Package graphics Info: Driver file: pdftex.def on input line 91.
+
+(/usr/share/texlive/texmf-dist/tex/latex/pdftex-def/pdftex.def
+File: pdftex.def 2011/05/27 v0.06d Graphics/color for pdfTeX
+
+(/usr/share/texlive/texmf-dist/tex/generic/oberdiek/infwarerr.sty
+Package: infwarerr 2010/04/08 v1.3 Providing info/warning/error messages (HO)
+)
+(/usr/share/texlive/texmf-dist/tex/generic/oberdiek/ltxcmds.sty
+Package: ltxcmds 2011/11/09 v1.22 LaTeX kernel commands for general use (HO)
+)
+\Gread@gobject=\count87
+))
+\Gin@req@height=\dimen103
+\Gin@req@width=\dimen104
+)
+(./CommEntProcs.aux)
 \openout1 = `CommEntProcs.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 2.
-LaTeX Font Info:    ... okay on input line 2.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 2.
-LaTeX Font Info:    ... okay on input line 2.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 2.
-LaTeX Font Info:    ... okay on input line 2.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 2.
-LaTeX Font Info:    ... okay on input line 2.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 2.
-LaTeX Font Info:    ... okay on input line 2.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 2.
-LaTeX Font Info:    ... okay on input line 2.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 4.
+LaTeX Font Info:    ... okay on input line 4.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 4.
+LaTeX Font Info:    ... okay on input line 4.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 4.
+LaTeX Font Info:    ... okay on input line 4.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 4.
+LaTeX Font Info:    ... okay on input line 4.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 4.
+LaTeX Font Info:    ... okay on input line 4.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 4.
+LaTeX Font Info:    ... okay on input line 4.
+
+(/usr/share/texlive/texmf-dist/tex/context/base/supp-pdf.mkii
+[Loading MPS to PDF converter (version 2006.09.02).]
+\scratchcounter=\count88
+\scratchdimen=\dimen105
+\scratchbox=\box26
+\nofMPsegments=\count89
+\nofMParguments=\count90
+\everyMPshowfont=\toks15
+\MPscratchCnt=\count91
+\MPscratchDim=\dimen106
+\MPnumerator=\count92
+\makeMPintoPDFobject=\count93
+\everyMPtoPDFconversion=\toks16
+) (/usr/share/texlive/texmf-dist/tex/generic/oberdiek/pdftexcmds.sty
+Package: pdftexcmds 2011/11/29 v0.20 Utility functions of pdfTeX for LuaTeX (HO
+)
+
+(/usr/share/texlive/texmf-dist/tex/generic/oberdiek/ifluatex.sty
+Package: ifluatex 2010/03/01 v1.3 Provides the ifluatex switch (HO)
+Package ifluatex Info: LuaTeX not detected.
+)
+(/usr/share/texlive/texmf-dist/tex/generic/oberdiek/ifpdf.sty
+Package: ifpdf 2011/01/30 v2.3 Provides the ifpdf switch (HO)
+Package ifpdf Info: pdfTeX in PDF mode is detected.
+)
+Package pdftexcmds Info: LuaTeX not detected.
+Package pdftexcmds Info: \pdf@primitive is available.
+Package pdftexcmds Info: \pdf@ifprimitive is available.
+Package pdftexcmds Info: \pdfdraftmode found.
+)
+(/usr/share/texlive/texmf-dist/tex/latex/oberdiek/epstopdf-base.sty
+Package: epstopdf-base 2010/02/09 v2.5 Base part for package epstopdf
+
+(/usr/share/texlive/texmf-dist/tex/latex/oberdiek/grfext.sty
+Package: grfext 2010/08/19 v1.1 Manage graphics extensions (HO)
+
+(/usr/share/texlive/texmf-dist/tex/generic/oberdiek/kvdefinekeys.sty
+Package: kvdefinekeys 2011/04/07 v1.3 Define keys (HO)
+))
+(/usr/share/texlive/texmf-dist/tex/latex/oberdiek/kvoptions.sty
+Package: kvoptions 2011/06/30 v3.11 Key value format for package options (HO)
+
+(/usr/share/texlive/texmf-dist/tex/generic/oberdiek/kvsetkeys.sty
+Package: kvsetkeys 2012/04/25 v1.16 Key value parser (HO)
+
+(/usr/share/texlive/texmf-dist/tex/generic/oberdiek/etexcmds.sty
+Package: etexcmds 2011/02/16 v1.5 Avoid name clashes with e-TeX commands (HO)
+Package etexcmds Info: Could not find \expanded.
+(etexcmds)             That can mean that you are not using pdfTeX 1.50 or
+(etexcmds)             that some package has redefined \expanded.
+(etexcmds)             In the latter case, load this package earlier.
+)))
+Package grfext Info: Graphics extension search list:
+(grfext)             [.png,.pdf,.jpg,.mps,.jpeg,.jbig2,.jb2,.PNG,.PDF,.JPG,.JPE
+G,.JBIG2,.JB2,.eps]
+(grfext)             \AppendGraphicsExtensions on input line 452.
+
+(/usr/share/texlive/texmf-dist/tex/latex/latexconfig/epstopdf-sys.cfg
+File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
+e
+))
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <7> on input line 9.
+(Font)              <7> on input line 19.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <5> on input line 9.
+(Font)              <5> on input line 19.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <8> on input line 10.
+(Font)              <8> on input line 20.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <6> on input line 10.
+(Font)              <6> on input line 20.
+
 [1
 
 {/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}] [2] [3] [4]
-Overfull \hbox (74.99634pt too wide) in paragraph at lines 261--261
+Overfull \hbox (74.99634pt too wide) in paragraph at lines 272--272
 []    \OT1/cmtt/m/n/10 JNE enter_region      |si no era cero, se asigno 1 a loc
 k y se ejecuta ciclo[] 
  []
 
 
-Overfull \hbox (59.24648pt too wide) in paragraph at lines 261--261
+Overfull \hbox (59.24648pt too wide) in paragraph at lines 272--272
 []    \OT1/cmtt/m/n/10 ret                   |volver al invocador; se entro en 
 la region critica[] 
  []
 
 [5] [6]
-Overfull \hbox (6.74693pt too wide) in paragraph at lines 344--344
+Overfull \hbox (6.74693pt too wide) in paragraph at lines 355--355
 []  \OT1/cmtt/m/n/10 // not reordered after it.  The 1996 PentiumPro manual (Vo
 lume 3,[] 
  []
 
 [7]
-Overfull \hbox (10.06967pt too wide) in paragraph at lines 396--402
+Overfull \hbox (32.9967pt too wide) in paragraph at lines 390--390
+[]  \OT1/cmtt/m/n/10 uchar id;                    // Local APIC ID; index into 
+cpus[] below[] 
+ []
+
+
+Overfull \hbox (38.24666pt too wide) in paragraph at lines 390--390
+[]  \OT1/cmtt/m/n/10 struct taskstate ts;         // Used by x86 to find stack 
+for interrupt[] 
+ []
+
+
+Overfull \hbox (38.24666pt too wide) in paragraph at lines 390--390
+[]  \OT1/cmtt/m/n/10 int intena;                  // Were interrupts enabled be
+fore pushcli?[] 
+ []
+
+[8]
+Overfull \hbox (10.06967pt too wide) in paragraph at lines 445--451
 \OT1/cmr/m/n/10 Como ejem-plo de uso de es-tas prim-i-ti-vas, con-sid-er-e-mos 
 el prob-lema de \OT1/cmr/bx/n/10 productor-
  []
 
-[8] [9]
-Overfull \hbox (27.74675pt too wide) in paragraph at lines 562--562
+[9] [10]
+Overfull \hbox (27.74675pt too wide) in paragraph at lines 611--611
 []\OT1/cmtt/m/n/10 #define N 100                        /* numero de ranuras de
 l buffer */[] 
  []
 
 
-Overfull \hbox (95.99615pt too wide) in paragraph at lines 562--562
+Overfull \hbox (95.99615pt too wide) in paragraph at lines 611--611
 []\OT1/cmtt/m/n/10 typedef int semaphore;               /* los semaforos son un
  tipo especial de int */[] 
  []
 
 
-Overfull \hbox (80.24629pt too wide) in paragraph at lines 562--562
+Overfull \hbox (80.24629pt too wide) in paragraph at lines 611--611
 []\OT1/cmtt/m/n/10 semaphore mutex=1;                   /* controla el acceso a
  la region critica */[] 
  []
 
 
-Overfull \hbox (69.74638pt too wide) in paragraph at lines 562--562
+Overfull \hbox (69.74638pt too wide) in paragraph at lines 611--611
 []\OT1/cmtt/m/n/10 semaphore empty=N;                   /* cuenta las ranuras d
 el buffer vacias */[] 
  []
 
 
-Overfull \hbox (64.49643pt too wide) in paragraph at lines 562--562
+Overfull \hbox (64.49643pt too wide) in paragraph at lines 611--611
 []\OT1/cmtt/m/n/10 semaphore full=0;                    /* cuenta las ranuras d
 e buffer llenas */[] 
  []
 
-[10]
-Overfull \hbox (80.24629pt too wide) in paragraph at lines 562--562
+[11]
+Overfull \hbox (80.24629pt too wide) in paragraph at lines 611--611
 []    \OT1/cmtt/m/n/10 produce_item(&item);             /* generar algo para po
 nerlo en el buffer */[] 
  []
 
 
-Overfull \hbox (32.9967pt too wide) in paragraph at lines 562--562
+Overfull \hbox (32.9967pt too wide) in paragraph at lines 611--611
 []    \OT1/cmtt/m/n/10 down(&empty);                    /* decrementar el conta
 dor empty */[] 
  []
 
 
-Overfull \hbox (22.4968pt too wide) in paragraph at lines 562--562
+Overfull \hbox (22.4968pt too wide) in paragraph at lines 611--611
 []    \OT1/cmtt/m/n/10 down(&mutex);                    /* entrar en la region 
 critica */[] 
  []
 
 
-Overfull \hbox (80.24629pt too wide) in paragraph at lines 562--562
+Overfull \hbox (80.24629pt too wide) in paragraph at lines 611--611
 []    \OT1/cmtt/m/n/10 enter_item(item);                /* colocar el nuevo ele
 mento en el buffer */[] 
  []
 
 
-Overfull \hbox (17.24684pt too wide) in paragraph at lines 562--562
+Overfull \hbox (17.24684pt too wide) in paragraph at lines 611--611
 []    \OT1/cmtt/m/n/10 up(&mutex);                      /* salir de la region c
 ritica */[] 
  []
 
 
-Overfull \hbox (32.9967pt too wide) in paragraph at lines 562--562
+Overfull \hbox (32.9967pt too wide) in paragraph at lines 611--611
 []    \OT1/cmtt/m/n/10 down(&full);                      /* decrementar el cont
 ador full */[] 
  []
 
 
-Overfull \hbox (27.74675pt too wide) in paragraph at lines 562--562
+Overfull \hbox (27.74675pt too wide) in paragraph at lines 611--611
 []    \OT1/cmtt/m/n/10 down(&mutex);                     /* entrar en la region
  critica */[] 
  []
 
 
-Overfull \hbox (17.24684pt too wide) in paragraph at lines 562--562
+Overfull \hbox (17.24684pt too wide) in paragraph at lines 611--611
 []    \OT1/cmtt/m/n/10 remove_item(&item);               /* sacar elemento del 
 buffer */[] 
  []
 
 
-Overfull \hbox (22.4968pt too wide) in paragraph at lines 562--562
+Overfull \hbox (22.4968pt too wide) in paragraph at lines 611--611
 []    \OT1/cmtt/m/n/10 up(&mutex);                       /* salir de la region 
 critica */[] 
  []
 
 
-Overfull \hbox (101.24611pt too wide) in paragraph at lines 562--562
+Overfull \hbox (101.24611pt too wide) in paragraph at lines 611--611
 []    \OT1/cmtt/m/n/10 up(&empty);                       /* incrementar el cont
 ador de ranuras vacias */[] 
  []
 
 
-Overfull \hbox (22.4968pt too wide) in paragraph at lines 562--562
+Overfull \hbox (22.4968pt too wide) in paragraph at lines 611--611
 []    \OT1/cmtt/m/n/10 consume_item(item);               /* hacer algo con el e
 lemento */[] 
  []
 
-[11] [12] [13] (./CommEntProcs.aux) ) 
+[12] [13]
+Overfull \hbox (53.99652pt too wide) in paragraph at lines 656--656
+[]  \OT1/cmtt/m/n/10 long *sp;               // pointer to stack, valid for thr
+eads not running[] 
+ []
+
+
+Overfull \hbox (27.74675pt too wide) in paragraph at lines 670--670
+[]  \OT1/cmtt/m/n/10 long *sp;          // pointer to stack (valid for threads 
+not running[] 
+ []
+
+<img/OS_Wait_y_OS_Signal.jpg, id=53, 4175.6pt x 2344.76pt>
+File: img/OS_Wait_y_OS_Signal.jpg Graphic file (type jpg)
+
+<use img/OS_Wait_y_OS_Signal.jpg>
+Package pdftex.def Info: img/OS_Wait_y_OS_Signal.jpg used on input line 680.
+(pdftex.def)             Requested size: 313.1565pt x 175.84941pt.
+
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+[14]
+Overfull \hbox (7.19322pt too wide) in paragraph at lines 730--732
+\OT1/cmr/m/n/10 y las fun-ciones \OT1/cmtt/m/n/10 StartCritical() \OT1/cmr/m/n/
+10 y \OT1/cmtt/m/n/10 EndCritical(long) \OT1/cmr/m/n/10 est^^San es-critas en l
+enguaje
+ []
+
+[15 <./img/OS_Wait_y_OS_Signal.jpg>]
+Overfull \hbox (85.49625pt too wide) in paragraph at lines 750--750
+[]        \OT1/cmtt/m/n/10 MRS     R0, PRIMASK        ; Set prio int mask to ma
+sk all (except faults)[] 
+ []
+
+
+Overfull \hbox (6.74693pt too wide) in paragraph at lines 750--750
+[]\OT1/cmtt/m/n/10 ; using the copy of previous I bit, restore I bit to previou
+s value[] 
+ []
+
+[16] [17] (./CommEntProcs.aux) ) 
 Here is how much of TeX's memory you used:
- 242 strings out of 494977
- 2620 string characters out of 6180183
- 55049 words of memory out of 5000000
- 3539 multiletter control sequences out of 15000+600000
+ 1506 strings out of 494977
+ 21483 string characters out of 6180183
+ 79350 words of memory out of 5000000
+ 4736 multiletter control sequences out of 15000+600000
  7495 words of font info for 27 fonts, out of 8000000 for 9000
  36 hyphenation exceptions out of 8191
- 24i,8n,17p,151b,243s stack positions out of 5000i,500n,10000p,200000b,80000s
-</usr/share/texlive/texmf-dist/fonts/type1
-/public/amsfonts/cm/cmbx10.pfb></usr/share/texlive/texmf-dist/fonts/type1/publi
-c/amsfonts/cm/cmbx12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsf
-onts/cm/cmmi10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/c
-m/cmmi7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10
-.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></u
-sr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/share
-/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/share/texlive
-/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/share/texlive/texmf-
-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/share/texlive/texmf-dist/f
-onts/type1/public/amsfonts/cm/cmtt10.pfb>
-Output written on CommEntProcs.pdf (13 pages, 163631 bytes).
+ 37i,8n,23p,238b,258s stack positions out of 5000i,500n,10000p,200000b,80000s
+</usr/share/texlive/texmf-dist/fonts/type1/publ
+ic/amsfonts/cm/cmbx10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/ams
+fonts/cm/cmbx12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/
+cm/cmmi10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmm
+i7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb>
+</usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/sh
+are/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/share/texl
+ive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/share/texlive/texm
+f-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/share/texlive/texmf-dist/
+fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/share/texlive/texmf-dist/fonts/
+type1/public/amsfonts/cm/cmtt10.pfb>
+Output written on CommEntProcs.pdf (17 pages, 333030 bytes).
 PDF statistics:
- 91 PDF objects out of 1000 (max. 8388607)
- 64 compressed objects within 1 object stream
+ 104 PDF objects out of 1000 (max. 8388607)
+ 72 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
- 1 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 6 words of extra memory for PDF output out of 10000 (max. 10000000)
 

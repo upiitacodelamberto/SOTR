@@ -1,10 +1,20 @@
 \documentclass{article}
+\usepackage{graphicx}
+
 \begin{document}
+\begin{quote}
+``The true engineering experience occurs not with your eyes and ears, 
+but rather with your fingers and elbows. In other words, engineering 
+education does not happen by listening in class or reading a book; 
+rather it happens by designing under the watchful eyes of a patient 
+mentor. So, go build something, then show it to someone you res\-pect!''\\
+V\'ease Preface to Volume del libro \cite{Valvano}.
+\end{quote}
 \section{COMUNICACI\'ON ENTRE PROCESOS}
 Los procesos con frecuencia necesitan comunicarse con otros 
 procesos. Por tanto es deseable tener mecanismos para esa 
 comunicaci\'on en una forma bien estructurada y que no 
-utilice interrupciones. En la literatura puede encontrarse el 
+utilicen interrupciones. En la literatura puede encontrarse el 
 t\'ermino {\bf comunicaci\'on entre procesos} o {\bf IPC} 
 para referirse a estos mecanismos\footnote{V\'ease por ejemplo
 \cite{Tanenbaum}}.
@@ -19,10 +29,12 @@ A produce datos y el proceso B los imprime, B tiene que esperar
 hasta que A haya producido algunos datos antes de comenzar a 
 imprimir.
 \subsection*{Programaci\'on Concurrente}
-Es el nombre dado a la notaci\'on y t\'ecnicas de programaci\'on 
-utilizados para expresar paralelismo potencial y resolver los 
-problemas de sincronizaci\'on y comunicaci\'on resultantes. 
-V\'ease \cite{Burns}.
+{\bf Programaci\'on concurrente} es el nombre dado a la notaci\'on 
+y t\'ecnicas de programaci\'on utilizados para expresar paralelismo 
+potencial y resolver los problemas de sincronizaci\'on y 
+comunicaci\'on resultantes. V\'ease \cite{Burns}. En la programaci\'on 
+concurrente, para resolver los problemas antes mencionados generalmente 
+se utilizan dos esquemas: Variables compartidas o Paso de mensajes.
 \subsubsection*{Variables compartidas}
 Las variables compartidas son objetos a los que m\'as de un 
 proceso tienen acceso; la comunicaci\'on por lo tanto, puede 
@@ -30,13 +42,12 @@ proceder con cada proceso referenciando esas variables cuando
 sea apropiado.
 \subsubsection*{Paso de mensajes}
 El paso de mensajes involucra intercambio de datos expl\'icito 
-entre dos procesos por medio de un mensaje por medio de un mensaje 
-que pasa de un proceso a otro.
+entre dos procesos por medio de un mensaje que pasa de un proceso a otro.
 
 La elecci\'on entre variables compartidas y paso de mensajes 
 recae en los dise\~nadores del lenguaje o del sistema operativo.
 
-Las variables compartidas son faciles de f\'aciles de soportar 
+Las variables compartidas son f\'aciles de soportar 
 si hay memoria compartida entre los procesos. Si no es as\'i, 
 aun se pueden usar si el hardware incorpora un medio de 
 comunicaci\'on.
@@ -48,14 +59,14 @@ f\'isica.
 \subsection{Condiciones de Competencia}
 En un programa concurrente, dos procesos que est\'an colaborando 
 podr\'ian compartir cierto almacenamiento com\'un en el que ambos 
-pueden leer y escribir. El almacenamiento compartido puee estar 
+pueden leer y escribir. El almacenamiento compartido puede estar 
 en la memoria principal o puede ser un archivo compartido; la 
 ubicaci\'on de la memoria compartida no altera la naturaleza de 
 la comunicaci\'on ni los problemas que surgen. 
 
 Aunque las variables compartidas aparecen como una forma directa 
 de pasar informaci\'on entre procesos, su uso sin restricci\'on 
-no es confiable y es inseguro debido a problemas de actualizaciones 
+no es conf\/iable y es inseguro debido a problemas de actualizaciones 
 m\'ultiples.
 
 Considere dos procesos actualizando una variable compartida $X$, 
@@ -75,7 +86,7 @@ del stack);
 Como las tres operaciones no son indivisibles, dos procesos 
 actualizando la variable simultaneamente podr\'ian entrelazar sus 
 acciones y producir un resultado incorrecto. Por ejemplo, si $X$ 
-era originalmente 5, los dos procesos podr\'ian cargar en sus 
+era originalmente 5, los dos procesos podr\'ian cargar 5 en sus 
 registros e incrementar y entonces almacenar 6.
 
 \subsubsection*{Condiciones de competencia/carrera}
@@ -92,7 +103,7 @@ prueba est\'an bien, pero en alg\'um momento poco frecuente
 ocurrir\'a algo extra\~no e inexplicable.
 
 \subsubsection*{?`Qu\'e ocasiona las condiciones de carrera?}
-La dificultas mencionada en el ejemplo de la variable compartida 
+La dif\/icultad mencionada en el ejemplo de la variable compartida 
 $X$ ocurri\'o debido a que un segundo proceso, digamos proceso B 
 empez\'o a utilizar una variable compartida $X$ antes de que el 
 primer proceso, digamos el proceso A terminara de trabajar con 
@@ -105,7 +116,7 @@ condiciones de carrera. Sin embargo, algunas veces un  proceso
 tiene que acceder a la memoria compartida o a archivos compartidos, 
 o hacer cosas cr\'iticas que pueden producir carreras. Esa parte 
 del programa en la que se accede a la memoria compartida se conoce 
-como {regi\'on cr\'itica} o {'bf secci\'on cr\'itica}. Si pudieramos 
+como {regi\'on cr\'itica} o {\bf secci\'on cr\'itica}. Si pudieramos 
 ordenar las cosas de manera que dos procesos nunca estuvieran en sus 
 regiones cr\'iticas al mismo tiempo, podr\'iamos evitar las carreras.
 
@@ -128,10 +139,10 @@ entrar a su propia regi\'on cr\'itica y ocasionar problemas.
 La soluci\'on m\'as sencilla es hacer que cada proceso inhabilite las 
 interrupciones justo despu\'es de ingresar en su regi\'on cr\'itica 
 y vuelva a habilitarlas justo antes de salir de ella. Con las 
-interrupciones inhabilitadas, no pueden ocurrir interrupciones de reloj. 
-Despu\'es de todo, la CPU s\'olo se conmuta de un proceso a otro como 
-resultado de interrupciones de reloj o de otro tipo, y con las 
-interrupciones desactivadas la CPU no se conmutar\'a a ning\'un otro 
+interrupciones inhabilitadas, no pueden ocurrir in\-te\-rrup\-cio\-nes 
+de reloj.  Despu\'es de todo, la CPU s\'olo se conmuta de un proceso a 
+otro como resultado de interrupciones de reloj o de otro tipo, y con las 
+in\-te\-rrup\-cio\-nes desactivadas la CPU no se conmutar\'a a ning\'un otro 
 proceso. As\'i, una vez que un proceso ha inhabilitado las 
 interrupciones, puede examinar y actualizar la memoria compartida sin 
 temor a que otro proceso intervenga.
@@ -147,17 +158,17 @@ inhabilitaci\'on; las dem\'as seguir\'ian con las interrupciones
 habilitadas y podr\'ian acceder a la memoria compartida.
 
 Por otro lado, en muchos casos es necesario que el kernel mismo 
-inhabilite las interrupcionesdurante unas cuantas instrucciones 
+inhabilite las interrupciones durante unas cuantas instrucciones 
 mientras actualiza variables o listas. Si ocurriera una interrupci\'on 
 en un momento en que la lista de procesos listos, por ejemplo, est\'a 
 en un estado inconsistente, ocurrir\'ian condiciones de competencia. 
 La conslusi\'on es: la inhabilitaci\'on de interrupciones suele ser 
 una t\'ecnica util dentro del sistema operativo mismo pero no es 
 apropiada como mecanismo de exclusi\'on mutua general para los 
-procesos de usuario.
+proceso de  de usuario.
 
 En la b\'usqueda de soluciones al problemas de exclusi\'on mutua se 
-han propuesto dos tipos de enfoque: soluciones no usan ayuda del 
+han pro\-pues\-to dos tipos de enfoques: soluciones no usan ayuda del 
 hardware y soluciones que si usan ayuda del hardware. Las primeras 
 pretenden ser m\'as portables y se conocen como soluciones software, 
 mientras que las segundas pretenden ser m\'as simples. Exploraremos 
@@ -168,7 +179,7 @@ el tipo de soluci\'on que si usa ayuda del hardware.
 Supongamos que tenemos una sola variable (de candado/lock) compartida 
 cuyo valor inicial es 0. Cuando un proceso quiere entrar en su regi\'on 
 cr\'itica, lo primero que hace es probar el candado. Si el candado es 0, 
-el proceso le asigna 1 y entra en su regi\'on cr\'itica; sie s 1, el 
+el proceso le asigna 1 y entra en su regi\'on cr\'itica; si es 1, el 
 proceso espera hasta que el candado vuelve a ser 0. As\'i, un 0 significa 
 que ning\'un proceso est\'a en su regi\'on cr\'itica.
 
@@ -180,9 +191,9 @@ candado. Cuando el primer proceso contin\'ua su ejecuci\'on, asignar\'a
 1 al candado, y dos procesos estar\'an en su regi\'on cr\'itica al mismo 
 tiempo.
 
-Podr\'ia pensarse que este problema puede superarse leyendo priemro el 
-valor del candado, y verific\'andolo otra vez justo antes de guardadr el 
-1 en \'el, pero esto nno sirve de nada. La competencia ocurrir\'ia entonces 
+Podr\'ia pensarse que este problema puede superarse leyendo primero el 
+valor del candado, y verific\'andolo otra vez justo antes de guardar el 
+1 en \'el, pero esto no sirve de nada. La competencia ocurrir\'ia entonces 
 si el segundo proceso modif\/ica el candado justo despu\'es de que el primer 
 proceso termin\'o su segunda verif\/icaci\'on.
 
@@ -192,7 +203,7 @@ Un algoritmo de alternancia estricta se muestra a continuaci\'on
 while(TRUE){                       while(TRUE){
   while(turn!=0);/* esperar */       while(turn!=1);/* esperar */
   critical_region_0();                 critical_region_1();
-  turn=1;                            turn=0;
+  turn=1;                              turn=0;
   noncritical_region_0();              noncritical_region_1();
 }                                  }
        (a)                                (b)
@@ -204,7 +215,7 @@ compartida. En un principio, el proceso 0 inspecciona {\tt turn}, ve que es
 es 0 y se mantiene en un ciclo corto probando {\tt turn} continuamente para 
 detectar el momento en que cambia a 1. Esta prueba continua de una variable 
 hasta que adquiere alg\'un valor se denomina {\bf espera activa},\footnote{En 
-el ambito de la programaci\'on en lenguaje ensamblador se conoce con el 
+el \'ambito de la programaci\'on en lenguaje ensamblador se conoce con el 
 nombre de polling.} y normalmente debe evitarse, ya que desperdicia tiempo 
 de CPU. La espera activa solo debe usarse cuando exista una expectativa 
 razonable de que la espera ser\'a corta. 
@@ -219,8 +230,8 @@ de su ciclo despu\'es de haber asignado 1 a {\tt turn}. Luego el proceso
 0, termina su regi\'on no cr\'itica y regresa al principio de su ciclo. 
 Desafortunadamente, no puede entrar en su regi\'on cr\'itica porque 
 {\tt turn} es 1 y el proceso 1 est\'a ocupado en su regi\'on no cr\'itica. 
-Dicho de otro modo, la alternancia de turnos no es una buena idea cuando 
-un proceso cuando un proceso es mucho m\'as lento que el otro. As\'i pues, 
+Dicho de otro modo, la alternancia de turnos no es una buena idea  
+cuando un proceso es mucho m\'as lento que el otro. As\'i pues, 
 el proceso 0 est\'a siendo bloqueado por un proceso que no est\'a en su 
 regi\'on cr\'itica. De hecho, esta soluci\'on requiere que los dos procesos 
 se alternen extrictamente en el ingreso a sus regiones cr\'iticas.
@@ -260,8 +271,8 @@ leave_region:
     ret                   |volver al invocador
 \end{verbatim}
 {\tt enter$\_$region} es una subrutina de cuatro instrucciones escrita 
-en un lenguaje ensamblador ficticio (pero t\'ipico). La primera instrucci\'on 
-copia el valor antiguo de lock en el registro y luego asigna 1 a {'tt lock}. 
+en un lenguaje ensamblador f\/icticio (pero t\'ipico). La primera instrucci\'on 
+copia el valor antiguo de lock en el registro y luego asigna 1 a {\tt lock}. 
 Luego se compara el valor antiguo con 0. Si es distinto de 0, el candado ya 
 estaba establecido, as\'i que el programa simplemente vuelve al principio 
 y lo prueba otra vez. Tarde o temprano el valor de {\tt lock} ser\'a 0 
@@ -277,8 +288,8 @@ est\'a libre; luego adquiere el candado y regresa. Despu\'es de la regi\'on
 cr\'itica el proceso invoca {\tt leave$\_$region}, que almacena un 0 en 
 {\tt lock}.
 
-\subsubsection*{Implementaci\'on en xv6}
-En el archivo {\tt x86.h} de xv6 encontramos la funci\'on
+\subsubsection*{Implementaci\'on de una soluci\'on con ayuda hardware en xv6}
+En el archivo {\tt x86.h} del sistema operativo xv6 encontramos la funci\'on
 \begin{verbatim}
 static inline uint
 xchg(volatile uint *addr, uint newval)
@@ -342,11 +353,49 @@ release(struct spinlock *lk)
   popcli();
 }
 \end{verbatim}
+El prototipo de la funci\'on {\tt holding()} lo podemos encontrar 
+en el archivo defs.h
+\begin{verbatim}
+int             holding(struct spinlock*);
+\end{verbatim}
+y la resoluci\'on de esta funci\'on est\'a en el archivo {\tt spinlock.c}
+\begin{verbatim}
+// Check whether this cpu is holding the lock.
+int
+holding(struct spinlock *lock)
+{
+  return lock->locked && lock->cpu == cpu;
+}
+\end{verbatim}
+en la funci\'on de arriba {\tt cpu} es un apuntador a {\tt struct cpu} 
+declarado en el archivo {\tt proc.h}
+\begin{verbatim}
+struct cpu *cpu;
+\end{verbatim}
+La {\tt struct cpu} esta declarada tambi\'en en el archivo {\tt proc.h}
+\begin{verbatim}
+struct cpu {
+  uchar id;                    // Local APIC ID; index into cpus[] below
+  struct context *scheduler;   // swtch() here to enter scheduler
+  struct taskstate ts;         // Used by x86 to find stack for interrupt
+  struct segdesc gdt[NSEGS];   // x86 global descriptor table
+  volatile uint started;       // Has the CPU started?
+  int ncli;                    // Depth of pushcli nesting.
+  int intena;                  // Were interrupts enabled before pushcli?
+  
+  // Cpu-local storage variables; see below
+  struct cpu *cpu;
+  struct proc *proc;           // The currently-running process.
+};
+\end{verbatim}
+
+\noindent{\bf Una nota sobre la instrucci\'on {\tt XCHG} de los 
+microprocesadores Intel}\\
 Una nota sobre la instrucci\'on {\tt XCHG} de los microprocesadores 
 Intel. V\'ease \cite{Brey}.\par
 \noindent{\tt XCHG}\par
 \noindent La instrucci\'on de intercambio ({\tt XCHG}) intercambia 
-el contenido de un registrocon el contenido de cualquier otro 
+el contenido de un registro con el contenido de cualquier otro 
 registro o una localidad de memoria. La instrucci\'on {\tt XCHG} 
 no se puede ejecutar en registros de segmento ni con datos de 
 memoria a memoria. Los intercambios son de tama\~no byte, palabra 
@@ -364,11 +413,11 @@ doble palabra\\\hline
 
 \subsubsection*{Dormir y despertar}
 Tanto las soluciones software como las que usan {\tt TSL} son 
-correctas pero ambas tienen el defecto de requerir espesra activa. 
+correctas pero ambas tienen el defecto de requerir espera activa. 
 En esencia, lo que estas soluciones hacen es lo siguiente: cuando 
 un proceso desea entrar en su regi\'on cr\'itica verifica si est\'a 
 permitida la entrada; si no, el proceso simplemente repite un ciclo 
-corto esperando ahasta que lo est\'e.
+corto esperando hasta que lo est\'e.
 
 Este enfoque no solo desperdicia tiempo de CPU, sino que tambi\'en 
 puede tener efectos inesperados. Consideremos una computadora con 
@@ -377,7 +426,7 @@ reglas de planificaci\'on son tales que H se ejecuta siempre que
 est\'a en el estado listo. En un momento dado, con L en su regi\'on 
 cr\'itica, H queda listo para ejecutarse (p.ej. se complet\'o una 
 operaci\'on de E/S). H inicia ahora la espera activa, pero dado que 
-L nunca se planifica mientras H se est\'a ejecutando, L nunca tiene 
+L nunca se planif\/ica mientras H se est\'a ejecutando, L nunca tiene 
 oportunidad de salir de su regi\'on cr\'itica, y H permanece en un 
 ciclo infinito. Esta situaci\'on se conoce como {\bf problema de 
 inversi\'on de prioridad}. V\'ease \cite{Tanenbaum} pag. 64.
@@ -397,7 +446,7 @@ memoria que sirve para enlazar los {\tt SLEEP} con los {\tt WAKEUP}.
 Como ejemplo de uso de estas primitivas, consideremos el problema de 
 {\bf productor-consumidor} (tambi\'en conocido como problema de 
 {\bf buffer limitado}). Dos procesos comparten un mismo {\it buffer} 
-sw tama\~no fijo. Uno de ellos, el productor, coloca informaci\'on en 
+de tama\~no fijo. Uno de ellos, el productor, coloca informaci\'on en 
 el {\it buffer}, y el otro, el consumidor, la saca.
 
 Surgen problemas cuando el productor quiere colocar un nuevo elemento 
@@ -409,7 +458,7 @@ duerme hasta que el productor pone algo en el {\it buffer} y lo despierta.
 
 Este enfoque parece muy sencillo, pero da lugar a los mismos tipos de 
 condiciones de carrera que se han mencionado antes. Para seguir la pista 
-al n\'umeor de elementos contenidos en el {\it buffer}, necesitaremos una 
+al n\'umero de elementos contenidos en el {\it buffer}, necesitaremos una 
 variable, {\it count}. Si el n\'umero m\'aximo de elementos que el 
 {\it buffer} puede contener es $N$, el c\'odigo del productor primero 
 verificar\'a si {\it count} es igual a $N$. Si es as\'i, el productor 
@@ -450,7 +499,7 @@ void consumer(void){
 \end{verbatim}
 Volvamos ahora a la condici\'on de carrera. \'Esta puede ocurrir 
 porque el acceso a {\it count} es irrestricto, y podr\'ia presentarse 
-la siguiente situaci\'on. El {'it buffer} est\'a vacio y el consumidor 
+la siguiente situaci\'on. El {\it buffer} est\'a vacio y el consumidor 
 acaba de leer {\it count} para ver si es 0. En ese instante, el 
 planificador decide dejar de ejecutar el consumidor temporalmente y 
 comenzar a ejecutar el productor. \'Este coloca un elemento en el 
@@ -482,14 +531,14 @@ un segundo bit de espera de despertar, o quiz\'a 8 o 32, pero en
 principio el problema sigue ah\'i.
 
 \noindent{\bf Sem\'aforos}\\
-En 1965, E, W. Dijkstra introdujo un nuevo tipo de variable llamada 
+En 1965, E. W. Dijkstra introdujo un nuevo tipo de variable llamada 
 {\bf sem\'aforo}. Un sem\'aforo podr\'ia tener el valor 0, indicando 
-que no hab\'ia se\~nales de despertar guardadas, o alg''un valor positivo 
+que no hab\'ia se\~nales de despertar guardadas, o alg\'un valor positivo 
 si hab\'ia una o m\'as se\~nales de despertar pendientes. 
 
 Dijkstra propuso tener dos operaciones {\tt DOWN} y {\tt UP} 
 (generalizaciones de sleep y wakeup, respectivamente). La operaci\'on 
-{\tt DOWN} aplicada a un sem\'aforo verifica si el valor es mayor que 
+{\tt DOWN} aplicada a un sem\'aforo verif\/ica si el valor es mayor que 
 0; de ser as\'i, decrementa el valor (esto es, gasta una se\~nal de 
 despertar almacenada) y contin\'ua. Si el valor es 0, el proceso se 
 pone a dormir sin completar la operaci\'on {\tt DOWN} por el momento. 
@@ -561,10 +610,10 @@ void consumer(void){
 }
 \end{verbatim}
 Esta soluci\'on usa tres sem\'aforos: uno llamado {\tt full} para contar el n\'umero 
-de ranuras que est\'an llenas, uno llamado {\tt empty} para contar el n\'umeor de ranuras 
+de ranuras que est\'an llenas, uno llamado {\tt empty} para contar el n\'umero de ranuras 
 que est\'an vacias, y otro llamado {\tt mutex} para asegurarse de que el productor y el 
-consumidor no accedan al buffer al mismo tiempo. {\tt full} inicialmentevale 0, 
-{\tt empty} inicialmente es igual al numero de ranuras del {\tt buffer} y {\tt mutex} 
+consumidor no accedan al buffer al mismo tiempo. {\tt full} inicialmente vale 0, 
+{\tt empty} inicialmente es igual al n\'umero de ranuras del {\tt buffer} y {\tt mutex} 
 inicialmente es 1. Los sem\'aforos a los que se asigna 1 como valor inicial y son 
 utilizados por dos o m\'as procesos para asegurar que s\'olo uno de ellos pueda entrar 
 en su regi\'on cr\'itica al mismo tiempo se denominan {\bf sem\'aforos binarios}. Si 
@@ -576,7 +625,7 @@ para ``ocultar'' las interrupciones).
 En el ejemplo del c\'odigo anterior realmente se usan los sem\'aforos de dos formas 
 distintas. Esta diferencia es lo siguiente: el sem\'aforo {\tt mutex} se usa para 
 exclusi\'on mutua: est\'a dise\~nado para garantizar que solo un proceso a la vez estar\'a 
-leyendo o escribiendo el buffer y las variables asociadas a \'el. Esta eclusi\'on mutua es 
+leyendo o escribiendo el buffer y las variables asociadas a \'el. Esta exclusi\'on mutua es 
 necesaria para evitar el caos.
 
 El otro uso de los sem\'aforos es la {\bf sincronizaci\'on}. Los sem\'aforos {\tt full} y 
@@ -585,14 +634,132 @@ ocurran. En este caso, los sem\'aforos aseguran que el productor dejar\'a de eje
 cuando el buffer est\'e lleno y que el consumidor dejar\'a de ejecutarse cuando el buffer 
 est\'e vacio. Este uso es diferente de la exclusi\'on mutua. Aunque los sem\'aforos se han 
 usado desde 1965, aun se siguen efectuando investigaciones sobre su uso y en la actualidad 
-se pueden encontrar en kernels de sistemas operativos ya sade tiempo real o no, podemos 
+se pueden encontrar en kernels de sistemas operativos ya sean de tiempo real o no, podemos 
 verlos por ejemplo en el kernel linux.
 
+\eject
+\subsection{Implementaci\'on de sem\'aforos bloqueantes}
+En esta secci\'on se muestra una implementaci\'on de sem\'aforos bloqueantes para un 
+sistema operativo simple. La implementaci\'on se describe a partir de los bloques de 
+control de Tarea (Task Control Block) que se utilizan en el sistema:
+\begin{verbatim}
+#define NUMTHREADS   3    // maximun number of threads
+#define STACKSIZE    100  // number of 32-bit words in stack
+struct tcb{
+  long *sp;               // pointer to stack, valid for threads not running
+  struct tcb *next;       // linked-list pointer
+};
+typedef struct tcb tcbType;
+tcbType tcbs[NUMTHREADS];
+tcbType *runPt;
+long Stacks[NUMTHREADS][STACKSIZE];
+\end{verbatim}
+Esta estructura es el {\it Task Control Block} (TCB) utilizado en el sistema operativo 
+descrito en el cap\'itulo 4 del libro \cite{Valvano}. El c\'odigo completo de este 
+sistema operativo puede ser visto y descargado de:\\
+{\tt https://github.com/upiitacodelamberto/SOTR/UNIDADES/U3}.\\
+La implementaci\'on aqu\'i descrita es apropiada para sistemas con un 
+n\'umero  peque\~no de {\it threads} (o procesos ligeros). En esta implementaci\'on 
+se agrega al TCB un campo de tipo apuntador a long llamado {\tt status}. 
+\begin{verbatim}
+struct tcb{
+  long *sp;          // pointer to stack (valid for threads not running
+  struct tcb *next;  // linked-list pointer
+  long *status;        // the second implementation, page 176.
+};
+\end{verbatim}
+
+
+Si la variable {\tt status} es null, el thread no est\'a bloqueado, si {\tt status} 
+contiene un apuntador a sem\'aforo, el thread est\'a bloqueado sobre ese sem\'aforo. 
+La implementaci\'on de las operaciones {\tt down}/{\tt OS}$\_${\tt Wait} y 
+{\tt up}/{\tt OS}$\_${\tt Signal} est\'an basadas en los diagramas de flujo de la 
+figura \ref{ValvanoVol3Pag176}.
+\begin{figure}[h]
+\begin{center}
+\includegraphics[scale=0.075]{img/OS_Wait_y_OS_Signal.jpg}
+\caption{Diagramas de flujo para sem\'aforos bloqueantes}
+\label{ValvanoVol3Pag176}
+\end{center}
+\end{figure}
+La operaci\'on ``Block this thead'' establecer\'a el campo {\tt status} para que 
+apunte al sem\'aforo, y despu\'es se suspende el thread como se muestra a continuaci\'on:
+\begin{verbatim}
+void OS_Wait(long *s){
+  OS_DisableInterrupts();
+  *s=*s-1;
+  if(*s<0){// the ''Block this thread'' operation
+    RunPt->status=s;          // reason it is blocked
+    OS_Suspend();
+  }
+  OS_EnableInterrupts();
+}
+\end{verbatim}
+La operaci\'on ``wakeup one thread'' ser\'a buscar de entre todos los TCBs uno 
+que tenga un {\tt status} igual al sem\'aforo y despertarlo:
+\begin{verbatim}
+void OS_Signal(long *s){
+  long st;
+  tcbType *pt;
+  st=StartCritical();
+  *s=*s+1;
+  if(*s<=0){// the ''wakeup one thread'' operation
+    pt=RunPt->next;
+    while(pt->status!=s) pt=pt->next;
+    pt->status=0;             // wakeup this one
+  }
+  EndCritical(st);
+}
+\end{verbatim}
+Las dos funciones anteriores se usan durante la opreaci\'on de los 
+sem\'aforos. Para inicializar los sem\'aforos se usa la funci\'on
+\begin{verbatim}
+void OS_Semaphore_Init(long *s, long value){
+  *s=value;
+}
+\end{verbatim}
+
+Por otra parte, la funci\'on {\tt OS}$\_${\tt Suspend()} fue tomada 
+del libro \cite{Valvano}, p\'ag. 174.
+\begin{verbatim}
+void OS_Suspend(void){
+  NVIC_ST_CURRENT_R=0;         // clear counter
+  NVIC_INT_CTRL_R=0x04000000;  // trigger SysTick interrupt
+}
+\end{verbatim}
+y las funciones {\tt StartCritical()} y {\tt EndCritical(long)} est\'an 
+escritas en lenguaje ensamblador en el archivo {\tt osasm.s}
+\begin{verbatim}
+;*********** StartCritical************************
+; make a copy of previous I bit, disable interrupts
+; inputs:  none
+; outputs: previous I bit
+StartCritical
+        MRS     R0, PRIMASK        ; Set prio int mask to mask all (except faults)
+        CPSID   I
+        BX      LR
+
+
+;*********** EndCritical************************
+; using the copy of previous I bit, restore I bit to previous value
+; inputs:  previous I bit
+; outputs: none
+EndCritical
+        MSR     PRIMASK, R0
+        BX      LR
+\end{verbatim}
+Lo anterior constituye una implementaci\'on de sem\'aforos bloqueantes para un  
+sistema operativo construido a partir del archivo {\tt RTOS$\_$811.zip}, tomado del 
+sitio web 
+\begin{verbatim}
+http://users.ece.utexas.edu/~valvano/arm
+\end{verbatim}
+que acompa\~na al libro \cite{Valvano}.
 
 \eject
 \begin{thebibliography}{9}
 \bibitem{Brey}Barry B. Brey, ``Los Microprocesadores Intel, 
-Arquitectura, programaci\'on e interfases.'' Prentice-Hall 
+Arquitectura, programaci\'on e interfaces.'' Prentice-Hall 
 3$^{a}$ Edici\'on, 1995.
 \bibitem{Burns}Alan Burns, Andy Wellings, ``Real-Time Systems and 
 Programming Languages'', Addison-Wesley, 3$^{\mbox{a}}$ Edici\'on, 
@@ -601,6 +768,9 @@ Pearson Education Limited 2001.
 ``Drivers en Linux, T\'ecnicas y soluciones para el desarrollo de 
 Controladores'', O$^{\prime}$Reilly Anaya Multimedia, 2005.
 \bibitem{Tanenbaum}Andrew S. Tanenbaum, ``Sistemas Operativos, 
-Dise\~no e implementaci\'on,'' Editorial Pearson, 2002.
+Dise\~no e Implementaci\'on,'' Editorial Pearson, 2002.
+\bibitem{Valvano}Jonathan W. Valvano, ``EMBEDDED SYSTEMS Volume 3, Real-Time Operating 
+Systems for the ARM CORTEX-M3,'' 2012 Jonathan W. Valvano. ISBN-13:978-1466468863, 
+ISBN-10:1466468866. 
 \end{thebibliography}
 \end{document}
