@@ -8,7 +8,7 @@ but rather with your fingers and elbows. In other words, engineering
 education does not happen by listening in class or reading a book; 
 rather it happens by designing under the watchful eyes of a patient 
 mentor. So, go build something, then show it to someone you res\-pect!''\\
-V\'ease Preface to Volume del libro \cite{Valvano}.
+V\'ease Preface to Volume 3 del libro \cite{Valvano}.
 \end{quote}
 \section{COMUNICACI\'ON ENTRE PROCESOS}
 Los procesos con frecuencia necesitan comunicarse con otros 
@@ -620,7 +620,8 @@ en su regi\'on cr\'itica al mismo tiempo se denominan {\bf sem\'aforos binarios}
 cada proceso ejecuta {\tt DOWN} justo antes de entrar en su regi\'on cr\'itica, y {\tt UP} 
 justo despu\'es de salir de ella, la exclusi\'on mutua est\'a garantizada. (V\'ease 
 \cite{Tanenbaum}, pag. 68 para una indicaci\'on sobre c\'omo usar los sem\'aforos 
-para ``ocultar'' las interrupciones). 
+para ``ocultar'' las interrupciones, esa indicaci\'on se ha transcrito aqu\'i en la 
+secci\'on \ref{OcultarInterrupciones}). 
 
 En el ejemplo del c\'odigo anterior realmente se usan los sem\'aforos de dos formas 
 distintas. Esta diferencia es lo siguiente: el sem\'aforo {\tt mutex} se usa para 
@@ -756,6 +757,17 @@ sitio web
 http://users.ece.utexas.edu/~valvano/arm
 \end{verbatim}
 que acompa\~na al libro \cite{Valvano}.
+
+\subsection{Ocultamiento de interrupciones usando sem\'aforos\label{OcultarInterrupciones}}
+En un sitema que usa sem\'aforos, la forma natural de ocultar las interrupciones 
+es tener un sem\'aforo, inicialmente puesto en 0, asociado a cada dispositivo de 
+E/S. Inmediatamente despu\'es de iniciar un dispositivode E/S, el proceso que lo 
+administra ejecuta {\tt DOWN} con el sem\'aforo correspondiente, bloque\'andose 
+as\'i de inmediato. Cuando llega la interrupci\'on, la rutina de servicio de 
+interrupci\'on (o manejador de interrupciones) ejecuta {\tt UP} con el sem\'aforo 
+correspondiente, haciendo que el proceso en cuesti\'on quede otra vez listo para 
+ejecutarse. Desde luego, si ahora varios procesos est\'an listos, el planificador 
+puede optar por ejecutar a continuaci\'on un proceso aun m\'as importante.
 
 \eject
 \begin{thebibliography}{9}
