@@ -1,0 +1,11 @@
+Forma de uso de este Makefile:
+
+make PASO_1 
+despues
+make PASO_2 
+despues 
+make PASO_3
+.
+.
+.
+make PASO_8

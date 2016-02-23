@@ -15,7 +15,7 @@ SECTIONS {
 
   .data ALIGN (0x1000) :        /* align at 4KB */
   {
-    *(.data)                    /* all data sctions from all files */
+    *(.data)                    /* all data sections from all files */
   }
 
   .bss ALIGN (0x1000) :		/* align at 4KB */   

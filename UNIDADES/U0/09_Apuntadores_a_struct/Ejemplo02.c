@@ -1,18 +1,12 @@
 #include <stdio.h>
 #include <stdlib.h> /*malloc()*/
 #include <string.h> /*atoi()*/
+#include "FechaType.h"
 char *MES[]={
   "enero","febrero","marzo","abril","mayo","junio","julio",
   "agosto","septiembre","octubre","noviembre","dicembre"
 };
 
-struct Fecha{
-  int dia;
-  int mes;
-  int n;
-  int *intPt;
-};
-typedef struct Fecha FechaType;
 
 /**
  Los dos ultimos argumentos deben ser el numero del 
@@ -51,15 +45,6 @@ int main(int argc,char *argv[]){
   return 0;
 }
 
-void set_Fecha(FechaType* f,int d,int m){
-  f->dia=d;f->mes=m;f->n=5;
-  f->intPt=(int*)malloc(5*sizeof(int));
-  *(f->intPt+0)=1;
-  *(f->intPt+1)=8;
-  *(f->intPt+2)=15;
-  *(f->intPt+3)=22;
-  *(f->intPt+4)=29;
-}
 
 
 

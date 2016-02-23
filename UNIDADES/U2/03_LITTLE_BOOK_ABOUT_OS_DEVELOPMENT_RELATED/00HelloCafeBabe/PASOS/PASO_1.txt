@@ -1,0 +1,9 @@
+Este ejemplo esta tomado del libro 
+Little Book OS Development 2015.01.19
+COMPARE los archivos loader.s y 
+/root/2016_01_A_2016_07/07_NASM/00_HolaMundo_ASM/hello.asm 
+Para construir el kernel se debe hacer lo siguiente:
+
+1) Ensamblar el archivo loader.s con el comando
+nasm -f elf32 loader.s
+

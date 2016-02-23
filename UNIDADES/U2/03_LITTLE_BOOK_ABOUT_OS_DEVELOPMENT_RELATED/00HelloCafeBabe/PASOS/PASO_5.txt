@@ -1,0 +1,4 @@
+5) Copiar el archivo menu.lst al directorio 
+iso/boot/grub/ con el comando:
+cp menu.lst iso/boot/grub/
+

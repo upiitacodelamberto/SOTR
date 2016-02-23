@@ -1,0 +1,14 @@
+7) Por ultimo se usa el emulador bochs para probar que si se 
+carga el kernel y cuando se cierra bochs se debe revisar el 
+archivo bochslog.txt
+
+bochs -f bochsrc.txt -q
+
+NOTA: Una vez que se abre la ventana del emulador bochs, en el prompt 
+de bochs
+<BOCHS>
+
+debemos teclear c y pulsar la tecla enter.
+
+Despues, apagar emulador dando clic sobre el boton de encendido/apagado.
+

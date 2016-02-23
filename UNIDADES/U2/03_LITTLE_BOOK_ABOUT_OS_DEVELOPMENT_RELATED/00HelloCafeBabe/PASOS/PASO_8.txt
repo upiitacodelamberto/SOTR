@@ -1,0 +1,6 @@
+8) Despues de cerrar bochs ejecutar
+cat bochslog.txt
+
+y buscar cerca del final del archivo el valor del registro RAX o EAX 
+y si todo se hizo bien debera ser CAFEBABE o 0xcafebabe.
+

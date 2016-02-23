@@ -1,0 +1,2 @@
+2) Enlazar o "linkear" el kernel con el comando
+ld -T link.ld -melf_i386 loader.o -o kernel.elf

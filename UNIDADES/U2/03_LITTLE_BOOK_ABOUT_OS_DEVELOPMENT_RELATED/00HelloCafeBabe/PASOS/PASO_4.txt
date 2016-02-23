@@ -1,0 +1,8 @@
+4) Crear el archivo menu.lst 
+El contenido del archivo menu.lst deb ser:
+default=0
+timeout=15
+
+title os
+kernel /boot/kernel.elf
+

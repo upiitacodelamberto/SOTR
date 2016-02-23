@@ -8,11 +8,12 @@ nasm -f elf32 loader.s
 2) Enlazar o "linkear" el kernel con el comando
 ld -T link.ld -melf_i386 loader.o -o kernel.elf
 
-Despues para crear la imagen iso se ejecutan los comandos
+3) Despues para crear la imagen iso se ejecutan los comandos
 mkdir -p iso/boot/grub
 cp stage2_eltorito iso/boot/grub/
 cp kernel.elf iso/boot/
 
+4) Crear el archivo menu.lst 
 El contenido del archivo menu.lst deb ser:
 default=0
 timeout=15
@@ -20,11 +21,11 @@ timeout=15
 title os
 kernel /boot/kernel.elf
 
-Copiar el archivo menu.lst al directorio iso/boot/grub/
-con el comando:
+5) Copiar el archivo menu.lst al directorio 
+iso/boot/grub/ con el comando:
 cp menu.lst iso/boot/grub/
 
-Despues, se crea la imagen iso con el comando
+6) Despues, se crea la imagen iso con el comando
 genisoimage -R                          \
             -b boot/grub/stage2_eltorito\
             -no-emul-boot               \
@@ -36,8 +37,9 @@ genisoimage -R                          \
             -o os.iso                   \
             iso/
 
-Por ultimo se usa el emulador bochs para probar que si se carga el kernel 
-y cuando se cierra bochs se debe revisar el archivo bochslog.txt
+7) Por ultimo se usa el emulador bochs para probar que si se 
+carga el kernel y cuando se cierra bochs se debe revisar el 
+archivo bochslog.txt
 
 bochs -f bochsrc.txt -q
 
@@ -50,7 +52,7 @@ debemos teclear c y pulsar la tecla enter.
 Despues, apagar emulador dando clic sobre el boton de encendido/apagado.
  
 
-Despues de cerrar bochs ejecutar
+8) Despues de cerrar bochs ejecutar
 cat bochslog.txt
 
 y buscar cerca del final del archivo el valor del registro RAX o EAX 
