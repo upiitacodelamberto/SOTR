@@ -2,3 +2,6 @@
 iso/boot/grub/ con el comando:
 cp menu.lst iso/boot/grub/
 
+Copiar tambien el archivo stage2_eltorito
+al directorio iso/boot/grub/ con el comando:
+cp stage2_eltorito iso/boot/grub/

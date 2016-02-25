@@ -1,6 +1,8 @@
-7) Por ultimo se usa el emulador bochs para probar que si se 
-carga el kernel y cuando se cierra bochs se debe revisar el 
-archivo bochslog.txt
+7) En el achivo de configuracion de bochs bochsrc.txt se incluye 
+el nombre de nuestro archivo iso os.iso. Por ultimo se usa el i
+emulador bochs para probar que si se carga el kernel y cuando se 
+cierra bochs se debe revisar el archivo bochslog.txt
+Para ejecutar el emulador bochs usamos el comando:
 
 bochs -f bochsrc.txt -q
 

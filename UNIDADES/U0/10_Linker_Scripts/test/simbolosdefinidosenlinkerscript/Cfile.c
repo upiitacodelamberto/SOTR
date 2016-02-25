@@ -17,7 +17,7 @@ void mymain(void)
 {
   int a = 42;
   int *p=&data_start;
-  printf("%p\n",p);
+//  printf("%d\n",(unsigned int)&data_start);
   a++;
   asm volatile("mov $1,%%eax; mov %0,%%ebx; int $0x80" 
                : : "r"(a) : "%eax" );
