@@ -200,7 +200,8 @@ isr%1:
 %if %1 = 0x20          ; isr32
   TSS_BODY %1, timer_handler
 %elif %1 = 0x80        ; isr128
-  TSS_BODY %1, syscall_handler          ; 
+  ;TSS_BODY %1, syscall_handler          ; 
+  TSS_BODY %1, syscall
 %else
   push dword %1        ; exception number
   push gs              ; push segment registers
@@ -228,7 +229,8 @@ isr%1:
 %endmacro
 
 extern timer_handler
-extern syscall_handler
+;extern syscall_handler
+extern syscall
 extern interrupt
 ;;"now declare isr's"
   INTBODY  0,0
