@@ -31,7 +31,7 @@ content_of_adotbin:a.bin
 content_of_bdotbin:b.bin
 	od -t x1 $<
 
-contof_vma_lmadotbin:vma_lma.bin
+content_of_vma_lmadotbin:vma_lma.bin
 	od -t x1 $<
 
 clean:

@@ -7,6 +7,7 @@ CHECKSUM     equ -MAGIC_NUMBER	; calculate the checksum
 KERNEL_STACK_SIZE equ 4096	; size of stack in bytes
 
 extern kmain	                ; function kmain is defined elsewhere
+extern sum_of_three
 
 section .text:			; start of the text (code) section
 align 4				; the code must be 4 byte aligned
@@ -19,6 +20,10 @@ loader:				; the loader label (defined as entry
     mov eax, 0xCAFEBABE		; place the number 0xCAFEBABE in the 
 				; register eax
     call kmain
+    push dword 0x3
+    push dword 0x2
+    push dword 0x1
+    call sum_of_three
 .loop:
     jmp .loop                   ; loop forever
 

@@ -1,0 +1,69 @@
+;============
+;SECTION .text
+;============
+[BITS 32]
+;[GLOBAL start]                  ; the entry symbol for ELF
+global start			; the entry symbol for ELF
+;[EXTERN kmain]
+;MULTIBOOT_PAGE_ALIGN   equ 1<<0
+;MULTIBOOT_MEMORY_INFO  equ 1<<1
+;MULTIBOOT_AOUT_KLUDGE  equ 1<<16
+MULTIBOOT_HEADER_MAGIC equ 0x1BADB002 ; define the magic number constant
+;MULTIBOOT_HEADER_FLAGS equ MULTIBOOT_PAGE_ALIGN | MULTIBOOT_MEMORY_INFO | MULTIBOOT_AOUT_KLUDGE
+FLAGS        equ 0x0		; multiboot flags
+;MULTIBOOT_CHECKSUM     equ -(MULTIBOOT_HEADER_MAGIC + MULTIBOOT_HEADER_FLAGS)
+CHECKSUM     equ -MULTIBOOT_HEADER_MAGIC	; calculate the checksum
+				; (magic number + checksum + flags should equal 0)
+KERNEL_STACK_SIZE equ 4096	; size of stack in bytes
+
+;EXTERN code, bss, end
+extern kmain	                ; function main is defined elsewhere
+
+SECTION .text:                  ; start of the text (code) section
+ALIGN 4                         ; the code must be 4 byte aligned
+mboot:
+  dd MULTIBOOT_HEADER_MAGIC     ; write the magic number to the machine code,
+;  dd MULTIBOOT_HEADER_FLAGS
+  dd FLAGS			; the flags
+;  dd MULTIBOOT_CHECKSUM
+  dd CHECKSUM			; and the checksum
+
+  dd mboot  ;these are PHYSICAL addresses
+;  dd code   ;start of kernel .text (code) section
+;  dd bss    ;start of kernel .bss setion
+;  dd end    ;end of kernel BSS
+;  dd start  ;kernel entry point
+
+start:                          ; the loader label (defined as entry 
+                                ; point in linker script)
+;  mov eax,0xCAFEBABE		; place the number 0xCAFEBABE in the 
+				; register eax
+  ;start C code
+  mov esp,stack
+  call kmain
+  ;shouldn't return from main; if we do, just do an idle loop
+  sti
+.idle:
+  hlt
+  jmp .idle
+
+;============
+SECTION .data
+;============
+
+;set up things like IDT, GDT or ISR/IRQ definitions
+
+
+;============
+section .bss:
+;============
+align 4				; align at 4 bytes
+
+;add other stacks like timerstack
+
+stack_start:
+  resd 1024
+stack:
+;    resb KERNEL_STACK_SIZE	; reserve stack for the kernel
+;    mov esp, stack_start+KERNEL_STACK_SIZE	; point esp to the start of the 
+						; stack (end of memory area)
