@@ -112,8 +112,8 @@ kernelmemfs: $(MEMFSOBJS) entry.o entryother initcode kernel.ld fs.img
 	$(OBJDUMP) -S kernelmemfs > kernelmemfs.asm
 	$(OBJDUMP) -t kernelmemfs | sed '1,/SYMBOL TABLE/d; s/ .* / /; /^$$/d' > kernelmemfs.sym
 
-tags: $(OBJS) entryother.S _init
-	etags *.S *.c
+#tags: $(OBJS) entryother.S _init
+#	etags *.S *.c
 
 vectors.S: vectors.pl
 	perl vectors.pl > vectors.S
@@ -173,27 +173,35 @@ clean:
 	rm -rfv *.tex *.dvi *.idx *.aux *.log *.ind *.ilg \
 	*.o *.d *.asm *.sym vectors.S os.iso bootblock entryother \
 	initcode initcode.out kernel xv6.img fs.img kernelmemfs mkfs \
-	.gdbinit \
+	.gdbinit kernel.elf os.iso\
 	$(UPROGS)
 
 #entry.o: entry.S
 #	gcc -m32 -gdwarf-2 -Wa,-divide   -c -o entry.o entry.S
 #
-#os.iso: kernel.elf
-#	cp -v kernel.elf iso/boot/kernel.elf
-#	genisoimage -R				\
-#                    -b boot/grub/stage2_eltorito\
-#                    -no-emul-boot               \
-#                    -boot-load-size 4           \
-#                    -A os                       \
-#                    -input-charset utf8         \
-#                    -quiet                      \
-#                    -boot-info-table            \
-#                    -o os.iso                   \
-#                    iso
-#
-#run: os.iso
-#	bochs -f bochsrc.txt -q
+OBJECTS = bio.o basicio.o console.o exec.o file.o fs.o ioapic.o irq.o interrupt.o kbd.o kalloc.o kernel.o\
+	lapic.o log.o mem.o mp.o pic.o pipe.o proc.o picirq.o scrn.o spinlock.o swtch.o syscall_handler.o\
+	string.o timer.o trapasm.o uart.o vm.o trap.o ide.o syscall.o sysproc.o sysfile.o vectors.o
+
+#kernel.elf: bootblock.o entry.o $(OBJECTS) $(ULIB) $(UPROGS)
+kernel.elf: bootblock.o $(OBJS) entry.o entryother initcode kernel.ld 
+	$(LD) $(LDFLAGS) -T kernel.ld -o $@ bootblock.o entry.o $(OBJS) -b binary initcode entryother
+
+os.iso: kernel.elf
+	cp -v kernel.elf iso/boot/kernel.elf
+	genisoimage -R				\
+                    -b boot/grub/stage2_eltorito\
+                    -no-emul-boot               \
+                    -boot-load-size 4           \
+                    -A os                       \
+                    -input-charset utf8         \
+                    -quiet                      \
+                    -boot-info-table            \
+                    -o os.iso                   \
+                    iso
+
+bochs: os.iso
+	bochs -f bochsrc.txt -q
 
 # If the makefile can't find QEMU, specify its path here
 # QEMU = qemu-system-i386
