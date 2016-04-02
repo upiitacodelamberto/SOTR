@@ -1,0 +1,664 @@
+trapasm.S::alltraps llama a trap.c::void trap(struct trapframe *tf)
+|___trap.c::void trap(struct trapframe *tf) llama a 
+    |_proc.c::void exit(void)
+    |_proc.c::void exit(void) llama a 
+    | |_console.c::void panic(char*) __attribute__((noreturn))
+    | |_console.c::void panic(char*) __attribute__((noreturn)) llama a cli()
+    |   |_x86.h::static inline void cli(void) no llama a otra funcion.
+    |_proc.c::void exit(void) llama a file.c::void fileclose(struct file*)
+    | |_file.c::void fileclose(struct file*) llama a 
+    | |_spinlock.c::void acquire(struct spinlock *lk)
+    | |_spinlock.c::void acquire(struct spinlock *lk)  llama a
+    | | |_pushcli(); // disable interrupts to avoid deadlock.
+    | | |_void pushcli(void) esta resuelto en spinlock.c
+    | | |_spinlock.c::void pushcli() llama a readeflags()
+    | |   |_static inline uint readeflags(void) esta resuelto en x86.h
+    | |   |_x86.h::static inline uint readeflags(void) usa ensamblador 
+    | |     inline y no llama a otra funcion.
+    | |_spinlock.c::void acquire(struct spinlock *lk)  llama a holding 
+    | |   pasando un struct spinlock *lk
+    | |   spinlock.c::int holding(struct spinlock *lock) no llama a otra funcion.
+    | |_spinlock.c::void acquire(struct spinlock *lk)  llama a console.c::panic 
+    |   | pasando "acquire"
+    |   |_console.c::void panic(char*) __attribute__((noreturn)) llama a cli()
+    |     |_x86.h::static inline void cli(void) no llama a otra funcion.
+    |_proc.c::void exit(void) llama a log.c::void begin_op()
+    | |_log.c::void begin_op() llama spinlock.c::void acquire(struct spinlock *lk)
+    | | y se sabe a quienes llama spinlock.c::void acquire(struct spinlock *lk), 
+    | | vease arriba.
+    | |_log.c::void begin_op() llama a proc.c::void sleep(void*, struct spinlock*)
+    | | |_proc.c::void sleep(void*, struct spinlock*) llama a
+    | | | |_console.c::void panic(char*) __attribute__((noreturn))
+    | | |   y se sabe a quienes llama console.c::void panic(char*) 
+    | | |   __attribute__((noreturn)), vease arriba.
+    | | |_proc.c::void sleep(void*, struct spinlock*) llama a
+    | | | |_spinlock.c::void acquire(struct spinlock *lk)
+    | | |   y se sabe a quienes llama  
+    | | |   spinlock.c::void acquire(struct spinlock *lk), vease arriba.
+    | | |_proc.c::void sleep(void*, struct spinlock*) llama a
+    | | | |_spinlock.c::void release(struct spinlock *lk)
+    | | |   y se sabe a quienes llama 
+    | | |   spinlock.c::void release(struct spinlock *lk), vease arriba.
+    | | |_proc.c::void sleep(void*, struct spinlock*) llama a
+    | |   |_proc.c::void sched(void)
+    | |   | proc.c::void sched(void) llama a
+    | |   | |_spinlock.c::int holding(struct spinlock *lock)  
+    | |   |   spinlock.c::int holding(struct spinlock *lock) no llama 
+    | |   |   a otra funcion.
+    | |   |_proc.c::void sched(void) llama a 
+    | |   | |_console.c::void panic(char*) __attribute__((noreturn))
+    | |   |   y se sabe a quienes llama console.c::void panic(char*)
+    | |   |   __attribute__((noreturn)), vease arriba.
+    | |   |_proc.c::void sched(void) llama a 
+    | |   | |_x86.h::static inline uint readeflags(void)
+    | |   |   x86.h::static inline uint readeflags(void) usa ensamblador
+    | |   |   inline y no llama a otra funcion.
+    | |   |_proc.c::void sched(void) llama a
+    | |     |_swtch.S::void swtch(struct context**, struct context*)  
+    | |       swtch.S::void swtch(struct context**, struct context*) 
+    | |       usa ensamblador y no llama a otra funcion. 
+    | |_log.c::void begin_op() llama a 
+    |   spinlock.c::void release(struct spinlock *lk)
+    |   y se sabe a quienes llama  
+    |   spinlock.c::void release(struct spinlock *lk) vease arriba.
+    |_proc.c::void exit(void) llama a fs.c::void iput(struct inode*)
+    | |_fs.c::void iput(struct inode*) llama a 
+    | | |_spinlock.c::void acquire(struct spinlock *lk)
+    | |_fs.c::void iput(struct inode*) llama a
+    | | |_console.c::void panic(char*) __attribute__((noreturn))
+    | |_fs.c::void iput(struct inode*) llama a
+    | | |_spinlock.c::void release(struct spinlock *lk)
+    | |_fs.c::void iput(struct inode*) llama a
+    | | |_fs.c::static void itrunc(struct inode *ip)
+    | |_fs.c::void iput(struct inode*) llama a
+    | | |_fs.c::void iupdate(struct inode*)
+    | |_fs.c::void iput(struct inode*) llama a
+    |   |_proc.c::void wakeup(void*) 
+    |_proc.c::void exit(void) llama a log.c::void end_op()
+    | |_log.c::void end_op() llama a
+    | | |_spinlock.c::void acquire(struct spinlock *lk)
+    | |_log.c::void end_op() llama a
+    | | |_console.c::void panic(char*) __attribute__((noreturn))
+    | |_log.c::void end_op() llama a
+    | | |_proc.c::void wakeup(void*)
+    | |_log.c::void end_op() llama a
+    | | |_spinlock.c::void release(struct spinlock *lk)
+    | |_log.c::void end_op() llama a
+    |   |_log.c::commit()
+    |_proc.c::void exit(void) llama a    
+    | |_spinlock.c::void acquire(struct spinlock *lk)  
+    |_proc.c::void exit(void) llama a 
+    | |_proc.c::static void wakeup1(void *chan)
+    |_proc.c::void exit(void) llama a 
+    | |_proc.c::void sched(void)
+    |_proc.c::void exit(void) llama a 
+      |_console.c::void panic(char*) __attribute__((noreturn))
+i.e la forma en la que proc.c::void exit(void) depende del file system es que 
+llama a file.c::void fileclose(struct file*) para cerrar todos los archivos 
+que tenga abiertos el proceso proc, 
+(struct proc *proc asm("%gs:4") //cpus[cpunum()].proc en proc.h) el sufijo 
+asm le dice a gcc que use "%gs:4" para referirse a proc. seginit establece 
+el registro de segmento %gs de tal manera que %gs se refiere a la memoria 
+que contiene las variables cpu y proc en la struct cpu de la cpu local.
+
+proc.c
+ptable es una variable global, es una struct que contiene una struct spinlock lock y 
+un arreglo de NPROC=64 (param.h) de struct proc proc[NPROC].
+
+initproc es un static struct proc *. 
+
+
+proc.c::void pinit(void) llama a initlock pasando &ptable.lock y la cadena "ptable".
+void initlock(struct spinlock*, char*) esta resuelto en spinlock.c
+En spinlock.c en initlock() solo se hacen asignaciones no se llama a otra funcion.
+
+proc.c::static struct proc* allocproc(void) llama a acquire pasando &ptable.lock
+    void acquire(struct spinlock*) esta resuelto en spinlock.c
+    spinlock.c::void acquire(struct spinlock *lk)  llama a
+      pushcli(); // disable interrupts to avoid deadlock.
+      void pushcli(void) esta resuelto en spinlock.c
+      spinlock.c::void pushcli() llama a readeflags()
+        static inline uint readeflags(void) esta resuelto en x86.h
+        x86.h::static inline uint readeflags(void) usa ensamblador 
+        inline y no llama a otra funcion.
+      spinlock.c::void acquire(struct spinlock *lk)  llama a holding 
+      pasando un struct spinlock *lk
+      spinlock.c::int holding(struct spinlock *lock) no llama a otra funcion.
+    spinlock.c::void acquire(struct spinlock *lk)  llama a panic pasando "acquire"
+      console.c::void panic(char*) __attribute__((noreturn)) llama a cli()
+        x86.h::static inline void cli(void) no llama a otra funcion.
+
+proc.c::static struct proc* allocproc(void) llama a spinlock.c::release pasando &ptable.lock
+void            release(struct spinlock*) esta resuelto en spinlock.c
+spinlock.c::void release(struct spinlock *lk) llama a 
+    spinlock.c::int holding(struct spinlock*) pasando un struct spinlock *lk
+    spinlock.c::int holding(struct spinlock *lock) no llama a otra funcion.
+
+proc.c::static struct proc* allocproc(void) llama a kalloc.c::char* kalloc(void)
+    kalloc.c::char* kalloc(void) llama a spinlock.c::void acquire(struct spinlock *lk)
+      spinlock.c::void acquire(struct spinlock *lk)  llama a holding pasando un struct spinlock *lk
+      spinlock.c::int holding(struct spinlock *lock) no llama a otra funcion.
+    kalloc.c::char* kalloc(void) llama a spinlock.c::void release(struct spinlock*)
+      spinlock.c::void release(struct spinlock *lk) llama a 
+        spinlock.c::int holding(struct spinlock*) pasando un struct spinlock *lk
+        spinlock.c::int holding(struct spinlock *lock) no llama a otra funcion.
+proc.c::static struct proc* allocproc(void) llama a string.c::void* memset(void*, int, uint)
+    string.c::void* memset(void*, int, uint)llama a 
+      x86.h::static inline void stosl(void *addr, int data, int cnt)
+      x86.h::static inline void stosl(void *addr, int data, int cnt) 
+      usa ensamblador inline y no llama a otra funcion.
+    string.c::void* memset(void*, int, uint)llama a 
+      x86.h::static inline void stosb(void *addr, int data, int cnt)
+      x86.h::static inline void stosb(void *addr, int data, int cnt)
+      usa ensamblador inline y no llama a otra funcion.
+i.e. proc.c::static struct proc* allocproc(void) no llama a funciones en 
+{# file system:buf.h fcntl.h stat.h fs.h file.h ide.c bio.c log.c fs.c 
+file.c sysfile.c exec.c}
+
+
+
+ide.c:
+r!grep idewait *
+ide.c:  idewait(0);
+ide.c:  idewait(0);
+ide.c:  if(!(b->flags & B_DIRTY) && idewait(1) >= 0)
+
+ide.c:
+r!grep ideinit *
+kernel.c:  ideinit();       // disk
+
+ide.c:
+r!grep idestart *
+ide.c:    idestart(idequeue);
+ide.c:    idestart(b);
+
+bio.c:
+r!grep ideintr *
+trap.c:    ideintr();
+trap.c:    ideintr();
+
+bio.c:
+r!grep iderw *
+bio.c:    iderw(b);
+bio.c:  iderw(b);
+
+bio.c:
+r!grep binit *
+kernel.c:  binit();         // buffer cache
+
+bio.c:
+r!grep bget *
+bio.c:  b = bget(dev, blockno);
+
+bio.c:
+r!grep bread *
+fs.c:  bp = bread(dev, 1);
+fs.c:  bp = bread(dev, bno);
+fs.c:    bp = bread(dev, BBLOCK(b, sb));
+fs.c:  bp = bread(dev, BBLOCK(b, sb));
+fs.c:    bp = bread(dev, IBLOCK(inum, sb));
+fs.c:  bp = bread(ip->dev, IBLOCK(ip->inum, sb));
+fs.c:    bp = bread(ip->dev, IBLOCK(ip->inum, sb));
+fs.c:    bp = bread(ip->dev, addr);
+fs.c:    bp = bread(ip->dev, ip->addrs[NDIRECT]);
+fs.c:    bp = bread(ip->dev, bmap(ip, off/BSIZE));
+fs.c:    bp = bread(ip->dev, bmap(ip, off/BSIZE));
+log.c:    struct buf *lbuf = bread(log.dev, log.start+tail+1); // read log block
+log.c:    struct buf *dbuf = bread(log.dev, log.lh.block[tail]); // read dst
+log.c:  struct buf *buf = bread(log.dev, log.start);
+log.c:  struct buf *buf = bread(log.dev, log.start);
+log.c:    struct buf *to = bread(log.dev, log.start+tail+1); // log block
+log.c:    struct buf *from = bread(log.dev, log.lh.block[tail]); // cache block
+
+bio.c:
+r!grep bwrite *
+bio.c:// * After changing buffer data, call bwrite to write it to disk.
+log.c:    bwrite(dbuf);  // write dst to disk
+log.c:  bwrite(buf);
+log.c:    bwrite(to);  // write the log
+log.c:// log_write() replaces bwrite(); a typical use is:
+
+bio.c:
+r!grep brelse *
+fs.c:  brelse(bp);
+fs.c:  brelse(bp);
+fs.c:        brelse(bp);
+fs.c:    brelse(bp);
+fs.c:  brelse(bp);
+fs.c:      brelse(bp);
+fs.c:    brelse(bp);
+fs.c:  brelse(bp);
+fs.c:    brelse(bp);
+fs.c:    brelse(bp);
+fs.c:    brelse(bp);
+fs.c:    brelse(bp);
+fs.c:    brelse(bp);
+log.c:    brelse(lbuf); 
+log.c:    brelse(dbuf);
+log.c:  brelse(buf);
+log.c:  brelse(buf);
+log.c:    brelse(from); 
+log.c:    brelse(to);
+
+log.c:
+r!grep initlog *
+proc.c:    initlog(ROOTDEV);
+
+log.c:
+r!grep install_trans *
+log.c:  install_trans(); // if committed, copy from log to disk
+log.c:    install_trans(); // Now install writes to home locations
+
+log.c:
+r!grep read_head *
+log.c:  read_head();      
+
+log.c:
+r!grep write_head *
+log.c:  write_head(); // clear the log
+log.c:    write_head();    // Write header to disk -- the real commit
+log.c:    write_head();    // Erase the transaction from the log
+
+log.c:
+r!grep recover_from_log *
+log.c:  recover_from_log();
+
+log.c:
+r!grep begin_op *
+exec.c:  begin_op();
+file.c:    begin_op();
+file.c:      begin_op();
+proc.c:  begin_op();
+sysfile.c:  begin_op();
+sysfile.c:  begin_op();
+sysfile.c:  begin_op();
+sysfile.c:  begin_op();
+sysfile.c:  begin_op();
+sysfile.c:  begin_op();
+
+log.c:
+r!grep end_op *
+exec.c:    end_op();
+exec.c:  end_op();
+exec.c:    end_op();
+file.c:    end_op();
+file.c:      end_op();
+proc.c:  end_op();
+sysfile.c:    end_op();
+sysfile.c:    end_op();
+sysfile.c:  end_op();
+sysfile.c:  end_op();
+sysfile.c:    end_op();
+sysfile.c:  end_op();
+sysfile.c:  end_op();
+sysfile.c:      end_op();
+sysfile.c:      end_op();
+sysfile.c:      end_op();
+sysfile.c:    end_op();
+sysfile.c:  end_op();
+sysfile.c:    end_op();
+sysfile.c:  end_op();
+sysfile.c:    end_op();
+sysfile.c:  end_op();
+sysfile.c:    end_op();
+sysfile.c:    end_op();
+sysfile.c:  end_op();
+
+log.c:
+r!grep write_log *
+log.c:    write_log();     // Write modified blocks from cache to log
+log.c:// commit()/write_log() will do the disk write.
+
+log.c:
+r!grep commit *
+log.c:    commit();
+log.c:commit()
+log.c:// commit()/write_log() will do the disk write.
+
+log.c:
+r!grep log_write *
+fs.c:  log_write(bp);
+fs.c:        log_write(bp);
+fs.c:  log_write(bp);
+fs.c:      log_write(bp);   // mark it allocated on the disk
+fs.c:  log_write(bp);
+fs.c:      log_write(bp);
+fs.c:    log_write(bp);
+
+fs.c:
+r!grep readsb *
+fs.c:  readsb(dev, &sb);
+fs.c:  readsb(dev, &sb);
+log.c:  readsb(dev, &sb);
+
+fs.c:
+r!grep bzero *
+fs.c:        bzero(dev, b + bi);
+mkfs.c:  bzero(&de, sizeof(de));
+mkfs.c:  bzero(&de, sizeof(de));
+mkfs.c:    bzero(&de, sizeof(de));
+mkfs.c:  bzero(&din, sizeof(din));
+mkfs.c:  bzero(buf, BSIZE);
+
+fs.c:
+r!grep balloc *
+fs.c:      ip->addrs[bn] = addr = balloc(ip->dev);
+fs.c:      ip->addrs[NDIRECT] = addr = balloc(ip->dev);
+fs.c:      a[bn] = addr = balloc(ip->dev);
+mkfs.c:  balloc(freeblock);
+
+fs.c:
+r!grep bfree *
+fs.c:      bfree(ip->dev, ip->addrs[i]);
+fs.c:        bfree(ip->dev, a[j]);
+fs.c:    bfree(ip->dev, ip->addrs[NDIRECT]);
+
+fs.c:
+r!grep iinit *
+proc.c:    iinit(ROOTDEV);
+
+fs.c:
+r!grep ialloc *
+mkfs.c:  rootino = ialloc(T_DIR);
+mkfs.c:    inum = ialloc(T_FILE);
+sysfile.c:  if((ip = ialloc(dp->dev, type)) == 0)
+
+fs.c:
+r!grep iupdate *
+fs.c:    iupdate(ip);
+fs.c:  iupdate(ip);
+fs.c:    iupdate(ip);
+sysfile.c:  iupdate(ip);
+sysfile.c:  iupdate(ip);
+sysfile.c:    iupdate(dp);
+sysfile.c:  iupdate(ip);
+sysfile.c:  iupdate(ip);
+sysfile.c:    iupdate(dp);
+
+fs.c:
+r!grep iget *
+fs.c:      return iget(dev, inum);
+fs.c:      return iget(dp->dev, inum);
+fs.c:    ip = iget(ROOTDEV, ROOTINO);
+
+fs.c:
+r!grep idup *
+fs.c:    ip = idup(proc->cwd);
+proc.c:  np->cwd = idup(proc->cwd);
+
+fs.c:
+r!grep ilock *
+console.c:        ilock(ip);
+console.c:  ilock(ip);
+console.c:  ilock(ip);
+exec.c:  ilock(ip);
+file.c:    ilock(f->ip);
+file.c:    ilock(f->ip);
+file.c:      ilock(f->ip);
+fs.c:    ilock(ip);
+sysfile.c:  ilock(ip);
+sysfile.c:  ilock(dp);
+sysfile.c:  ilock(ip);
+sysfile.c:  ilock(dp);
+sysfile.c:  ilock(ip);
+sysfile.c:  ilock(dp);
+sysfile.c:    ilock(ip);
+sysfile.c:  ilock(ip);
+sysfile.c:    ilock(ip);
+sysfile.c:  ilock(ip);
+
+fs.c:
+r!grep iunlock *
+console.c:  iunlock(ip);
+console.c:  iunlock(ip);
+exec.c:  iunlockput(ip);
+exec.c:    iunlockput(ip);
+file.c:    iunlock(f->ip);
+file.c:    iunlock(f->ip);
+file.c:      iunlock(f->ip);
+fs.c:  iunlock(ip);
+fs.c:      iunlock(ip);
+sysfile.c:  iunlock(ip);
+sysfile.c:  iunlock(ip);
+sysfile.c:  iunlock(ip);
+
+fs.c:
+r!grep iput *
+file.c:    iput(ff.ip);
+fs.c:  iput(ip);
+fs.c:    iput(ip);
+fs.c:    iput(ip);
+proc.c:  iput(proc->cwd);
+sysfile.c:  iput(ip);
+sysfile.c:  iput(proc->cwd);
+
+fs.c:
+r!grep iunlockput *
+exec.c:  iunlockput(ip);
+exec.c:    iunlockput(ip);
+fs.c:      iunlockput(ip);
+fs.c:      iunlockput(ip);
+fs.c:    iunlockput(ip);
+sysfile.c:    iunlockput(ip);
+sysfile.c:    iunlockput(dp);
+sysfile.c:  iunlockput(dp);
+sysfile.c:  iunlockput(ip);
+sysfile.c:    iunlockput(ip);
+sysfile.c:  iunlockput(dp);
+sysfile.c:  iunlockput(ip);
+sysfile.c:  iunlockput(dp);
+sysfile.c:    iunlockput(dp);
+sysfile.c:    iunlockput(ip);
+sysfile.c:  iunlockput(dp);
+sysfile.c:      iunlockput(ip);
+sysfile.c:    iunlockput(ip);
+sysfile.c:  iunlockput(ip);
+sysfile.c:  iunlockput(ip);
+sysfile.c:    iunlockput(ip);
+
+fs.c:
+r!grep bmap *
+fs.c:    bp = bread(ip->dev, bmap(ip, off/BSIZE));
+fs.c:    bp = bread(ip->dev, bmap(ip, off/BSIZE));
+
+fs.c:
+r!grep itrunc *
+fs.c:    itrunc(ip);
+
+fs.c:
+r!grep stati *
+file.c:    stati(f->ip, st);
+
+fs.c:
+r!grep readi *
+exec.c:  if(readi(ip, (char*)&elf, 0, sizeof(elf)) < sizeof(elf))
+exec.c:    if(readi(ip, (char*)&ph, off, sizeof(ph)) != sizeof(ph))
+file.c:    if((r = readi(f->ip, addr, f->off, n)) > 0)
+fs.c:    if(readi(dp, (char*)&de, off, sizeof(de)) != sizeof(de))
+fs.c:    if(readi(dp, (char*)&de, off, sizeof(de)) != sizeof(de))
+sysfile.c:    if(readi(dp, (char*)&de, off, sizeof(de)) != sizeof(de))
+vm.c:    if(readi(ip, p2v(pa), offset+i, n) != n)
+
+fs.c:
+r!grep writei *
+file.c:      if ((r = writei(f->ip, addr + i, f->off, n1)) > 0)
+fs.c:  if(writei(dp, (char*)&de, off, sizeof(de)) != sizeof(de))
+sysfile.c:  if(writei(dp, (char*)&de, off, sizeof(de)) != sizeof(de))
+
+fs.c:
+r!grep namecmp *
+fs.c:    if(namecmp(name, de.name) == 0){
+sysfile.c:  if(namecmp(name, ".") == 0 || namecmp(name, "..") == 0)
+
+fs.c:
+r!grep dirlookup *
+fs.c:  if((ip = dirlookup(dp, name, 0)) != 0){
+fs.c:    if((next = dirlookup(ip, name, 0)) == 0){
+sysfile.c:  if((ip = dirlookup(dp, name, &off)) == 0)
+sysfile.c:  if((ip = dirlookup(dp, name, &off)) != 0){
+
+fs.c:
+r!grep dirlink *
+sysfile.c:  if(dp->dev != ip->dev || dirlink(dp, name, ip->inum) < 0){
+sysfile.c:    if(dirlink(ip, ".", ip->inum) < 0 || dirlink(ip, "..", dp->inum) < 0)
+sysfile.c:  if(dirlink(dp, name, ip->inum) < 0)
+
+fs.c:
+r!grep skipelem *
+fs.c:  while((path = skipelem(path, name)) != 0){
+grep: iso: Es un directorio
+
+fs.c:
+r!grep namex *
+fs.c:  return namex(path, 0, name);
+fs.c:  return namex(path, 1, name);
+
+fs.c:
+r!grep namei *
+exec.c:  if((ip = namei(path)) == 0){
+proc.c:  p->cwd = namei("/");
+sysfile.c:  if((ip = namei(old)) == 0){
+sysfile.c:    if((ip = namei(path)) == 0){
+sysfile.c:  if(argstr(0, &path) < 0 || (ip = namei(path)) == 0){
+
+fs.c:
+r!grep nameiparent *
+sysfile.c:  if((dp = nameiparent(new, name)) == 0)
+sysfile.c:  if((dp = nameiparent(path, name)) == 0){
+sysfile.c:  if((dp = nameiparent(path, name)) == 0)
+
+file.c:
+r!grep fileinit *
+kernel.c:  fileinit();      // file table
+
+file.c:
+r!grep filealloc *
+pipe.c:  if((*f0 = filealloc()) == 0 || (*f1 = filealloc()) == 0)
+sysfile.c:  if((f = filealloc()) == 0 || (fd = fdalloc(f)) < 0){
+
+file.c:
+r!grep filedup *
+proc.c:      np->ofile[i] = filedup(proc->ofile[i]);
+sysfile.c:  filedup(f);
+
+file.c:
+r!grep fileclose *
+pipe.c:    fileclose(*f0);
+pipe.c:    fileclose(*f1);
+proc.c:      fileclose(proc->ofile[fd]);
+sysfile.c:  fileclose(f);
+sysfile.c:      fileclose(f);
+sysfile.c:    fileclose(rf);
+sysfile.c:    fileclose(wf);
+
+file.c:
+r!grep filestat *
+sysfile.c:  return filestat(f, st);
+
+file.c:
+r!grep fileread *
+sysfile.c:  return fileread(f, p, n);
+
+file.c:
+r!grep filewrite *
+sysfile.c:  return filewrite(f, p, n);
+
+sysfile.c:
+r!grep argfd *
+sysfile.c:  if(argfd(0, 0, &f) < 0)
+sysfile.c:  if(argfd(0, 0, &f) < 0 || argint(2, &n) < 0 || argptr(1, &p, n) < 0)
+sysfile.c:  if(argfd(0, 0, &f) < 0 || argint(2, &n) < 0 || argptr(1, &p, n) < 0)
+sysfile.c:  if(argfd(0, &fd, &f) < 0)
+sysfile.c:  if(argfd(0, 0, &f) < 0 || argptr(1, (void*)&st, sizeof(*st)) < 0)
+
+sysfile.c:
+r!grep fdalloc *
+sysfile.c:  if((fd=fdalloc(f)) < 0)
+sysfile.c:  if((f = filealloc()) == 0 || (fd = fdalloc(f)) < 0){
+sysfile.c:  if((fd0 = fdalloc(rf)) < 0 || (fd1 = fdalloc(wf)) < 0){
+
+sysfile.c:
+r!grep sys_dup *
+syscall.c:extern int sys_dup(void);
+syscall.c:[SYS_dup]     sys_dup,
+
+sysfile.c:
+r!grep sys_read *
+syscall.c:extern int sys_read(void);
+syscall.c:[SYS_read]    sys_read,
+
+sysfile.c:
+r!grep sys_write *
+syscall.c:extern int sys_write(void);
+syscall.c:[SYS_write]   sys_write,
+
+sysfile.c:
+r!grep sys_close *
+syscall.c:extern int sys_close(void);
+syscall.c:[SYS_close]   sys_close,
+
+sysfile.c:
+r!grep sys_fstat *
+syscall.c:extern int sys_fstat(void);
+syscall.c:[SYS_fstat]   sys_fstat,
+
+sysfile.c:
+r!grep sys_link *
+syscall.c:extern int sys_link(void);
+syscall.c:[SYS_link]    sys_link,
+
+sysfile.c:
+r!grep isdirempty *
+sysfile.c:  if(ip->type == T_DIR && !isdirempty(ip)){
+
+sysfile.c:
+r!grep sys_unlink *
+syscall.c:extern int sys_unlink(void);
+syscall.c:[SYS_unlink]  sys_unlink,
+
+sysfile.c:
+r!grep create *
+sysfile.c:    ip = create(path, T_FILE, 0, 0);
+sysfile.c:  if(argstr(0, &path) < 0 || (ip = create(path, T_DIR, 0, 0)) == 0){
+sysfile.c:     (ip = create(path, T_DEV, major, minor)) == 0){
+
+sysfile.c:
+r!grep sys_open *
+syscall.c:extern int sys_open(void);
+syscall.c:[SYS_open]    sys_open,
+
+sysfile.c:
+r!grep sys_mkdir *
+syscall.c:extern int sys_mkdir(void);
+syscall.c:[SYS_mkdir]   sys_mkdir,
+
+sysfile.c:
+r!grep sys_mknod *
+syscall.c:extern int sys_mknod(void);
+syscall.c:[SYS_mknod]   sys_mknod,
+
+sysfile.c:
+r!grep sys_chdir *
+syscall.c:extern int sys_chdir(void);
+syscall.c:[SYS_chdir]   sys_chdir,
+
+sysfile.c:
+r!grep sys_exec *
+syscall.c:extern int sys_exec(void);
+syscall.c:[SYS_exec]    sys_exec,
+
+sysfile.c:
+r!grep sys_pipe *
+syscall.c:extern int sys_pipe(void);
+syscall.c:[SYS_pipe]    sys_pipe,
+
+exec.c:
+r!grep exec *
+init.c:      exec("sh", argv);
+initcode.S:# exec(init, argv)
+initcode.S:  movl $SYS_exec, %eax
+sh.c:    exec(ecmd->argv[0], ecmd->argv);
+sysfile.c:  return exec(path, argv);
+usys.S:SYSCALL(exec)
+vm.c:// setupkvm() and exec() set up every page table like this:
+

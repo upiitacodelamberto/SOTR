@@ -1,0 +1,355 @@
+Para que/donde se usan las funciones de los archivos 
+que implementan el file system:
+# file system
+buf.h
+fcntl.h
+stat.h
+fs.h
+file.h
+ide.c:
+ide.c::linea 35
+// Wait for IDE disk to become ready.
+static int idewait(int checkerr)         [SOLO ES LLAMADA DESDE ide.c\in{file system}]
+
+ide.c::linea 47
+void ideinit(void)                                                 [ES LLAMADA SOLO UNA VEZ DESDE kernel.c::kmain()]
+
+ide.c::linea 71
+// Start the request for b.  Caller must hold idelock.
+static void idestart(struct buf *b)      [SOLO ES LLAMADA DESDE ide.c\in{file system}]
+
+ide.c::linea 99
+// Interrupt handler.
+void ideintr(void)                                                   [SOLO ES LLAMADA DESDE trap.c::void tvinit(void)]
+
+ide.c::linea 133
+// Sync buf with disk. 
+// If B_DIRTY is set, write buf to disk, clear B_DIRTY, set B_VALID.
+// Else if B_VALID is not set, read buf from disk, set B_VALID.
+void iderw(struct buf *b)                [SOLO ES LLAMADA DESDE bio.c\in{file system}]
+
+
+bio.c:
+bio.c::linea 39
+void binit(void)                                                   [ES LLAMADA SOLO UNA VEZ DESDE kernel.c::kmain()]
+
+bio.c::linea 62
+// Look through buffer cache for block on device dev.
+// If not found, allocate a buffer.
+// In either case, return B_BUSY buffer.
+static struct buf* bget(uint dev, uint blockno)
+                                         [SOLO ES LLAMADA DESDE bio.c\in{file system}]
+
+bio.c::linea 99
+// Return a B_BUSY buf with the contents of the indicated block.
+struct buf* bread(uint dev, uint blockno)
+                   [SOLO ES LLAMADA DESDE fs.c\in{file system} y log.c\in{file system}]
+
+bio.c::linea 112
+// Write b's contents to disk.  Must be B_BUSY.
+void bwrite(struct buf *b)
+                   [SOLO ES LLAMADA DESDE fs.c\in{file system} y log.c\in{file system}]
+
+bio.c::linea 123
+// Release a B_BUSY buffer.
+// Move to the head of the MRU list.
+void brelse(struct buf *b)
+                   [SOLO ES LLAMADA DESDE fs.c\in{file system} y log.c\in{file system}]
+ 
+log.c:
+log.c::linea 52
+void
+initlog(int dev)                                              [ES LLAMADA SOLO UNA VEZ DESDE proc.c::void forkret()]
+
+log.c::linea 68
+// Copy committed blocks from log to their home location
+static void install_trans(void)           [SOLO ES LLAMADA DESDE log.c\in{file system}]
+
+log.c::linea 84
+// Read the log header from disk into the in-memory log header
+static void read_head(void)               [SOLO ES LLAMADA DESDE log.c\in{file system}]
+
+log.c::linea 100
+// Write in-memory log header to disk.
+// This is the true point at which the
+// current transaction commits.
+static void write_head(void)              [SOLO ES LLAMADA DESDE log.c\in{file system}]
+
+log.c::linea 114
+static void recover_from_log(void)        [SOLO ES LLAMADA DESDE log.c\in{file system}]
+
+log.c::linea 124
+// called at the start of each FS system call.
+void begin_op(void)[ES LLAMADA DESDE file.c(dos veces), sysfile.c(seis veces), exec.c(una vez), proc.c::void exit(void)]
+
+log.c::linea 144
+// called at the end of each FS system call.
+// commits if this was the last outstanding operation.
+void end_op(void)                                   [ES LLAMADA DESDE exec.c,file.c,sysfile.c y proc.c(una vez)]
+
+log.c::linea 174
+// Copy modified blocks from cache to log.
+static void write_log(void)       [SOLO ES LLAMADA DESDE log.c]
+
+log.c::linea 189
+static void commit()              [SOLO ES LLAMADA DESDE log.c]
+
+log.c::linea 210
+// Caller has modified b->data and is done with the buffer.
+// Record the block number and pin in the cache with B_DIRTY.
+// commit()/write_log() will do the disk write.
+//
+// log_write() replaces bwrite(); a typical use is:
+//   bp = bread(...)
+//   modify bp->data[]
+//   log_write(bp)
+//   brelse(bp)
+void log_write(struct buf *b)     [SOLO ES LLAMADA DESDE fs.c]
+
+fs.c:
+fs.c::linea 28
+// Read the super block.
+void readsb(int dev, struct superblock *sb)[SOLO ES LLAMADA DESDE fs.c y log.c]
+
+fs.c::linea 39
+// Zero a block.
+static void bzero(int dev, int bno) [SOLO ES LLAMADA DESDE fs.c]
+
+fs.c::linea 53
+// Allocate a zeroed disk block.
+static uint balloc(uint dev)        [SOLO ES LLAMADA DESDE fs.c]
+
+fs.c::linea 78
+// Free a disk block.
+static void bfree(int dev, uint b)  [SOLO ES LLAMADA DESDE fs.c]
+
+fs.c::linea 162
+void iinit(int dev)                                                 [SOLO ES LLAMADA DESDE proc.c::void forkret(void)]
+
+fs.c::linea 176
+// Allocate a new inode with the given type on device dev.
+// A free inode has a type of zero.
+struct inode* ialloc(uint dev, short type)[ES LLAMADA DESDE sysfile.c]
+
+fs.c::linea 199
+// Copy a modified in-memory inode to disk.
+void iupdate(struct inode *ip)        [ES LLAMADA DESDE fs.c y sysfile.c]
+
+fs.c::linea 220
+// Find the inode with number inum on device dev
+// and return the in-memory copy. Does not lock
+// the inode and does not read it from disk.
+static struct inode* iget(uint dev, uint inum)[SOLO ES LLAMADA DESDE fs.c]
+
+fs.c::linea 255
+// Increment reference count for ip.
+// Returns ip to enable ip = idup(ip1) idiom.
+struct inode* idup(struct inode *ip)                                   [ES LLAMADA DESDE fs.c y proc.c::int fork(void)]
+
+fs.c::linea 266
+// Lock the given inode.
+// Reads the inode from disk if necessary.
+void ilock(struct inode *ip)                 [ES LLAMADA DESDE exec.c, file.c, fs.c, sysfile.c y console.c(tres veces)]
+
+fs.c::linea 298
+// Unlock the given inode.
+void iunlock(struct inode *ip)               [ES LLAMADA DESDE exec.c, file.c, fs.c, sysfile.c y console.c(tres veces)]
+
+fs.c::linea 317
+// Drop a reference to an in-memory inode.
+// If that was the last reference, the inode cache entry can
+// be recycled.
+// If that was the last reference and the inode has no links
+// to it, free the inode (and its content) on disk.
+// All calls to iput() must be inside a transaction in
+// case it has to free the inode.
+void iput(struct inode *ip)                       [ES LLAMADA DESDE file.c, fs.c, sysfile.c y proc.c::void exit(void)]
+
+fs.c::linea 339
+// Common idiom: unlock, then put.
+void iunlockput(struct inode *ip)[ES LLAMADA DESDE exec.c, fs.c, sysfile.c]
+
+fs.c::linea 356
+// Inode content
+//
+// The content (data) associated with each inode is stored
+// in blocks on the disk. The first NDIRECT block numbers
+// are listed in ip->addrs[].  The next NINDIRECT blocks are 
+// listed in block ip->addrs[NDIRECT].
+
+// Return the disk block address of the nth block in inode ip.
+// If there is no such block, bmap allocates one.
+static uint bmap(struct inode *ip, uint bn)           [ES LLAMADA DESDE fs.c]
+
+fs.c::linea 391
+// Truncate inode (discard contents).
+// Only called when the inode has no links
+// to it (no directory entries referring to it)
+// and has no in-memory reference to it (is
+// not an open file or current directory).
+static void itrunc(struct inode *ip)
+
+fs.c::linea 422
+// Copy stat information from inode.
+void stati(struct inode *ip, struct stat *st)    [SOLO ES LLAMADA DESDE file.c]
+
+fs.c::linea 434
+// Read data from inode.
+int readi(struct inode *ip, char *dst, uint off, uint n)
+                                   [ES LLAMADA DESDE exec.c, file.c, fs.c, sysfile.c, y de 
+                                   vm.c::int loaduvm(pde_t *pgdir, char *addr, struct inode *ip, uint offset, uint sz)]
+
+fs.c::linea 462
+// Write data to inode.
+int writei(struct inode *ip, char *src, uint off, uint n)
+                                     [ES LLAMADA DESDE file.c, fs.c y sysfile.c]
+
+fs.c::linea 497
+// Directories
+
+int namecmp(const char *s, const char *t)       [LLAMADA DESDE fs.c y sysfile.c]
+
+fs.c::linea 505
+// Look for a directory entry in a directory.
+// If found, set *poff to byte offset of entry.
+struct inode* dirlookup(struct inode *dp, char *name, uint *poff)
+                                                [LLAMADA DESDE fs.c y sysfile.c]
+
+fs.c::linea 532
+// Write a new directory entry (name, inum) into the directory dp.
+int dirlink(struct inode *dp, char *name, uint inum)
+                                               [SOLO ES LLAMADA DESDE sysfile.c]
+
+fs.c::linea 576
+// Copy the next path element from path into name.
+// Return a pointer to the element following the copied one.
+// The returned path has no leading slashes,
+// so the caller can check *path=='\0' to see if the name is the last one.
+// If no name to remove, return 0.
+//
+// Examples:
+//   skipelem("a/bb/c", name) = "bb/c", setting name = "a"
+//   skipelem("///a//bb", name) = "bb", setting name = "a"
+//   skipelem("a", name) = "", setting name = "a"
+//   skipelem("", name) = skipelem("////", name) = 0
+//
+static char*
+skipelem(char *path, char *name)                    [SOLO ES LLAMADA DESDE fs.c]
+
+fs.c::linea 605
+// Look up and return the inode for a path name.
+// If parent != 0, return the inode for the parent and copy the final
+// path element into name, which must have room for DIRSIZ bytes.
+// Must be called inside a transaction since it calls iput().
+static struct inode* namex(char *path, int nameiparent, char *name)
+                                                    [SOLO ES LLAMADA DESDE fs.c]
+
+fs.c::linea 641
+struct inode* namei(char *path)                      [ES LLAMADA DESDE exec.c, sysfile.c y proc.c::void userinit(void)]
+
+fs.c::linea 647
+struct inode* nameiparent(char *path, char *name)    [SOLO ES LLAMADA DESDE sysfile.c]
+
+
+
+file.c:
+file.c::linea 18
+void fileinit(void)                                                  [SOLO ES LLAMADA DESDE kernel.c::void kmain(void)]
+
+file.c::linea 25
+// Allocate a file structure.
+struct file* filealloc(void)                                                      [ES LLAMADA DESDE sysfile.c y pipe.c]
+
+file.c::linea 43
+// Increment ref count for file f.
+struct file* filedup(struct file *f)                                              [ES LLAMADA DESDE sysfile.c y pipe.c]
+
+file.c::linea 55
+// Close file f.  (Decrement ref count, close when reaches 0.)
+void fileclose(struct file *f)                                                    [ES LLAMADA DESDE sysfile.c y pipe.c]
+
+file.c::linea 84
+// Get metadata about file f.
+int filestat(struct file *f, struct stat *st) [SOLO ES LLAMADA DESDE sysfile.c]
+
+file.c::linea 97
+// Read from file f.
+int fileread(struct file *f, char *addr, int n)[SOLO ES LLAMADA DESDE sysfile.c]
+
+file.c::linea 119
+// Write to file f.
+int filewrite(struct file *f, char *addr, int n)
+                                              [SOLO ES LLAMADA DESDE sysfile.c]
+
+
+
+sysfile.c:
+sysfile.c::linea 19
+// Fetch the nth word-sized system call argument as a file descriptor
+// and return both the descriptor and the corresponding struct file.static int argfd(int n, int *pfd, struct file **pf)
+static int argfd(int n, int *pfd, struct file **pf)
+                                              [SOLO ES LLAMADA DESDE sysfile.c]
+
+sysfile.c::linea 38
+// Allocate a file descriptor for the given file.
+// Takes over file reference from caller on success.
+static int fdalloc(struct file *f)            [SOLO ES LLAMADA DESDE sysfile.c]
+
+sysfile.c::linea 52
+int sys_dup(void)                                         [SE USA EN syscall.c]
+
+sysfile.c::linea 67
+int sys_read(void)                                        [SE USA EN syscall.c]
+
+sysfile.c::linea 80
+int sys_write(void)                                       [SE USA EN syscall.c]
+
+sysfile.c::linea 92
+int sys_close(void)                                       [SE USA EN syscall.c]
+
+sysfile.c::linea 106
+int sys_fstat(void)                                       [SE USA EN syscall.c]
+
+sysfile.c::linea 119
+// Create the path new as a link to the same inode as old.
+int sys_link(void)                                        [SE USA EN syscall.c]
+
+sysfile.c::linea 170
+// Is the directory dp empty except for "." and ".." ?
+static int isdirempty(struct inode *dp)
+                            [SOLO ES LLAMADA EN sysfile.c::int sys_unlink(void)]
+
+sysfile.c::linea 187
+int sys_unlink(void)                                       [SE USA EN syscall.c]
+
+sysfile.c::linea 245
+static struct inode* create(char *path, short type, short major, short minor)
+                                               [SOLO ES LLAMADA DESDE sysfile.c]
+
+sysfile.c::linea 291
+int sys_open(void)                                         [SE USA EN syscall.c]
+
+sysfile.c::linea 342
+int sys_mkdir(void)                                        [SE USA EN syscall.c]
+
+sysfile.c::linea 359
+int sys_mknod(void)                                        [SE USA EN syscall.c]
+
+sysfile.c::linea 381
+int sys_chdir(void)                                        [SE USA EN syscall.c]
+
+sysfile.c::linea 419
+int sys_exec(void)                                         [SE USA EN syscall.c]
+
+sysfile.c::linea 432
+int sys_pipe(void)                                         [SE USA EN syscall.c]
+
+
+
+exec.c:
+exec.c::linea 10
+int exec(char *path, char **argv)
+                        [ES LLAMADA DESDE sysfile.c, initcode.S, init.c, sh.c, SE USA EN usys.S Y SE MENCIONA EN vm.c]
+
+
+

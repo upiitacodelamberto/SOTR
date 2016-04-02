@@ -1,0 +1,45 @@
+Ocurrio un llamado a 
+    ide.c:    panic("iderw: ide disk 1 not present");
+desde la funcion ide.c::void iderw(struct nuf *b)
+ide.c::void iderw(struct buf*) puede ser llamado desde bio.c::struct buf* bread(uint dev, uint blockno)
+                                        o desde bio.c::void bwrite(struct buf *b)
+Se llamo a ide.c::void iderw(struct buf*) desde bio.c::struct buf* bread(uint dev, uint blockno)
+
+bio.c::struct buf* bread(uint dev, uint blockno) puede ser llamado desde fs.c 
+                                                                 o desde log.c
+Se llamo a bio.c::struct buf* bread(uint dev, uint blockno) desde fs.c::void readsb(int dev, struct superblock *sb)
+
+fs.c::void readsb(int dev, struct superblock *sb) puede ser llamado 
+                                       desde fs.c::static void bfree(int dev, uint b)  
+                                     o desde fs.c::void iinit(int dev)
+                                     o desde log.c::void initlog(int dev)
+Se llamo a fs.c::void readsb(int dev, struct superblock *sb)
+                      desde fs.c::void iinit(int dev)
+
+fs.c::void iinit(int dev) puede ser llamado 
+                solo desde proc.c::void forkret(void)
+                Que pasa si proc.c::void forkret(void) no llama a 
+                fs.c::void iinit(int dev)?
+
+proc.c::void forkret(void) al parecer es llamado debido a que en 
+                proc.c::static struct proc* allocproc(void) se 
+                realiza la asignacion p->context->eip = (uint)forkret;
+                Quien llama a proc.c::static struct proc* allocproc(void)?
+
+proc.c::static struct proc* allocproc(void) puede ser llamado 
+                desde proc.c::void userinit(void)
+                o desde proc.c::int fork(void)
+
+Se llamo a proc.c::static struct proc* allocproc(void)
+                desde proc.c::void userinit(void)
+                y proc.c::void userinit(void) solo puede ser llamado 
+                desde kernel.c::kmain()
+
+proc.c::void exit(void) puede ser llamado 
+                desde forktest.c::void forktest(void) en 5 o 6 diferentes lugares
+                o desde forktest.c::main()
+                o desde HolaMundo.c::main()
+                o desde init.c::int main()
+
+Si fs.c::void readsb(int dev, struct superblock *sb) fue llamdo desde 
+    fs.c::static void bfree(int dev, uint b)

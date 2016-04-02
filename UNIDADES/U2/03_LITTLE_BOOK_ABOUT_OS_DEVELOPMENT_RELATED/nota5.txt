@@ -1,0 +1,162 @@
+VARIABLES GLOBALES
+
+# kernel linker script
+kernel.ld::PROVIDE(data = .);               vm.c::extern char data[];  // defined by kernel.ld
+
+# processes
+vm.c::extern char data[];  // defined by kernel.ld
+vm.c::pde_t *kpgdir;  // for use in scheduler()
+vm.c::struct segdesc gdt[NSEGS];
+
+proc.h::extern struct cpu cpus[NCPU];
+proc.h::extern int ncpu;
+proc.h::extern struct cpu *cpu asm("%gs:0");       // &cpus[cpunum()]        [SE USA EN trap.c::void trap(struct trapframe *tf)]
+proc.h::extern struct proc *proc asm("%gs:4");     // cpus[cpunum()].proc    [SE USA EN trap.c::void trap(struct trapframe *tf)]
+                                                                         [SE USA EN syscall.c::int fetchint(uint addr, int *ip)]
+                                                                       [SE USA EN syscall.c::int fetchstr(uint addr, char **pp)]
+                                                                               [SE USA EN syscall.c::int argint(int n, int *ip)]
+                                                                   [SE USA EN syscall.c::int argptr(int n, char **pp, int size)]
+                                                                                       [SE USA EN syscall.c::void syscall(void)]
+                                                                       [SE USA EN sysfile.c::static int fdalloc(struct file *f)]
+                                                                                      [SE USA EN sysfile.c::int sys_close(void)]
+
+proc.h::enum procstate { UNUSED, EMBRYO, SLEEPING, RUNNABLE, RUNNING, ZOMBIE };
+                                                                             [SE USA EN trap.c::void trap(struct trapframe *tf)]
+
+proc.c::struct {
+        struct spinlock lock;
+        struct proc proc[NPROC];
+        } ptable;
+
+proc.c::static struct proc *initproc;
+
+proc.c::int nextpid = 1;
+proc.c::extern void forkret(void);
+proc.c::extern void trapret(void);
+
+swtch.S::# Context switch
+swtch.S::#   void swtch(struct context **old, struct context *new);
+swtch.S::.globl swtch
+
+kalloc.c::extern char end[]; // first address after kernel loaded from ELF file
+kalloc.c::struct {
+  struct spinlock lock;
+  int use_lock;
+  struct run *freelist;
+} kmem;               [SE USA EN kalloc.c::void kinit1(void *vstart, void *vend)]
+                      [SE USA EN kalloc.c::void kinit2(void *vstart, void *vend)]
+                      [SE USA EN kalloc.c::char* kalloc(void)]
+
+# system calls
+trapasm.S::# vectors.S sends all traps here.
+trapasm.S::.globl alltraps
+trapasm.S::.globl trapret
+
+trap.c::// Interrupt descriptor table (shared by all CPUs).
+trap.c::struct gatedesc idt[256];             [SE USA EN trap.c::void tvinit(void)]
+                                             [SE USA EN trap.c::void idtinit(void)]
+trap.c::extern uint vectors[];  // in vectors.S: array of 256 entry pointers
+                                              [SE USA EN trap.c::void tvinit(void)]
+trap.c::struct spinlock tickslock;            [SE USA EN trap.c::void tvinit(void)]
+                                [SE USA EN trap.c::void trap(struct trapframe *tf)]
+trap.c::uint ticks;             [SE USA EN trap.c::void trap(struct trapframe *tf)]
+
+
+# file system
+file.h::extern struct devsw devsw[];                   [SE DECLARA EN file.c]
+   [SE USA EN fs.c::int readi(struct inode *ip, char *dst, uint off, uint n)]
+  [SE USA EN fs.c::int writei(struct inode *ip, char *src, uint off, uint n)]
+
+ide.c::static struct spinlock idelock;  [SE USA EN ide.c::void ideinit(void)]
+ide.c::static struct buf *idequeue;     [SE USA EN ide.c::void ideintr(void)]
+                                 [SE USA EN ide.c::void iderw(struct buf *b)]
+ide.c::static int havedisk1;     [SE USA EN ide.c::void iderw(struct buf *b)]
+
+bio.c::struct {
+  struct spinlock lock;
+  struct buf buf[NBUF];
+
+  // Linked list of all buffers, through prev/next.
+  // head.next is most recently used.
+  struct buf head;
+} bcache;                                 [SE USA EN bio.c::void binit(void)]
+                                [SE USA EN bio.c::void brelse(struct buf *b)]
+
+log.c::struct log log;               [SE USA EN log.c::void initlog(int dev)]
+                                       [SE USA EN log.c::void begin_op(void)]
+                                         [SE USA EN log.c::void end_op(void)]
+
+fs.c::struct superblock sb;   // there should be one per dev, but we run with one dev
+                               [SE USA EN fs.c::static uint balloc(uint dev)]
+                          [SE USA EN fs.c::static void bfree(int dev,uint b)]
+                                        [SE USA EN fs.c::void iinit(int dev)]
+                 [SE USA EN fs.c::struct inode* ialloc(uint dev, short type)]
+                             [SE USA EN fs.c::void iupdate(struct inode *ip)]
+                               [SE USA EN fs.c::void ilock(struct inode *ip)]
+
+fs.c::struct {
+  struct spinlock lock;
+  struct inode inode[NINODE];
+} icache;                               [SE USA EN fs.c::void iinit(int dev)]
+             [SE USA EN fs.c::static struct inode* iget(uint dev, uint inum)]
+                       [SE USA EN fs.c::struct inode* idup(struct inode *ip)]
+                               [SE USA EN fs.c::void ilock(struct inode *ip)]
+                             [SE USA EN fs.c::void iunlock(struct inode *ip)]
+                                [SE USA EN fs.c::void iput(struct inode *ip)]
+
+file.c::struct devsw devsw[NDEV];                       
+                                            [SE USA EN fs.c::int readi(struct inode *ip, char *dst, uint off, uint n)]
+                                           [SE USA EN fs.c::int writei(struct inode *ip, char *src, uint off, uint n)]
+file.c::struct {
+  struct spinlock lock;
+  struct file file[NFILE];
+} ftable;                             [SE USA EN file.c::void fileinit(void)]
+                             [SE USA EN file.c::struct file* filealloc(void)]
+                     [SE USA EN file.c::struct file* filedup(struct file *f)]
+                           [SE USA EN file.c::void fileclose(struct file *f)]
+
+# low-level hardware
+mp.c::struct cpu cpus[NCPU];
+mp.c::static struct cpu *bcpu;
+mp.c::int ismp;
+mp.c::int ncpu;
+mp.c::uchar ioapicid;
+
+lapic.c::volatile uint *lapic;  // Initialized in mp.c
+
+ioapic.c::volatile struct ioapic *ioapic;
+
+console.c::static int panicked = 0;
+console.c::static struct {
+  struct spinlock lock;
+  int locking;
+} cons;
+
+console.c::static ushort *crt = (ushort*)P2V(0xb8000);  // CGA memory
+console.c::struct {
+  struct spinlock lock;
+  char buf[INPUT_BUF];
+  uint r;  // Read index
+  uint w;  // Write index
+  uint e;  // Edit index
+} input;
+
+
+uart.c::static int uart;    // is there a uart?                                [SE USA EN uart.c::void uartinit(void)]
+
+# user-level
+initcode.S::# exec(init, argv)
+initcode.S::.globl start
+
+usys.S::#define SYSCALL(name) \
+  .globl name; \
+  name: \
+    movl $SYS_ ## name, %eax; \
+    int $T_SYSCALL; \
+    ret
+
+init.c::char *argv[] = { "sh", 0 };                                                  [SE USA EN init.c::int main(void)]
+
+sh.c::char whitespace[] = " \t\r\n\v";
+sh.c::char symbols[] = "<|>&;()";
+

@@ -6,6 +6,7 @@ OBJS = \
 	exec.o\
 	file.o\
 	fs.o\
+	ide.o\
 	ioapic.o\
 	irq.o\
 	interrupt.o\
@@ -30,7 +31,6 @@ OBJS = \
 	uart.o\
 	vm.o\
 	trap.o\
-	ide.o\
 	syscall.o\
 	sysproc.o\
 	sysfile.o\
@@ -179,9 +179,9 @@ clean:
 #entry.o: entry.S
 #	gcc -m32 -gdwarf-2 -Wa,-divide   -c -o entry.o entry.S
 #
-OBJECTS = bio.o basicio.o console.o exec.o file.o fs.o ioapic.o irq.o interrupt.o kbd.o kalloc.o kernel.o\
-	lapic.o log.o mem.o mp.o pic.o pipe.o proc.o picirq.o scrn.o spinlock.o swtch.o syscall_handler.o\
-	string.o timer.o trapasm.o uart.o vm.o trap.o ide.o syscall.o sysproc.o sysfile.o vectors.o
+#OBJECTS = bio.o basicio.o console.o exec.o file.o fs.o ioapic.o irq.o interrupt.o kbd.o kalloc.o kernel.o\
+#	lapic.o log.o mem.o mp.o pic.o pipe.o proc.o picirq.o scrn.o spinlock.o swtch.o syscall_handler.o\
+#	string.o timer.o trapasm.o uart.o vm.o trap.o ide.o syscall.o sysproc.o sysfile.o vectors.o
 
 #kernel.elf: bootblock.o entry.o $(OBJECTS) $(ULIB) $(UPROGS)
 kernel.elf: bootblock.o $(OBJS) entry.o entryother initcode kernel.ld 
