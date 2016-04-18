@@ -89,3 +89,10 @@ sys_uptime(void)
   release(&tickslock);
   return xticks;
 }
+
+//20160407_candprocs_4/6
+int
+sys_candprocs(void)
+{
+  return candprocs();
+}

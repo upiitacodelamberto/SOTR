@@ -24,7 +24,7 @@ exec(char *path, char **argv)
 cprintf("exec.c::int exec(char *path, char **argv)\n");
 cprintf("%s\n",path);
 cprintf("%s\n",argv[0]);
-cprintf("sizeof(struct inode)=%d\n",sizeof(struct inode));
+//cprintf("sizeof(struct inode)=%d\n",sizeof(struct inode));
   begin_op();
   if((ip = namei(path)) == 0){
     end_op();

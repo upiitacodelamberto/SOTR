@@ -9,6 +9,7 @@
 start:
   pushl $argv
   pushl $init
+#  pushl $TaskId_1
   pushl $0  // where caller pc would be
   movl $SYS_exec, %eax
   int $T_SYSCALL
@@ -22,10 +23,13 @@ exit:
 # char init[] = "/init\0";
 init:
   .string "/init\0"
+#TaskId_1:
+#  .string "/TaskId_1\0"
 
 # char *argv[] = { init, 0 };
 .p2align 2
 argv:
   .long init
+#  .long TaskId_1
   .long 0
 

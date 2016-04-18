@@ -83,7 +83,7 @@ userinit(void)
   extern char _binary_initcode_start[], _binary_initcode_size[];
   
   p = allocproc();
-  initproc = p;
+  initproc = p; /*inicialmente (al menos) ptable.proc*/
   if((p->pgdir = setupkvm()) == 0)
     panic("userinit: out of memory?");
   inituvm(p->pgdir, _binary_initcode_start, (int)_binary_initcode_size);
@@ -177,6 +177,7 @@ exit(void)
   struct proc *p;
   int fd;
 
+//20160416
   if(proc == initproc)
     panic("init exiting");
 
@@ -275,7 +276,7 @@ scheduler(void)
 
     // Loop over process table looking for process to run.
     acquire(&ptable.lock);
-    for(p = ptable.proc; p < &ptable.proc[NPROC]; p++){
+    for(p = ptable.proc; p < &ptable.proc[NPROC]; p++){//it could also be used ptable.proc+NPROC
       if(p->state != RUNNABLE)
         continue;
 

@@ -147,10 +147,11 @@ mkfs: mkfs.c fs.h
 .PRECIOUS: %.o
 
 UPROGS=\
-	_init\
 	_forktest\
-	_sh\
-	_HolaMundo
+	_HolaMundo\
+	_init\
+	_ls\
+	_sh
 
 #%.o: %.c
 #	$(CC) $(CFLAGS) $< -o $@

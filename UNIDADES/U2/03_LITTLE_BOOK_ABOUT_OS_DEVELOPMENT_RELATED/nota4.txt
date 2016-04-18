@@ -351,5 +351,5 @@ exec.c::linea 10
 int exec(char *path, char **argv)
                         [ES LLAMADA DESDE sysfile.c, initcode.S, init.c, sh.c, SE USA EN usys.S Y SE MENCIONA EN vm.c]
 
-
+proc.c::void exit(void)
 

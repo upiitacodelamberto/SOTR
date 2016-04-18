@@ -467,3 +467,17 @@ procdump(void)
     cprintf("\n");
   }
 }
+
+//20160408_candprocs_6/
+int
+candprocs(void)
+{
+  struct proc *p;
+  int count=0;
+  acquire(&ptable.lock);  /* ptable is a struct defined above */
+  for(p=ptable.proc;p<ptable.proc+NPROC;p++)
+    if(p->state==UNUSED)
+      count++;
+  release(&ptable.lock);
+  return NPROC-count;
+}

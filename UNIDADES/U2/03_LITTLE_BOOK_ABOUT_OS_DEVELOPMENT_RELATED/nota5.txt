@@ -1,3 +1,25 @@
+COMANDO GDB ensamblador:
+  a. Equivalent of 'list' command for assemby level
+     (gdb) x/10i $pc-20
+     [This means examine the next 10 instructions, starting with 
+     the value of the program counter ($pc) minus 20 bytes. Try 
+     this on any GDB session, and it will quickly become intuitive]
+
+  b. Equivalent of 'step' and 'next commands for assembly level:
+     They are 'si' ("step instruction") and 'ni' ("next instruction").
+  c. (gdb) info registers
+     [The name says it all.  Display current values of all registers.]
+
+2.  Loading a new symbol table into GDB:
+        After 'myrestart' has mapped in the memory of the user application
+    (e.g., hello.c), we now want to see the symbols of 'hello.c' instead
+    of the symbols of 'myrestart'.  So, we need to do
+        Recall that a symbol table is a table in which each row specifies
+    a symbol (variable name, function name, etc.), followed by
+    the address where it is stored in RAM, and optionally followed
+    by the type of the symbol (or at least the size of the memory
+    buffer that the address points to, such as 4 bytes for an 'int').
+
 VARIABLES GLOBALES
 
 # kernel linker script
@@ -159,4 +181,23 @@ init.c::char *argv[] = { "sh", 0 };                                             
 
 sh.c::char whitespace[] = " \t\r\n\v";
 sh.c::char symbols[] = "<|>&;()";
+
+
+proc.h::// Per-process state
+struct proc {
+  uint sz;                     // Size of process memory (bytes)
+  pde_t* pgdir;                // Page table
+  char *kstack;                // Bottom of kernel stack for this process
+  enum procstate state;        // Process state
+  int pid;                     // Process ID
+  struct proc *parent;         // Parent process
+  struct trapframe *tf;        // Trap frame for current syscall
+  struct context *context;     // swtch() here to run process
+  void *chan;                  // If non-zero, sleeping on chan
+  int killed;                  // If non-zero, have been killed
+  struct file *ofile[NOFILE];  // Open files
+//20160313--
+  struct inode *cwd;           // Current directory
+  char name[16];               // Process name (debugging)
+};
 

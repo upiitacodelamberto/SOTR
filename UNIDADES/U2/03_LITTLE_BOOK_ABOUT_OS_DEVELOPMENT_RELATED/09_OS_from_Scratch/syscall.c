@@ -77,6 +77,8 @@ argstr(int n, char **pp)
   return fetchstr(addr, pp);
 }
 
+//20160407_candprocs_2/6 y _candprocs_3/6
+
 extern int sys_chdir(void);
 extern int sys_close(void);
 extern int sys_dup(void);
@@ -98,6 +100,7 @@ extern int sys_unlink(void);//
 extern int sys_wait(void);
 extern int sys_write(void);//
 extern int sys_uptime(void);
+extern int sys_candprocs(void);
 
 //20160313
 static int (*syscalls[])(void) = {
@@ -122,6 +125,7 @@ static int (*syscalls[])(void) = {
 [SYS_link]    sys_link,//
 [SYS_mkdir]   sys_mkdir,//
 [SYS_close]   sys_close,
+[SYS_candprocs]  sys_candprocs,
 };
 
 void

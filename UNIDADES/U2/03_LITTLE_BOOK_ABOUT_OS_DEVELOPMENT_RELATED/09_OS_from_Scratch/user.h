@@ -23,6 +23,8 @@ int getpid(void);
 char* sbrk(int);
 int sleep(int);
 int uptime(void);
+//20160408_candprocs_7/8
+int candprocs(void);
 
 // ulib.c
 int stat(char*, struct stat*);

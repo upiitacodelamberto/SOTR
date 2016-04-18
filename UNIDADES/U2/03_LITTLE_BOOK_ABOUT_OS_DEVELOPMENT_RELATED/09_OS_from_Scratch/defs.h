@@ -118,6 +118,8 @@ void            userinit(void);
 int             wait(void);
 void            wakeup(void*);
 void            yield(void);
+//20160408_candprocs_5/
+int             candprocs(void);
 
 /*spinlock.c*/
 void            acquire(struct spinlock*);

@@ -608,7 +608,7 @@ namex(char *path, int nameiparent, char *name)
   struct inode *ip, *next;
 
   if(*path == '/'){
-cprintf("fs.c::static struct inode* namex(char *path, int nameiparent, char *name)\n");
+//cprintf("fs.c::static struct inode* namex(char *path, int nameiparent, char *name)\n");
     ip = iget(ROOTDEV, ROOTINO);
 }
   else

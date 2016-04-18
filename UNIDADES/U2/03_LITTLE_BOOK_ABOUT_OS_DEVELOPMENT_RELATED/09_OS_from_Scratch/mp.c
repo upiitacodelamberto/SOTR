@@ -147,7 +147,7 @@ cprintf("mp.c::void mpinit(void): Didn't like what we found; fall back to no MP.
     ioapicid = 0;
     return;
   }
-cprintf("mp.c::void mpinit(void): ismp=%d\n",ismp);
+//cprintf("mp.c::void mpinit(void): ismp=%d\n",ismp);
 
   if(mp->imcrp){
     // Bochs doesn't support IMCR, so this doesn't run on Bochs.
