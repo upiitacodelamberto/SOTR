@@ -90,7 +90,7 @@ sys_uptime(void)
   return xticks;
 }
 
-//20160407_candprocs_4/6
+//20160407_candprocs_4/8
 int
 sys_candprocs(void)
 {

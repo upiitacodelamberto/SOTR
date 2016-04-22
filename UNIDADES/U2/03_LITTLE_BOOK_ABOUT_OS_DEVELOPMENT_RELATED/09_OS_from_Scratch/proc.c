@@ -468,7 +468,7 @@ procdump(void)
   }
 }
 
-//20160408_candprocs_6/
+//20160408_candprocs_6/8
 int
 candprocs(void)
 {

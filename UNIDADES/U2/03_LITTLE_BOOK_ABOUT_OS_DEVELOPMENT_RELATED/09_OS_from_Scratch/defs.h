@@ -118,7 +118,7 @@ void            userinit(void);
 int             wait(void);
 void            wakeup(void*);
 void            yield(void);
-//20160408_candprocs_5/
+//20160408_candprocs_5/8
 int             candprocs(void);
 
 /*spinlock.c*/

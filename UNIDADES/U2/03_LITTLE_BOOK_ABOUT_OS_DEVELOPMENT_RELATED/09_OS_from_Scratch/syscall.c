@@ -77,7 +77,7 @@ argstr(int n, char **pp)
   return fetchstr(addr, pp);
 }
 
-//20160407_candprocs_2/6 y _candprocs_3/6
+//20160407_candprocs_2/8 y _candprocs_3/8
 
 extern int sys_chdir(void);
 extern int sys_close(void);

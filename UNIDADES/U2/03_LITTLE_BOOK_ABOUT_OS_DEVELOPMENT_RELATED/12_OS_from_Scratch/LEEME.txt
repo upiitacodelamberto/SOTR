@@ -1,0 +1,34 @@
+En esta version se ejecutan dos procesos:
+TaskId_1 y TaskId_2
+
+En el codigo de initcode.S se hizo la modificacion
+#  .string "/init\0"
+  .string "/TaskId_1\0"
+
+y en el archivo kernel.c se agregron
+//Vease archivo sysproc.c
+//char *argv1[] = { "TaskId_1", 0 };
+//char *argv2[] = { "TaskId_2", 0 };
+extern char *argv1[];
+extern char *argv2[];
+//Estas variables de definen en ese archivo
+
+en void kmain() se usa la llamada al sistema createTask()
+  createTask(1, TaskId_1,argv1);
+  createTask(2, TaskId_2,argv2);
+
+En los programas de usuario TaskId_1.c y TaskId_2.c seusan las 
+llamadas al sistema startTask(), waitYask() y Sched().
+
+Tambien se hizo la siguiente modificacion en la llamada al sistema exit():
+//2016.04.20
+  if(proc == initproc){
+//    panic("init exiting");
+    cprintf("Ahora hay que cambiar el planificador. En scheduler() \
+o sched()? creo que en scheduler().");
+  }
+Para poder ver este mensaje, se debe comentar las llamadas a createTask()
+en la funcion kmain() de kernel.c
+
+En esta version se remplaza el proceso de init.c con el de TaskId_1.c 
+y no se ejecuta sh (no hay shell).

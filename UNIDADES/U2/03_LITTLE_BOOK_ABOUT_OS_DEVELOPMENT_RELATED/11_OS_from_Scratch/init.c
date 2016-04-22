@@ -20,7 +20,7 @@ char *argv[] = { "sh", 0 };
 //disposicion de los programas de usuario a traves del archivo de 
 //cabecera user.h
 
-//Solo para cooregir error de compilacion
+//Solo para corregir error de compilacion
 //de este archivo (vease int sys_createTask(void) 
 //en sysproc.c)   2016.04.01
 char *argv1[] = { "TaskId_1", 0 };
