@@ -23,8 +23,8 @@ char *argv[] = { "sh", 0 };
 //Solo para cooregir error de compilacion
 //de este archivo (vease int sys_createTask(void) 
 //en sysproc.c)   2016.04.01
-char *argv1[] = { "TaskId_1", 0 };
-char *argv2[] = { "TaskId_2", 0 };
+//char *argv1[] = { "TaskId_1", 0 };
+//char *argv2[] = { "TaskId_2", 0 };
 
 int
 main(void)
@@ -52,7 +52,7 @@ main(void)
     }
     if(pid == 0){
 //20160401
-      printf(1,"En el proceso hijo de init:exec(\"sh\", argv);\n");
+      printf(1,"En el proceso hijo de init.c:exec(\"sh\", argv);\n");
       exec("sh", argv);
 //      Sched();
 

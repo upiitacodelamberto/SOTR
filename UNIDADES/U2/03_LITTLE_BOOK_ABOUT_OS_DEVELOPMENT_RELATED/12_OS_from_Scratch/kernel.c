@@ -22,18 +22,10 @@ extern char *argv2[];
 
 /*int main(void){*/
 void kmain(void){
-//  vga_init();
-//  puts((uint8_t*)"Hello kernel world!\n");
-  /*do some work here, like initialize timer or paging*/
   kinit1(end, P2V(4*1024*1024)); // phys page allocator
   kvmalloc();      // kernel page table
   mpinit();        // collect info about this machine
   lapicinit();
-//  gdt_descriptor();
-//  puts((uint8_t*)"GDT initialized...\n");
-//  idt_descriptor();
-//  puts((uint8_t*)"IDT initialized...\n");
-//  cprintf("IDT initialized...\n");
   seginit();       // set up segments
   cprintf("\ncpu%d: starting xv6\n\n", cpu->id);
   picinit();       // interrupt controller
@@ -52,8 +44,8 @@ void kmain(void){
   startothers();   // start other processors
   kinit2(P2V(4*1024*1024), P2V(PHYSTOP)); // must come after startothers()
 //2016.04.20
-  createTask(1, TaskId_1,argv1);
-  createTask(2, TaskId_2,argv2);
+//  createTask(1, TaskId_1,argv1);
+//  createTask(2, TaskId_2,argv2);
 
   userinit();      // first user process
   // Finish setting up this processor in mpmain.

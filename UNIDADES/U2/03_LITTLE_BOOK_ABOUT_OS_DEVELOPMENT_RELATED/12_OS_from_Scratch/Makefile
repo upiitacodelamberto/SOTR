@@ -136,6 +136,9 @@ _forktest: forktest.o $(ULIB)
 #	# in order to be able to max out the proc table.
 #	$(LD) $(LDFLAGS) -N -e main -Ttext 0 -o _HolaMundo HolaMundo.o printf.o ulib.o usys.o
 #	$(OBJDUMP) -S _HolaMundo > HolaMundo.asm
+_uthread: uthread.o uthread_switch.o
+	$(LD) $(LDFLAGS) -N -e main -Ttext 0 -o _uthread uthread.o uthread_switch.o $(ULIB)
+	$(OBJDUMP) -S _uthread > uthread.asm
 
 mkfs: mkfs.c fs.h 
 	gcc -Werror -Wall -o mkfs mkfs.c
@@ -156,7 +159,8 @@ UPROGS=\
 	_sh\
 	_TaskId_1\
 	_TaskId_2\
-	_TaskSche
+	_TaskSche\
+	_uthread
 
 #%.o: %.c
 #	$(CC) $(CFLAGS) $< -o $@
@@ -248,6 +252,8 @@ qemu: fs.img xv6.img
 qemu-memfs: xv6memfs.img
 	$(QEMU) xv6memfs.img -smp $(CPUS) -m 256
 
+qemu-nox: fs.img xv6.img
+	$(QEMU) -nographic $(QEMUOPTS)
 
 .gdbinit: .gdbinit.tmpl
 	sed "s/localhost:1234/localhost:$(GDBPORT)/" < $^ > $@

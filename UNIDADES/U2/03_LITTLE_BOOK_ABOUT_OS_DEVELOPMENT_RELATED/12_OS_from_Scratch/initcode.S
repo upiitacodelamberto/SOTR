@@ -22,8 +22,8 @@ exit:
 # char init[] = "/init\0";
 init:
 #2016.04.20
-#  .string "/init\0"
-  .string "/TaskId_1\0"
+  .string "/init\0"
+#  .string "/TaskId_1\0"
 
 # char *argv[] = { init, 0 };
 .p2align 2
