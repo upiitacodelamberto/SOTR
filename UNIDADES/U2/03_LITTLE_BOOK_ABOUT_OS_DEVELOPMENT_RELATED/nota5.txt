@@ -1,3 +1,93 @@
+/*
+Archivos modificados para agregar una nueva syscall a xv6
+syscall.h         #define SYS_clone  28
+syscall.c         extern int sys_clone(void); y [SYS_clone]  sys_clone,
+defs.h            int clone(void *stack,int size);
+proc.c            int clone(void *stack,int size);
+sysproc.c         int sys_clone(void);
+user.h            int clone(void *,int);;
+usys.S            SYSCALL(clone)
+*/
+
+
+La instruccion PUSHA copia el contenido del conjunto de rgistros interno, 
+con excepcion de los registros de sgmento, a la memoria de pila. La instruccion 
+PUSHA (push all) copia los registros a la pila en el siguiente orden: 
+AX, CX, DX, BX, SP, BP, SI y DI. El valor de SP almacenadonen la pila es el 
+anterior a la ejecucion de la instruccion PUSHA. La intruccion PUSHF (push flags) 
+copia el contenido del registro de banderas a la memoria de pila. Las instrucciones 
+PUSHAD y POPAD cargan y extraen el contenido del conjunto de registros de 32 bits 
+encontrado en los 80386 al pentium II.
+Siempre que se cargan datos en la memoria de pila, el primer byte del dato (el mas 
+sinificativo) entra en la localidad de memoria del segmento direccionada por 
+SP-1. El segundo byte del dato (el menos significativo) entra en la localidad 
+direccionada por SP-2. Despues de que la instruccion PUSH ha cargado el dato, el 
+contenido  del registro SP es disminuido en 2. Lo mismo sucede al cargar una 
+palabra doble, excepto que se cargan cuatro bytes en la memoria de pila (primero 
+los bytes mas significativos), despues de lo cual el apuntador de memoria de pila 
+disminue en cuatro. La instruccion PUSH AX copia el contenido de AX a la memoria 
+de pila, donde la direccion SS:[SP-1]=AH, SS:[SP-2]=AL y SP=SP-2.
+La instruccion PUSHA carga tdos los registros internos de 16 bits en la memoria 
+de pila, como puede verse en la figura. Esta instruccion requiere 16 bytes de 
+espacio de memoria de pila para almacenar los ocho registros de 16 bits, despues 
+de cargaar todos los registros, el contenido de SP disminuye en 16. La instruccion 
+PUSHA  es muy util cuanto es necesario guardar todo el conjunto de refistros 
+(ambiente del microprocesador) de los 80286 y posteriores durante una tarea. La 
+instruccion PUSHAD coloca el conjunto de registros de 32 bits de los procesadores 
+80386  al pentium II en la pila. PUSHAD requiere 32 bytes de espacio de 
+almacenamiento de pila.
+ ___________
+|   AX      |
+|-----------|
+|   CX      |
+|-----------|
+|   DX      |
+|-----------|
+|   BX      |
+|-----------|
+|   SP      |
+|-----------|
+|   BP      |
+|-----------|
+|   SI      |
+|-----------|
+|   DI      |<---SP despues de la instruccion PUSHA
+|___________|
+
+From Assembly Language Tutorial.htm
+<p>Included in the syntactic differences between <tt>gas</tt> and Intel 
+assemblers is that all register names used as operands must be preceeded by a 
+percent (%) sign, and instruction names usually end in either "l", "w", or "b", 
+indicating the size of the operands: long (32 bits), word (16 bits), or byte (8 
+bits), respectively. For our purposes, we will usually be using the "l" (long) 
+suffix. </p>
+
+
+<h3>Common/Useful Instructions</h3>
+<pre>mov (especially with segment registers)
+    - e.g.,:
+        movw %es,%ax
+        movl %cs:4,%esp
+        movw _processControlBlock,%cs
+
+    - note:     mov's do NOT set flags
+
+pushl, popl       - push/pop long
+pushal, popal     - push/pop EAX,EBX,ECX,EDX,ESP,EBP,ESI,EDI
+
+
+
+
+
+
+
+
+
+Una respuesta para uthread_switch.S
+https://github.com/romanzhg/xv6/blob/master/uthread_switch.S
+
+
+Homework Scheduler (2014)
 http://staff.ustc.edu.cn/~bjhua/courses/ats/2014/hw/hw-schedule.html
 
 

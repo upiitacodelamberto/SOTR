@@ -1,0 +1,193 @@
+Script started on lun 02 may 2016 16:51:13 CDT
+]0;root@RamRamIII: ~/2015_08_A_2015_12/SOTR/UNIDADES/U2/03_LITTLE_BOOK_ABOUT_OS_DEVELOPMENT_RELATED/12_OS_from_Scratch[01;31mroot@RamRamIII[00m:[01;34m~/2015_08_A_2015_12/SOTR/UNIDADES/U2/03_LITTLE_BOOK_ABOUT_OS_DEVELOPMENT_RELATED/12_OS_from_Scratch[00m# ls
+asm.h         defs.h        HolaMundo.c  link.ld        multiboot.S          runoff.list        sysproc.c      trap.c
+basicio.c     dot-bochsrc   ide.c        ln.c           osHeader.h           runoff.spec        tareas.c       traps.h
+basicio.h     dot-gdbinit   init.c       log.c          param.h              scrn.c             tareas.h       types.h
+bio.c         echo.c        initcode.S   ls.c           pic.c                scrn.h             TaskId_1.c     uart.c
+bochslog.txt  elf.h         interrupt.c  main.c         picirq.c             sh.c               TaskId_2.c     ulib.c
+bochsrc.txt   entryother.S  ioapic.c     Makefile       pipe.c               [0m[01;32msign.pl[0m            TaskSche.c     umalloc.c
+bootasm.S     entry.S       irq.c        Makefile.orig  printf.c             spinlock.c         tester.c       user.h
+bootmain.c    exec.c        [01;34miso[0m          mem.c          proc.c               spinlock.h         thread.h       usertests.c
+bootother.S   fcntl.h       kalloc.c     mem.h          proc.h               stat.h             threadlib.c    usys.S
+buf.h         file.c        kbd.c        memide.c       [01;32mpr.pl[0m                stressfs.c         threadlib.h    uthread.c
+cat.c         file.h        kbd.h        memlayout.h    README               string.c           threadtest1.c  uthread_switch.S
+chmod.c       forktest.c    kernel.c     mkdir.c        regs.h               swtch.S            threadtest.c   [01;32mvectors.pl[0m
+com1.out      fs.c          kernel.ld    mkfs.c         revisar20160502.txt  syscall.c          timer.c        vm.c
+console.c     fs.h          kill.c       mmu.h          rm.c                 syscall.h          toc.ftr        wc.c
+data.S        gdbutil       lapic.c      mp.c           [01;32mrunoff[0m               syscall_handler.c  toc.hdr        x86.h
+date.h        grep.c        LEEME.txt    mp.h           [01;32mrunoff1[0m              sysfile.c          trapasm.S      zombie.c
+]0;root@RamRamIII: ~/2015_08_A_2015_12/SOTR/UNIDADES/U2/03_LITTLE_BOOK_ABOUT_OS_DEVELOPMENT_RELATED/12_OS_from_Scratch[01;31mroot@RamRamIII[00m:[01;34m~/2015_08_A_2015_12/SOTR/UNIDADES/U2/03_LITTLE_BOOK_ABOUT_OS_DEVELOPMENT_RELATED/12_OS_from_Scratch[00m# make
+gcc  -fno-pic -fno-builtin -fno-strict-aliasing -fno-stack-protector -Wall -Werror -m32 -ggdb -M -MG threadtest1.c -MF threadtest1.d -MT threadtest1.d -MT threadtest1.o
+gcc  -fno-pic -fno-builtin -fno-strict-aliasing -fno-stack-protector -Wall -Werror -m32 -ggdb -M -MG zombie.c -MF zombie.d -MT zombie.d -MT zombie.o
+gcc  -fno-pic -fno-builtin -fno-strict-aliasing -fno-stack-protector -Wall -Werror -m32 -ggdb -M -MG wc.c -MF wc.d -MT wc.d -MT wc.o
+gcc  -fno-pic -fno-builtin -fno-strict-aliasing -fno-stack-protector -Wall -Werror -m32 -ggdb -M -MG usertests.c -MF usertests.d -MT usertests.d -MT usertests.o
+gcc  -fno-pic -fno-builtin -fno-strict-aliasing -fno-stack-protector -Wall -Werror -m32 -ggdb -M -MG tester.c -MF tester.d -MT tester.d -MT tester.o
+gcc  -fno-pic -fno-builtin -fno-strict-aliasing -fno-stack-protector -Wall -Werror -m32 -ggdb -M -MG stressfs.c -MF stressfs.d -MT stressfs.d -MT stressfs.o
+gcc  -fno-pic -fno-builtin -fno-strict-aliasing -fno-stack-protector -Wall -Werror -m32 -ggdb -M -MG sh.c -MF sh.d -MT sh.d -MT sh.o
+gcc  -fno-pic -fno-builtin -fno-strict-aliasing -fno-stack-protector -Wall -Werror -m32 -ggdb -M -MG rm.c -MF rm.d -MT rm.d -MT rm.o
+gcc  -fno-pic -fno-builtin -fno-strict-aliasing -fno-stack-protector -Wall -Werror -m32 -ggdb -M -MG mkdir.c -MF mkdir.d -MT mkdir.d -MT mkdir.o
+gcc  -fno-pic -fno-builtin -fno-strict-aliasing -fno-stack-protector -Wall -Werror -m32 -ggdb -M -MG ls.c -MF ls.d -MT ls.d -MT ls.o
+gcc  -fno-pic -fno-builtin -fno-strict-aliasing -fno-stack-protector -Wall -Werror -m32 -ggdb -M -MG ln.c -MF ln.d -MT ln.d -MT ln.o
+gcc  -fno-pic -fno-builtin -fno-strict-aliasing -fno-stack-protector -Wall -Werror -m32 -ggdb -M -MG kill.c -MF kill.d -MT kill.d -MT kill.o
+gcc  -fno-pic -fno-builtin -fno-strict-aliasing -fno-stack-protector -Wall -Werror -m32 -ggdb -M -MG init.c -MF init.d -MT init.d -MT init.o
+gcc  -fno-pic -fno-builtin -fno-strict-aliasing -fno-stack-protector -Wall -Werror -m32 -ggdb -M -MG grep.c -MF grep.d -MT grep.d -MT grep.o
+gcc  -fno-pic -fno-builtin -fno-strict-aliasing -fno-stack-protector -Wall -Werror -m32 -ggdb -M -MG forktest.c -MF forktest.d -MT forktest.d -MT forktest.o
+gcc  -fno-pic -fno-builtin -fno-strict-aliasing -fno-stack-protector -Wall -Werror -m32 -ggdb -M -MG echo.c -MF echo.d -MT echo.d -MT echo.o
+gcc  -fno-pic -fno-builtin -fno-strict-aliasing -fno-stack-protector -Wall -Werror -m32 -ggdb -M -MG cat.c -MF cat.d -MT cat.d -MT cat.o
+gcc  -fno-pic -fno-builtin -fno-strict-aliasing -fno-stack-protector -Wall -Werror -m32 -ggdb -M -MG threadlib.c -MF threadlib.d -MT threadlib.d -MT threadlib.o
+gcc  -fno-pic -fno-builtin -fno-strict-aliasing -fno-stack-protector -Wall -Werror -m32 -ggdb -M -MG umalloc.c -MF umalloc.d -MT umalloc.d -MT umalloc.o
+gcc  -fno-pic -fno-builtin -fno-strict-aliasing -fno-stack-protector -Wall -Werror -m32 -ggdb -M -MG printf.c -MF printf.d -MT printf.d -MT printf.o
+gcc -m32  -ggdb  -M -MG usys.S -MF usys.d -MT usys.d -MT usys.o
+gcc  -fno-pic -fno-builtin -fno-strict-aliasing -fno-stack-protector -Wall -Werror -m32 -ggdb -M -MG ulib.c -MF ulib.d -MT ulib.d -MT ulib.o
+gcc  -fno-pic -fno-builtin -fno-strict-aliasing -fno-stack-protector -Wall -Werror -m32 -ggdb -M -MG vm.c -MF vm.d -MT vm.d -MT vm.o
+perl vectors.pl > vectors.S
+gcc -m32  -ggdb  -M -MG vectors.S -MF vectors.d -MT vectors.d -MT vectors.o
+gcc  -fno-pic -fno-builtin -fno-strict-aliasing -fno-stack-protector -Wall -Werror -m32 -ggdb -M -MG uart.c -MF uart.d -MT uart.d -MT uart.o
+gcc  -fno-pic -fno-builtin -fno-strict-aliasing -fno-stack-protector -Wall -Werror -m32 -ggdb -M -MG trap.c -MF trap.d -MT trap.d -MT trap.o
+gcc -m32  -ggdb  -M -MG trapasm.S -MF trapasm.d -MT trapasm.d -MT trapasm.o
+gcc  -fno-pic -fno-builtin -fno-strict-aliasing -fno-stack-protector -Wall -Werror -m32 -ggdb -M -MG timer.c -MF timer.d -MT timer.d -MT timer.o
+gcc  -fno-pic -fno-builtin -fno-strict-aliasing -fno-stack-protector -Wall -Werror -m32 -ggdb -M -MG sysproc.c -MF sysproc.d -MT sysproc.d -MT sysproc.o
+gcc  -fno-pic -fno-builtin -fno-strict-aliasing -fno-stack-protector -Wall -Werror -m32 -ggdb -M -MG sysfile.c -MF sysfile.d -MT sysfile.d -MT sysfile.o
+gcc  -fno-pic -fno-builtin -fno-strict-aliasing -fno-stack-protector -Wall -Werror -m32 -ggdb -M -MG syscall.c -MF syscall.d -MT syscall.d -MT syscall.o
+gcc -m32  -ggdb  -M -MG swtch.S -MF swtch.d -MT swtch.d -MT swtch.o
+gcc  -fno-pic -fno-builtin -fno-strict-aliasing -fno-stack-protector -Wall -Werror -m32 -ggdb -M -MG string.c -MF string.d -MT string.d -MT string.o
+gcc  -fno-pic -fno-builtin -fno-strict-aliasing -fno-stack-protector -Wall -Werror -m32 -ggdb -M -MG spinlock.c -MF spinlock.d -MT spinlock.d -MT spinlock.o
+gcc  -fno-pic -fno-builtin -fno-strict-aliasing -fno-stack-protector -Wall -Werror -m32 -ggdb -M -MG proc.c -MF proc.d -MT proc.d -MT proc.o
+gcc  -fno-pic -fno-builtin -fno-strict-aliasing -fno-stack-protector -Wall -Werror -m32 -ggdb -M -MG pipe.c -MF pipe.d -MT pipe.d -MT pipe.o
+gcc  -fno-pic -fno-builtin -fno-strict-aliasing -fno-stack-protector -Wall -Werror -m32 -ggdb -M -MG picirq.c -MF picirq.d -MT picirq.d -MT picirq.o
+gcc  -fno-pic -fno-builtin -fno-strict-aliasing -fno-stack-protector -Wall -Werror -m32 -ggdb -M -MG mp.c -MF mp.d -MT mp.d -MT mp.o
+gcc  -fno-pic -fno-builtin -fno-strict-aliasing -fno-stack-protector -Wall -Werror -m32 -ggdb -M -MG main.c -MF main.d -MT main.d -MT main.o
+gcc  -fno-pic -fno-builtin -fno-strict-aliasing -fno-stack-protector -Wall -Werror -m32 -ggdb -M -MG lapic.c -MF lapic.d -MT lapic.d -MT lapic.o
+gcc  -fno-pic -fno-builtin -fno-strict-aliasing -fno-stack-protector -Wall -Werror -m32 -ggdb -M -MG kbd.c -MF kbd.d -MT kbd.d -MT kbd.o
+gcc  -fno-pic -fno-builtin -fno-strict-aliasing -fno-stack-protector -Wall -Werror -m32 -ggdb -M -MG kalloc.c -MF kalloc.d -MT kalloc.d -MT kalloc.o
+gcc  -fno-pic -fno-builtin -fno-strict-aliasing -fno-stack-protector -Wall -Werror -m32 -ggdb -M -MG ioapic.c -MF ioapic.d -MT ioapic.d -MT ioapic.o
+gcc  -fno-pic -fno-builtin -fno-strict-aliasing -fno-stack-protector -Wall -Werror -m32 -ggdb -M -MG ide.c -MF ide.d -MT ide.d -MT ide.o
+gcc  -fno-pic -fno-builtin -fno-strict-aliasing -fno-stack-protector -Wall -Werror -m32 -ggdb -M -MG fs.c -MF fs.d -MT fs.d -MT fs.o
+gcc  -fno-pic -fno-builtin -fno-strict-aliasing -fno-stack-protector -Wall -Werror -m32 -ggdb -M -MG file.c -MF file.d -MT file.d -MT file.o
+gcc  -fno-pic -fno-builtin -fno-strict-aliasing -fno-stack-protector -Wall -Werror -m32 -ggdb -M -MG exec.c -MF exec.d -MT exec.d -MT exec.o
+gcc  -fno-pic -fno-builtin -fno-strict-aliasing -fno-stack-protector -Wall -Werror -m32 -ggdb -M -MG console.c -MF console.d -MT console.d -MT console.o
+gcc  -fno-pic -fno-builtin -fno-strict-aliasing -fno-stack-protector -Wall -Werror -m32 -ggdb -M -MG bio.c -MF bio.d -MT bio.d -MT bio.o
+gcc  -fno-pic -fno-builtin -fno-strict-aliasing -fno-stack-protector -Wall -Werror -m32 -ggdb -fno-pic -O -nostdinc -I. -c bootmain.c
+gcc  -fno-pic -fno-builtin -fno-strict-aliasing -fno-stack-protector -Wall -Werror -m32 -ggdb -fno-pic -nostdinc -I. -c bootasm.S
+ld -m    elf_i386 --omagic --entry=start --section-start=.text=0x7C00 \
+	-o bootblock.o bootasm.o bootmain.o
+objcopy -S -O binary -j .text bootblock.o bootblock
+./sign.pl bootblock
+boot block is 420 bytes (max 510)
+gcc  -fno-pic -fno-builtin -fno-strict-aliasing -fno-stack-protector -Wall -Werror -m32 -ggdb -c -o bio.o bio.c
+gcc  -fno-pic -fno-builtin -fno-strict-aliasing -fno-stack-protector -Wall -Werror -m32 -ggdb -c -o console.o console.c
+gcc  -fno-pic -fno-builtin -fno-strict-aliasing -fno-stack-protector -Wall -Werror -m32 -ggdb -c -o exec.o exec.c
+gcc  -fno-pic -fno-builtin -fno-strict-aliasing -fno-stack-protector -Wall -Werror -m32 -ggdb -c -o file.o file.c
+gcc  -fno-pic -fno-builtin -fno-strict-aliasing -fno-stack-protector -Wall -Werror -m32 -ggdb -c -o fs.o fs.c
+gcc  -fno-pic -fno-builtin -fno-strict-aliasing -fno-stack-protector -Wall -Werror -m32 -ggdb -c -o ide.o ide.c
+gcc  -fno-pic -fno-builtin -fno-strict-aliasing -fno-stack-protector -Wall -Werror -m32 -ggdb -c -o ioapic.o ioapic.c
+gcc  -fno-pic -fno-builtin -fno-strict-aliasing -fno-stack-protector -Wall -Werror -m32 -ggdb -c -o kalloc.o kalloc.c
+gcc  -fno-pic -fno-builtin -fno-strict-aliasing -fno-stack-protector -Wall -Werror -m32 -ggdb -c -o kbd.o kbd.c
+gcc  -fno-pic -fno-builtin -fno-strict-aliasing -fno-stack-protector -Wall -Werror -m32 -ggdb -c -o lapic.o lapic.c
+gcc  -fno-pic -fno-builtin -fno-strict-aliasing -fno-stack-protector -Wall -Werror -m32 -ggdb -c -o main.o main.c
+gcc  -fno-pic -fno-builtin -fno-strict-aliasing -fno-stack-protector -Wall -Werror -m32 -ggdb -c -o mp.o mp.c
+gcc  -fno-pic -fno-builtin -fno-strict-aliasing -fno-stack-protector -Wall -Werror -m32 -ggdb -c -o picirq.o picirq.c
+gcc  -fno-pic -fno-builtin -fno-strict-aliasing -fno-stack-protector -Wall -Werror -m32 -ggdb -c -o pipe.o pipe.c
+gcc  -fno-pic -fno-builtin -fno-strict-aliasing -fno-stack-protector -Wall -Werror -m32 -ggdb -c -o proc.o proc.c
+gcc  -fno-pic -fno-builtin -fno-strict-aliasing -fno-stack-protector -Wall -Werror -m32 -ggdb -c -o spinlock.o spinlock.c
+gcc  -fno-pic -fno-builtin -fno-strict-aliasing -fno-stack-protector -Wall -Werror -m32 -ggdb -c -o string.o string.c
+gcc -m32  -ggdb    -c -o swtch.o swtch.S
+gcc  -fno-pic -fno-builtin -fno-strict-aliasing -fno-stack-protector -Wall -Werror -m32 -ggdb -c -o syscall.o syscall.c
+gcc  -fno-pic -fno-builtin -fno-strict-aliasing -fno-stack-protector -Wall -Werror -m32 -ggdb -c -o sysfile.o sysfile.c
+gcc  -fno-pic -fno-builtin -fno-strict-aliasing -fno-stack-protector -Wall -Werror -m32 -ggdb -c -o sysproc.o sysproc.c
+gcc  -fno-pic -fno-builtin -fno-strict-aliasing -fno-stack-protector -Wall -Werror -m32 -ggdb -c -o timer.o timer.c
+gcc -m32  -ggdb    -c -o trapasm.o trapasm.S
+gcc  -fno-pic -fno-builtin -fno-strict-aliasing -fno-stack-protector -Wall -Werror -m32 -ggdb -c -o trap.o trap.c
+gcc  -fno-pic -fno-builtin -fno-strict-aliasing -fno-stack-protector -Wall -Werror -m32 -ggdb -c -o uart.o uart.c
+gcc -m32  -ggdb    -c -o vectors.o vectors.S
+gcc  -fno-pic -fno-builtin -fno-strict-aliasing -fno-stack-protector -Wall -Werror -m32 -ggdb -c -o vm.o vm.c
+gcc -m32  -ggdb    -c -o multiboot.o multiboot.S
+gcc -m32  -ggdb    -c -o data.o data.S
+gcc  -fno-pic -fno-builtin -fno-strict-aliasing -fno-stack-protector -Wall -Werror -m32 -ggdb -nostdinc -I. -c bootother.S
+ld -m    elf_i386 --omagic --entry=start --section-start=.text=0x7000 \
+	-o bootother.out bootother.o
+objcopy -S -O binary bootother.out bootother
+gcc  -fno-pic -fno-builtin -fno-strict-aliasing -fno-stack-protector -Wall -Werror -m32 -ggdb -nostdinc -I. -c initcode.S
+ld -m    elf_i386 --omagic --entry=start --section-start=.text=0x0 \
+	--output=initcode.out initcode.o
+objcopy -S -O binary initcode.out initcode
+ld -m    elf_i386 --section-start=.text=0x100000 --entry=main -o kernel \
+	multiboot.o data.o bio.o console.o exec.o file.o fs.o ide.o ioapic.o kalloc.o kbd.o lapic.o main.o mp.o picirq.o pipe.o proc.o spinlock.o string.o swtch.o syscall.o sysfile.o sysproc.o timer.o trapasm.o trap.o uart.o vectors.o vm.o -b binary initcode bootother
+dd if=/dev/zero of=xv6.img count=10000
+10000+0 registros leídos
+10000+0 registros escritos
+5120000 bytes (5.1 MB) copiados, 0.0526393 s, 97.3 MB/s
+dd if=bootblock of=xv6.img conv=notrunc
+1+0 registros leídos
+1+0 registros escritos
+512 bytes (512 B) copiados, 0.00020982 s, 2.4 MB/s
+dd if=kernel of=xv6.img seek=1 conv=notrunc
+238+1 registros leídos
+238+1 registros escritos
+122312 bytes (122 kB) copiados, 0.000880572 s, 139 MB/s
+gcc -Werror -ggdb -Wall -o mkfs mkfs.c
+cp README fs/README
+gcc  -fno-pic -fno-builtin -fno-strict-aliasing -fno-stack-protector -Wall -Werror -m32 -ggdb -c -o cat.o cat.c
+gcc  -fno-pic -fno-builtin -fno-strict-aliasing -fno-stack-protector -Wall -Werror -m32 -ggdb -c -o ulib.o ulib.c
+gcc -m32  -ggdb    -c -o usys.o usys.S
+gcc  -fno-pic -fno-builtin -fno-strict-aliasing -fno-stack-protector -Wall -Werror -m32 -ggdb -c -o printf.o printf.c
+gcc  -fno-pic -fno-builtin -fno-strict-aliasing -fno-stack-protector -Wall -Werror -m32 -ggdb -c -o umalloc.o umalloc.c
+gcc  -fno-pic -fno-builtin -fno-strict-aliasing -fno-stack-protector -Wall -Werror -m32 -ggdb -c -o threadlib.o threadlib.c
+ld -m    elf_i386 --omagic --entry=main --section-start=.text=0x0 --output=fs/cat cat.o ulib.o usys.o printf.o umalloc.o threadlib.o
+gcc  -fno-pic -fno-builtin -fno-strict-aliasing -fno-stack-protector -Wall -Werror -m32 -ggdb -c -o echo.o echo.c
+ld -m    elf_i386 --omagic --entry=main --section-start=.text=0x0 --output=fs/echo echo.o ulib.o usys.o printf.o umalloc.o threadlib.o
+gcc  -fno-pic -fno-builtin -fno-strict-aliasing -fno-stack-protector -Wall -Werror -m32 -ggdb -c -o forktest.o forktest.c
+ld -m    elf_i386 --omagic --entry=main --section-start=.text=0x0 --output=fs/forktest forktest.o ulib.o usys.o
+gcc  -fno-pic -fno-builtin -fno-strict-aliasing -fno-stack-protector -Wall -Werror -m32 -ggdb -c -o grep.o grep.c
+ld -m    elf_i386 --omagic --entry=main --section-start=.text=0x0 --output=fs/grep grep.o ulib.o usys.o printf.o umalloc.o threadlib.o
+gcc  -fno-pic -fno-builtin -fno-strict-aliasing -fno-stack-protector -Wall -Werror -m32 -ggdb -c -o init.o init.c
+ld -m    elf_i386 --omagic --entry=main --section-start=.text=0x0 --output=fs/init init.o ulib.o usys.o printf.o umalloc.o threadlib.o
+gcc  -fno-pic -fno-builtin -fno-strict-aliasing -fno-stack-protector -Wall -Werror -m32 -ggdb -c -o kill.o kill.c
+ld -m    elf_i386 --omagic --entry=main --section-start=.text=0x0 --output=fs/kill kill.o ulib.o usys.o printf.o umalloc.o threadlib.o
+gcc  -fno-pic -fno-builtin -fno-strict-aliasing -fno-stack-protector -Wall -Werror -m32 -ggdb -c -o ln.o ln.c
+ld -m    elf_i386 --omagic --entry=main --section-start=.text=0x0 --output=fs/ln ln.o ulib.o usys.o printf.o umalloc.o threadlib.o
+gcc  -fno-pic -fno-builtin -fno-strict-aliasing -fno-stack-protector -Wall -Werror -m32 -ggdb -c -o ls.o ls.c
+ld -m    elf_i386 --omagic --entry=main --section-start=.text=0x0 --output=fs/ls ls.o ulib.o usys.o printf.o umalloc.o threadlib.o
+gcc  -fno-pic -fno-builtin -fno-strict-aliasing -fno-stack-protector -Wall -Werror -m32 -ggdb -c -o mkdir.o mkdir.c
+ld -m    elf_i386 --omagic --entry=main --section-start=.text=0x0 --output=fs/mkdir mkdir.o ulib.o usys.o printf.o umalloc.o threadlib.o
+gcc  -fno-pic -fno-builtin -fno-strict-aliasing -fno-stack-protector -Wall -Werror -m32 -ggdb -c -o rm.o rm.c
+ld -m    elf_i386 --omagic --entry=main --section-start=.text=0x0 --output=fs/rm rm.o ulib.o usys.o printf.o umalloc.o threadlib.o
+gcc  -fno-pic -fno-builtin -fno-strict-aliasing -fno-stack-protector -Wall -Werror -m32 -ggdb -c -o sh.o sh.c
+ld -m    elf_i386 --omagic --entry=main --section-start=.text=0x0 --output=fs/sh sh.o ulib.o usys.o printf.o umalloc.o threadlib.o
+gcc  -fno-pic -fno-builtin -fno-strict-aliasing -fno-stack-protector -Wall -Werror -m32 -ggdb -c -o stressfs.o stressfs.c
+ld -m    elf_i386 --omagic --entry=main --section-start=.text=0x0 --output=fs/stressfs stressfs.o ulib.o usys.o printf.o umalloc.o threadlib.o
+gcc  -fno-pic -fno-builtin -fno-strict-aliasing -fno-stack-protector -Wall -Werror -m32 -ggdb -c -o tester.o tester.c
+ld -m    elf_i386 --omagic --entry=main --section-start=.text=0x0 --output=fs/tester tester.o ulib.o usys.o printf.o umalloc.o threadlib.o
+gcc  -fno-pic -fno-builtin -fno-strict-aliasing -fno-stack-protector -Wall -Werror -m32 -ggdb -c -o usertests.o usertests.c
+ld -m    elf_i386 --omagic --entry=main --section-start=.text=0x0 --output=fs/usertests usertests.o ulib.o usys.o printf.o umalloc.o threadlib.o
+gcc  -fno-pic -fno-builtin -fno-strict-aliasing -fno-stack-protector -Wall -Werror -m32 -ggdb -c -o wc.o wc.c
+ld -m    elf_i386 --omagic --entry=main --section-start=.text=0x0 --output=fs/wc wc.o ulib.o usys.o printf.o umalloc.o threadlib.o
+gcc  -fno-pic -fno-builtin -fno-strict-aliasing -fno-stack-protector -Wall -Werror -m32 -ggdb -c -o zombie.o zombie.c
+ld -m    elf_i386 --omagic --entry=main --section-start=.text=0x0 --output=fs/zombie zombie.o ulib.o usys.o printf.o umalloc.o threadlib.o
+gcc  -fno-pic -fno-builtin -fno-strict-aliasing -fno-stack-protector -Wall -Werror -m32 -ggdb -c -o threadtest1.o threadtest1.c
+ld -m    elf_i386 --omagic --entry=main --section-start=.text=0x0 --output=fs/threadtest1 threadtest1.o ulib.o usys.o printf.o umalloc.o threadlib.o
+./mkfs fs.img fs
+used 29 (bit 1 ninode 26) free 29 total 1024
+rm
+mkdir
+usertests
+sh
+README
+ln
+zombie
+tester
+cat
+ls
+wc
+threadtest1
+forktest
+echo
+grep
+init
+kill
+stressfs
+balloc: first 492 blocks have been allocated
+balloc: write bitmap block at sector 28
+]0;root@RamRamIII: ~/2015_08_A_2015_12/SOTR/UNIDADES/U2/03_LITTLE_BOOK_ABOUT_OS_DEVELOPMENT_RELATED/12_OS_from_Scratch[01;31mroot@RamRamIII[00m:[01;34m~/2015_08_A_2015_12/SOTR/UNIDADES/U2/03_LITTLE_BOOK_ABOUT_OS_DEVELOPMENT_RELATED/12_OS_from_Scratch[00m# exit
+
+Script done on lun 02 may 2016 16:51:28 CDT

@@ -1,0 +1,1 @@
+// Mutual exclusion lock.
