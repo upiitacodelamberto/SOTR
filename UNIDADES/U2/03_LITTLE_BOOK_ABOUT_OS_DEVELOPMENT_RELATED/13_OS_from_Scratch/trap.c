@@ -1,6 +1,7 @@
 #include "types.h"
 #include "defs.h"
 #include "param.h"
+#include "memlayout.h"
 #include "mmu.h"
 #include "proc.h"
 #include "x86.h"
@@ -12,6 +13,8 @@ struct gatedesc idt[256];
 extern uint vectors[];  // in vectors.S: array of 256 entry pointers
 struct spinlock tickslock;
 uint ticks;
+
+extern int mappages(pde_t *pgdir, void *la, uint size, uint pa, int perm);
 
 void
 tvinit(void)
@@ -83,6 +86,25 @@ trap(struct trapframe *tf)
               tf->trapno, cpu->id, tf->eip, rcr2());
       panic("trap");
     }
+    if(tf->trapno==T_PGFLT){
+      //rcr2() is the address causing page fault
+      //should only allocate for this page
+      char *mem;
+      uint a;
+      a=(uint)PGROUNDDOWN(rcr2());
+      mem=kalloc();
+      if(mem==0){
+        cprintf("allocuvm out of memory\n");
+        cprintf("pid %d %s: trap %d err %d on cpu %d "
+        "eip 0x%x addr 0x%x--kill proc\n",
+        proc->pid,proc->name,tf->trapno,tf->err,cpu->id,tf->eip,rcr2());
+        proc->killed=1;
+        return;
+      }
+      memset(mem,0,PGSIZE);
+      mappages(proc->pgdir,(void*)a,PGSIZE,v2p(mem),PTE_W|PTE_U);
+      return;
+    }
     // In user space, assume process misbehaved.
     cprintf("pid %d %s: trap %d err %d on cpu %d "
             "eip 0x%x addr 0x%x--kill proc\n",
@@ -90,6 +112,7 @@ trap(struct trapframe *tf)
             rcr2());
     proc->killed = 1;
   }
+
 
   // Force process exit if it has been killed and is in user space.
   // (If it is still executing in the kernel, let it keep running 
