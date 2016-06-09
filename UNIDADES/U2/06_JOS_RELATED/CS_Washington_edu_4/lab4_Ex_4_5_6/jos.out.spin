@@ -1,0 +1,28 @@
++ ld obj/kern/kernel
++ mk obj/kern/kernel.img
+451 decimal is 703 octal!
+CPU: QEMU Virtual CPU version 2.1.2
+  fpu pse tsc msr pae mce cx8 apic sep pge cmov pat mmx fxsr sse sse2
+  sse3 popcnt hypervisor
+E820: physical memory map [mem 0x00009000-0x000090a7]
+  [mem 0x00000000-0x0009fbff] available
+  [mem 0x0009fc00-0x0009ffff] reserved
+  [mem 0x000f0000-0x000fffff] reserved
+  [mem 0x00100000-0x07fdffff] available
+  [mem 0x07fe0000-0x07ffffff] reserved
+  [mem 0xb0000000-0xbfffffff] reserved
+  [mem 0xfffc0000-0xffffffff] reserved
+Physical memory: 66556K available, base = 640K, extended = 65532K
+check_page_alloc() succeeded!
+check_page() succeeded!
+check_kern_pgdir() succeeded!
+check_page_installed_pgdir() succeeded!
+SMP: 1 CPU(s)
+SMP: LAPIC 0xfee00000 v14
+SMP: IOAPIC 0xfec00000 v11 [global_irq 00-23]
+[00000000] new env 00001000
+CPU 0 cannot release kernel_lock: held by CPU 742805680
+Acquired at:kernel panic on CPU 0 at kern/spinlock.c:103: spin_unlock
+Welcome to the JOS kernel monitor!
+Type 'help' for a list of commands.
+qemu: terminating on signal 15 from pid 21266

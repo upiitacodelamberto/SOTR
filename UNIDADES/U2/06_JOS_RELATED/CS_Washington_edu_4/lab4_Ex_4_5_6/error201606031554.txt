@@ -1,0 +1,3 @@
+check_page_alloc() succeeded!
+check_page() succeeded!
+kernel panic on CPU 0 at kern/pmap.c:884: assertion failed: check_va2pa(pgdir, base + KSTKGAP + i) == PADDR(percpu_kstacks[n]) + i
