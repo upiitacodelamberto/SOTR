@@ -1,0 +1,60 @@
+Unidad de Aprendizaje: SISTEMAS OPERATIVOS EN TIEMPO REAL
+UNIDAD 1 Introducción a los sistemas operativos en tiempo real
+  1.1 Definición de un sistema operativo en tiempo real
+    1.1.1 Clasificación
+    1.1.2 Características
+  1.2 Diferencias entre un kernel de tiempo real y un kernel normal
+    1.2.1 Ejemplos de sistemas de tiempo real
+  1.3 Conociendo sistemas operativos en tiempo real
+    1.3.1 Ejemplos de sistemas operativos en tiempo real
+  1.4 Instalación de un sistema operativo en tiempo real
+UNIDAD 2 Programación Concurrente
+  2.1 Concepto de procesos
+    2.1.1 Estados de los procesos
+    2.1.2 Bloque de control de procesos
+  2.2 Concepto de concurrencia
+    2.2.1 Procesos síncronos y asíncronos
+  2.3 Exclusión mutua
+    2.3.1 Región crítica
+    2.3.2 Algoritmo de Dekker
+    2.3.3 Algoritmo de Peterson
+  2.4 Semáforos
+    2.4.1 Sincronización de procesos con semáforos
+  2.5 Mensajes
+    2.5.1 Comunicación de procesos con mensajes
+UNIDAD 3 Las tareas, interrupciones y el reloj en tiempo real
+  3.1 Tareas en tiempo real
+    3.1.1 Clasificación de tareas
+  3.2 Interrupciones
+    3.2.1 Concepto
+    3.2.2 Clasificación de las interrupciones
+    3.2.3 Tratamiento de interrupciones
+  3.3 Reloj del sistema
+    3.3.1 Sistemas de referencia
+    3.3.2 Relojes de tiempo real
+    3.3.3 Funciones para medir el tiempo
+UNIDAD 4 Planificación de procesos
+  4.1 Planificador del sistema en tiempo real
+    4.1.1 Estructura de planificación
+    4.1.2 Despachador
+  4.2 Enfoque cíclico
+  4.3 Algoritmos de planificación
+    4.3.1 Planificación apropiativa y no apropiativa
+    4.3.2 Planificación por prioridad
+    4.3.3 Evaluación de los algoritmos
+  4.4 Procesos esporádicos y aperiodicos
+  4.5 Interacción de procesos y bloqueo
+
+
+PROPOSITO DE LA UNIDAD DE APRENDIZAJE:
+Analizar el funcionamiento de los sistemas operativos en tiempo real con base 
+a las características de lo conforman. 
+
+ORIENTACION DIDACTICA:
+En el proceso enseñanza aprendizaje de esta unidad de aprendizaje se utilizará 
+la estrategia de Aprendizaje Orientado a Proyectos (AOP). El facilitador aplicará 
+los métodos de enseñanza deductivo, inductivo y analítico. Las técnicas que 
+auxiliarán a las estratégias seleccionadas serán las siguientes: desarrollo del 
+proyecto, lluvia de ideas, organizadores gráficos, codificación de programas, 
+desarrollo de prácticas, consulta bibliográfica, discusión guiaday exposiciones.
+
