@@ -7,7 +7,7 @@ void salir();
 
 int main(){
   char msg[]="Hello  World!";
-  char c=msg[7];
+  char c=msg[0];
 
 
 
@@ -15,7 +15,7 @@ int main(){
 /*  getchar();*/
 
 /*  return c;*/
-    salir();
+    salir(c);
 }/*end main()*/
 
 

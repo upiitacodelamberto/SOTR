@@ -48,7 +48,7 @@ UNIDAD 4 Planificación de procesos
 
 PROPOSITO DE LA UNIDAD DE APRENDIZAJE:
 Analizar el funcionamiento de los sistemas operativos en tiempo real con base 
-a las características de lo conforman. 
+a las características que lo conforman. 
 
 ORIENTACION DIDACTICA:
 En el proceso enseñanza aprendizaje de esta unidad de aprendizaje se utilizará 
