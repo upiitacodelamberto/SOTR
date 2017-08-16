@@ -1,7 +1,11 @@
 AS=as
 ASFLAGS=--32
 CC=gcc
-CFLAGS=-fno-builtin -m32 -c
+#CFLAGS=-fno-builtin -m32 -c
+# If you are using a linux distribution based on Ubuntu, instead of 
+# the previous line use:
+CFLAGS=-fno-stack-protector -fno-builtin -m32 -c
+
 LD=ld
 LDFLAGS=-m elf_i386 -s -e main 
 
