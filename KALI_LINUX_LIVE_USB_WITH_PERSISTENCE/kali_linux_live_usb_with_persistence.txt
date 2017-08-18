@@ -4,7 +4,8 @@ Se puede comprobar la integridad:
 \begin{verbatim}
 http://docs.kali.org/introduction/download-official-kali-linux-images
 
-Once you’ve installed GPG, you’ll need to download and import a copy of the Kali Linux official key. Do this with the following command:
+Once you’ve installed GPG, you’ll need to download and import a copy 
+of the Kali Linux official key. Do this with the following command:
 $ wget -q -O - https://www.kali.org/archive-key.asc | gpg --import
 
 or the command
@@ -29,9 +30,13 @@ You’re now set up to validate your Kali Linux download.
 How do I verify my downloaded image?
 Manually Verify the Signature on the ISO (Direct download)
 
-If you downloaded the ISO directly from the downloads page, verify it using the following procedure.
+If you downloaded the ISO directly from the downloads page, 
+verify it using the following procedure.
 
-On Linux, or OS X, you can generate the SHA1 checksum from the ISO image you’ve downloaded with the following command (assuming that the ISO image is named “kali-linux-1.1.0-amd64.iso”, and is in your current directory):
+On Linux, or OS X, you can generate the SHA1 checksum from the 
+ISO image you’ve downloaded with the following command (assuming 
+that the ISO image is named “kali-linux-1.1.0-amd64.iso”, and is 
+in your current directory):
 
 shasum kali-linux-1.1.0-amd64.iso
 
@@ -39,7 +44,10 @@ The output should look like this:
 
 40a1fd1d4864e7fac70438a1bf2095c8c1a4e764  kali-linux-1.1.0-amd64.iso
 
-The resulting SHA1 signature, “40a1fd1d4864e7fac70438a1bf2095c8c1a4e764”, can be seen to match the signature displayed in the “SHA1SUM” column on the official download page for the 64-bit Intel architecture Kali Linux 1.1.0 ISO image:
+The resulting SHA1 signature, “40a1fd1d4864e7fac70438a1bf2095c8c1a4e764”, 
+can be seen to match the signature displayed in the “SHA1SUM” column on 
+the official download page for the 64-bit Intel architecture 
+Kali Linux 1.1.0 ISO image:
 \end{verbatim}
 
 
@@ -50,57 +58,105 @@ http://docs.kali.org/downloading/kali-linux-live-usb-install
 
 \begin{verbatim}
 Making a Kali Bootable USB Drive
-Our favorite way, and the fastest method, for getting up and running with Kali Linux is to run it “live” from a USB drive. This method has several advantages:
+Our favorite way, and the fastest method, for getting up and running with 
+Kali Linux is to run it “live” from a USB drive. This method has several 
+advantages:
 
-    It’s non-destructive — it makes no changes to the host system’s hard drive or installed OS, and to go back to normal operations, you simply remove the “Kali Live” USB drive and restart the system.
-    It’s portable — you can carry Kali Linux in your pocket and have it running in minutes on an available system
-    It’s customizable — you can roll your own custom Kali Linux ISO image and put it onto a USB drive using the same procedures
-    It’s potentially persistent — with a bit of extra effort, you can configure your Kali Linux “live” USB drive to have persistent storage, so the data you collect is saved across reboots
+    It’s non-destructive — it makes no changes to the host system’s hard 
+drive or installed OS, and to go back to normal operations, you simply 
+remove the “Kali Live” USB drive and restart the system.
+    It’s portable — you can carry Kali Linux in your pocket and have it 
+running in minutes on an available system
+    It’s customizable — you can roll your own custom Kali Linux ISO image 
+and put it onto a USB drive using the same procedures
+    It’s potentially persistent — with a bit of extra effort, you can 
+configure your Kali Linux “live” USB drive to have persistent storage, 
+so the data you collect is saved across reboots
 
-In order to do this, we first need to create a bootable USB drive which has been set up from an ISO image of Kali Linux.
+In order to do this, we first need to create a bootable USB drive which 
+has been set up from an ISO image of Kali Linux.
 What You’ll Need
 
-    A verified copy of the appropriate ISO image of the latest Kali build image for the system you’ll be running it on: see the details on downloading official Kali Linux images.
-    If you’re running under Windows, you’ll also need to download the Win32 Disk Imager utility. On Linux and OS X, you can use the dd command, which is pre-installed on those platforms.
-    A USB thumb drive, 4GB or larger. (Systems with a direct SD card slot can use an SD card with similar capacity. The procedure is identical.)
+    A verified copy of the appropriate ISO image of the latest Kali build 
+image for the system you’ll be running it on: see the details on 
+downloading official Kali Linux images.
+    If you’re running under Windows, you’ll also need to download the 
+Win32 Disk Imager utility. On Linux and OS X, you can use the dd command, 
+which is pre-installed on those platforms.
+    A USB thumb drive, 4GB or larger. (Systems with a direct SD card slot 
+can use an SD card with similar capacity. The procedure is identical.)
 
 Kali Linux Live USB Install Procedure
 
-The specifics of this procedure will vary depending on whether you’re doing it on a Windows, Linux, or OS X system.
+The specifics of this procedure will vary depending on whether you’re 
+doing it on a Windows, Linux, or OS X system.
 \end{verbatim}
 \begin{verbatim}
 Creating a Bootable Kali USB Drive on Linux
 
-Creating a bootable Kali Linux USB key in a Linux environment is easy. Once you’ve downloaded and verified your Kali ISO file, you can use the dd command to copy it over to your USB stick using the following procedure. Note that you’ll need to be running as root, or to execute the dd command with sudo. The following example assumes a Linux Mint 17.1 desktop — depending on the distro you’re using, a few specifics may vary slightly, but the general idea should be very similar.
+Creating a bootable Kali Linux USB key in a Linux environment is easy. 
+Once you’ve downloaded and verified your Kali ISO file, you can use the 
+dd command to copy it over to your USB stick using the following procedure. 
+Note that you’ll need to be running as root, or to execute the dd command 
+with sudo. The following example assumes a Linux Mint 17.1 desktop — 
+depending on the distro you’re using, a few specifics may vary slightly, 
+but the general idea should be very similar.
 
-WARNING: Although the process of imaging Kali Linux onto a USB drive is very easy, you can just as easily overwrite a disk drive you didn’t intend to with dd if you do not understand what you are doing, or if you specify an incorrect output path. Double-check what you’re doing before you do it, it’ll be too late afterwards.
+WARNING: Although the process of imaging Kali Linux onto a USB drive is 
+very easy, you can just as easily overwrite a disk drive you didn’t intend 
+to with dd if you do not understand what you are doing, or if you specify 
+an incorrect output path. Double-check what you’re doing before you do it, 
+it’ll be too late afterwards.
 
 Consider yourself warned.
 
 1
-First, you’ll need to identify the device path to use to write the image to your USB drive. Without the USB drive inserted into a port, execute the command
+First, you’ll need to identify the device path to use to write the image 
+to your USB drive. Without the USB drive inserted into a port, execute 
+the command
 sudo fdisk -l
 
-at a command prompt in a terminal window (if you don’t use elevated privileges with fdisk, you won’t get any output). You’ll get output that will look something (not exactly) like this, showing a single drive — “/dev/sda” — containing three partitions (/dev/sda1, /dev/sda2, and /dev/sda5):
+at a command prompt in a terminal window (if you don’t use elevated 
+privileges with fdisk, you won’t get any output). You’ll get output 
+that will look something (not exactly) like this, showing a single 
+drive — “/dev/sda” — containing three partitions 
+(/dev/sda1, /dev/sda2, and /dev/sda5):
 
 
 2
-Now, plug your USB drive into an available USB port on your system, and run the same command, “sudo fdisk -l” a second time. Now, the output will look something (again, not exactly) like this, showing an additional device which wasn’t there previously, in this example “/dev/sdb”, a 16GB USB drive:
+Now, plug your USB drive into an available USB port on your system, 
+and run the same command, “sudo fdisk -l” a second time. Now, the output 
+will look something (again, not exactly) like this, showing an additional 
+device which wasn’t there previously, in this example “/dev/sdb”, 
+a 16GB USB drive:
 
 
 3
-Proceed to (carefully!) image the Kali ISO file on the USB device. The example command below assumes that the ISO image you’re writing is named “kali-linux-1.0.9a-amd64.iso” and is in your current working directory. The blocksize parameter can be increased, and while it may speed up the operation of the dd command, it can occasionally produce unbootable USB drives, depending on your system and a lot of different factors. The recommended value, “bs=512k”, is conservative and reliable.
+Proceed to (carefully!) image the Kali ISO file on the USB device. 
+The example command below assumes that the ISO image you’re writing is 
+named “kali-linux-1.0.9a-amd64.iso” and is in your current working 
+directory. The blocksize parameter can be increased, and while it may 
+speed up the operation of the dd command, it can occasionally produce 
+unbootable USB drives, depending on your system and a lot of different 
+factors. The recommended value, “bs=512k”, is conservative and reliable.
  dd if=kali-linux-1.0.9a-amd64.iso of=/dev/sdb bs=512k
 
-Imaging the USB drive can take a good amount of time, over ten minutes or more is not unusual, as the sample output below shows. Be patient!
+Imaging the USB drive can take a good amount of time, over ten minutes 
+or more is not unusual, as the sample output below shows. Be patient!
 
-The dd command provides no feedback until it’s completed, but if your drive has an access indicator, you’ll probably see it flickering from time to time. The time to dd the image across will depend on the speed of the system used, USB drive itself, and USB port it’s inserted into. Once dd has finished imaging the drive, it will output something that looks like this:
+The dd command provides no feedback until it’s completed, but if your 
+drive has an access indicator, you’ll probably see it flickering from 
+time to time. The time to dd the image across will depend on the speed 
+of the system used, USB drive itself, and USB port it’s inserted into. 
+Once dd has finished imaging the drive, it will output something that 
+looks like this:
 
 5823+1 records in
 5823+1 records out
 3053371392 bytes (3.1 GB) copied, 746.211 s, 4.1 MB/s
 
-That’s it, really! You can now boot into a Kali Live / Installer environment using the USB device.
+That’s it, really! You can now boot into a Kali Live / Installer 
+environment using the USB device.
 
 \end{verbatim}
 
@@ -111,34 +167,59 @@ http://docs.kali.org/downloading/kali-linux-live-usb-persistence
 
 Adding Persistence to a Kali Linux “Live” USB Drive
 
-Kali Linux “Live” has two options in the default boot menu which enable persistence — the preservation of data on the “Kali Live” USB drive — across reboots of “Kali Live”. This can be an extremely useful enhancement, and enables you to retain documents, collected testing results, configurations, etc., when running Kali Linux “Live” from the USB drive, even across different systems. The persistent data is stored in its own partition on the USB drive, which can also be optionally LUKS-encrypted.
+Kali Linux “Live” has two options in the default boot menu which enable 
+persistence — the preservation of data on the “Kali Live” USB drive — 
+across reboots of “Kali Live”. This can be an extremely useful enhancement, 
+and enables you to retain documents, collected testing results, 
+configurations, etc., when running Kali Linux “Live” from the USB drive, 
+even across different systems. The persistent data is stored in its own 
+partition on the USB drive, which can also be optionally LUKS-encrypted.
 
-To make use of the USB persistence options at boot time, you’ll need to do some additional setup on your “Kali Linux Live” USB drive; this article will show you how.
+To make use of the USB persistence options at boot time, you’ll need to do 
+some additional setup on your “Kali Linux Live” USB drive; this article 
+will show you how.
 
-This guide assumes that you have already created a Kali Linux “Live” USB drive as described in the section on that subject. For the purposes of this article, we’ll assume you’re working on a Linux-based system.
+This guide assumes that you have already created a Kali Linux “Live” USB 
+drive as described in the section on that subject. For the purposes of 
+this article, we’ll assume you’re working on a Linux-based system.
 
 
-You’ll need to have root privileges to do this procedure, or the ability to escalate your privileges with the command “sudo su”. In this example, we assume
+You’ll need to have root privileges to do this procedure, or the ability 
+to escalate your privileges with the command “sudo su”. In this example, 
+we assume
 
     you are running as the root user
     your USB drive is /dev/sdb
-    your USB drive has a capacity of at least 8GB — the Kali Linux image takes over 3GB, and for this guide, we’ll be creating a new partition of about 4GB to store our persistent data in.
+    your USB drive has a capacity of at least 8GB — the Kali Linux image 
+takes over 3GB, and for this guide, we’ll be creating a new partition of 
+about 4GB to store our persistent data in.
 
-In this example, we’ll create a new partition to store our persistent data into, starting right above the second Kali Live partition and ending at 7GB, put an ext3 file system onto it, and create a persistence.conf file on the new partition.
+In this example, we’ll create a new partition to store our persistent data 
+into, starting right above the second Kali Live partition and ending at 7GB, 
+put an ext3 file system onto it, and create a persistence.conf file on the 
+new partition.
 
 1
-First, begin by imaging the latest Kali Linux ISO (currently v1.0.9a) to your USB drive as described in this article. We’re going to assume that the two partitions created by the imaging are /dev/sdb1 and /dev/sdb2. This can be verified with the command “fdisk -l“.
+First, begin by imaging the latest Kali Linux ISO (currently v1.0.9a) to 
+your USB drive as described in this article. We’re going to assume that the 
+two partitions created by the imaging are /dev/sdb1 and /dev/sdb2. This can 
+be verified with the command “fdisk -l“.
 
 2
 Create and format an additional partition on the USB drive.
-First, let’s create the new partition in the empty space above our Kali Live partitions.
+First, let’s create the new partition in the empty space above our 
+Kali Live partitions.
 
 
 end=7gb
 read start _ < <(du -bcm kali-linux-1.0.8-amd64.iso | tail -1); echo $start
 parted /dev/sdb mkpart primary $start $end
 
-The parted command may advise you that it can’t use the exact start values you specified; if so, accept the suggested value instead. If advised that the partition isn’t placed at an optimal location, “ignore” it. When parted completes, the new partition should have been created at /dev/sdb3; again, this can be verified with the command “fdisk -l“.
+The parted command may advise you that it can’t use the exact start values 
+you specified; if so, accept the suggested value instead. If advised that 
+the partition isn’t placed at an optimal location, “ignore” it. When parted 
+completes, the new partition should have been created at /dev/sdb3; again, 
+this can be verified with the command “fdisk -l“.
 
 3
 Next, create an ext3 file system in the partition and label it “persistence”.
@@ -146,7 +227,8 @@ mkfs.ext3 -L persistence /dev/sdb3
 e2label /dev/sdb3 persistence
 
 4
-Create a mount point, mount the new partition there, and then create the configuration file to enable persistence. Finally, unmount the partition.
+Create a mount point, mount the new partition there, and then create the 
+configuration file to enable persistence. Finally, unmount the partition.
 mkdir -p /mnt/my_usb
 mount /dev/sdb3 /mnt/my_usb
 echo "/ union" > /mnt/my_usb/persistence.conf
