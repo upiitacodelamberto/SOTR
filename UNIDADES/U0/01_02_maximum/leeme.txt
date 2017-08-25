@@ -1,0 +1,23 @@
+$ as maximum.s -o maximum.o
+$ ld maximum.o -o maximum
+$ ./maximum
+$ echo $?
+Use the Concepts in page 46
+
+El contenido de un archivo objeto lo vemos con:
+#objdump -D file.o
+Tambien se puede usar
+#objdump -d file.o
+#Las secciones de un archivo objeto las vemos con:
+#objdump -h file.o
+
+La ayuda para uso de objdump se muestra con:
+objdump -H
+
+Para crear un archivo binario a partir de unos archivos objeto primero 
+hay que enlazar ( por ej. ld file1.o file2.o -o file[.out] [-T test.lds] ) 
+y despues se usa el comando objcopy:  
+objcopy -j nombredeseccion1 -j nombredeseccion2 -O binary file[.out] file.bin
+
+Para observar el contenido de un archivo binario se usa el comando od:
+od -t x1 file.bin
