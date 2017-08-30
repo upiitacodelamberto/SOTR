@@ -70,7 +70,7 @@ add %edx,%ecx		 # end of list in ECX, now we have base + (4 * num_items) in %ecx
 start_loop:		 # start loop
 #cmpl $0,%eax		 # check to see if we’ve hit the end
 movl %ebx,%esi
-cmpl $data_items_end,%edx
+cmpl $data_items_end,%ecx
 je etiqueta
    movl $9,%edx           #message length
    movl $progname,%ecx    #message to write
@@ -79,8 +79,6 @@ je etiqueta
    int $0x80              #call kernel
 etiqueta:
 movl %esi,%ebx
-#cmpl %edx,%ecx
-#je loop_exit
 incl %edi		 # load next value
 movl data_items(,%edi,4),%eax # Current data item
 leal data_items(,%edi,4),%edx # Address of current data item
