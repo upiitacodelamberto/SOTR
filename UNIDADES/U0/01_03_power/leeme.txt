@@ -1,5 +1,11 @@
+Para 64 bits:
 $ as maximum.s -o maximum.o
 $ ld maximum.o -o maximum
+Para 32 bits:
+$ as --32 maximum.s -o maximum.o
+$ ld -m elf_i386 maximum.o -o maximum
+
+Para 32/64 bits
 $ ./maximum
 $ echo $?
 Use the Concepts in page 46
