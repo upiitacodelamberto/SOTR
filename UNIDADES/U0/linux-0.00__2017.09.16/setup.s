@@ -369,7 +369,7 @@ cyl:
 head:
 	.ascii "Headers:"
 sect:
-	.ascii "Secotrs:"
+	.ascii "Sectors:"
 .text
 endtext:
 .data

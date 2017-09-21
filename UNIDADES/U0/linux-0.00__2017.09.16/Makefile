@@ -106,3 +106,12 @@ main.o: main.c include/unistd.h include/sys/stat.h \
   include/linux/sched.h include/linux/head.h include/linux/fs.h \
   include/linux/mm.h include/signal.h include/asm/system.h \
   include/asm/io.h include/stddef.h include/stdarg.h include/fcntl.h
+
+iso:Image
+	cp -v -f Image ISO/iso/boot/kernel.elf
+	make -C ISO
+
+grabarCD:ISO/OS_IMAGE.iso
+	wodim -sao -eject -v dev=/dev/sr0 ISO/OS_IMAGE.iso
+
+
