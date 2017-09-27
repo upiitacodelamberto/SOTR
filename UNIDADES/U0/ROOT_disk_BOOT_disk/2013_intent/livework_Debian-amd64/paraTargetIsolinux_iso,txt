@@ -1,0 +1,5 @@
+xorriso -as mkisofs -r -J -joliet-long -l -cache-inodes \
+-isohybrid-mbr /usr/lib/SYSLINUX/isohdpfx.bin -partition_offset 16 \
+-A "Debian Live"  -b isolinux/isolinux.bin -c \
+isolinux/boot.cat -no-emul-boot -boot-load-size 4 \
+-boot-info-table -o remaster.iso binary

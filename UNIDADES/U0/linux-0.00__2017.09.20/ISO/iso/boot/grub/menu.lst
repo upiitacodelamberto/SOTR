@@ -1,0 +1,5 @@
+default=0
+timeout=15
+
+title os_linux-0.00_modificado20170916
+kernel /boot/kernel.elf

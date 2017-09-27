@@ -1,0 +1,3 @@
+		if(typeof storeUid !== "undefined")
+			storeUid('bsw','b6ac8a1d-e3d6-4872-85c4-0aa48240426d');
+		

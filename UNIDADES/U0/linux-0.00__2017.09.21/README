@@ -1,0 +1,120 @@
+Lamberto Maza Casas
+A fraction of linux-0.11, based on a repository (https://github.com/yuanxinyu/Linux-0.11) of yuanxinyu
+
+  This is an implementation of a fraction of linux-0.11, one of the first linux version developped
+  by Linus Torvalds.
+Next step is try to fullfill the objective:
+#
+#	" it switched between two processes that printed AAAA... and BBBB... respectively 
+#	  by using the timer-interrupt - God I was proud over that" --- Linus Torvalds
+#
+Based on the code in the repository https://github.com/issamabd/linux-0.00:
+
+#
+# 		Issam Abdallah, Tunisia.
+# 		  iabdallah@yandex.com
+#
+#		 linux-0.00 
+#
+#  This is a re-implementation of linux-0.00, the first linux version developped by  Linus
+#  Torvalds and it was abandoned.
+#  Two level-3 tasks run in user mode, scheduled by the timer interrupt and use a
+#  system call to print 'A' and 'B' on the screen. As we don't have a fork and execve system calls
+#  and even a file system (to load an executable from the disk into the memory and execute it), 
+#  the two tasks are coded into the kernel's source code!
+#
+# - boot.s
+#
+#    boot.s is a rewriting of the linux-0.01 boot.s, using the 
+#    GNU assembler syntax with some modifications.
+#
+#    boot.s is loaded at 0x7c00 by the bios-startup routines, and moves itself
+#    out of the way to address 0x90000, and jumps there.
+#
+#    It then loads the system (kernel.s) at 0x10000, using BIOS interrupts. Thereafter
+#    it disables all interrupts, moves the system down to 0x0000, changes
+#    to protected mode, and calls the start of system. System then must
+#    RE-initialize the protected mode in it's own tables, and enable
+#    interrupts as needed.
+#
+# - kernel.s
+#
+#    kernel.s is a small kernel that run in 32-bit protected mode. 
+#    It will setup GDT, IDT switch to user mode and schedule two user tasks. 
+#
+# - booting the system
+#
+#  1. make
+#  2. qemu-system-i386 boot
+#
+#-----------------------------------------------------------------------
+#
+# copyright(C) 2015 Issam Abdallah, Tunisia.
+# E-mail: iabdallah@yandex.com
+#
+# License: GPL
+
+En esta version se utilizan isolamente: bootsect.s, setup.s, head.s, main.c, sched.c, vsprintf.c y lib/errno.c
+
+bootsect.s	el sector de booteo de la Imagen Image
+		PATH CODE:linux-0.00/tools/build.sh
+		# Write bootsect (512 bytes, one sector) to stdout
+		[ ! -f "$bootsect" ] && echo "there is no bootsect binary file there" && exit -1
+		dd if=$bootsect bs=512 count=1 of=$IMAGE 2>&1 >/dev/null
+
+setup.s		forma parte de la imagen del sistema, 
+		PATH CODE:linux-0.00/Makefile
+		Image: bootsect setup system
+
+head.s		forma parte de system
+		PATH CODE:linux-0.00/Makefile
+		#tools/system:	boot/head.o init/main.o \
+		#		$(ARCHIVES) $(DRIVERS) $(MATH) $(LIBS)
+		system:head.o main.o $(ARCHIVES) $(LIBS)
+
+sched.c		forma parte de kernel.o, contiene la definicion de stack_start.
+		PATH CODE:linux-0.00/Makefile
+		#OBJS  = sched.o system_call.o traps.o asm.o fork.o \
+		#	panic.o printk.o vsprintf.o sys.o exit.o \
+		#	signal.o mktime.o who.o
+		OBJS  = sched.o vsprintf.o
+		kernel.o: $(OBJS)
+
+main.c		forma parte de system
+		PATH CODE:linux-0.00/Makefile
+		#tools/system:	boot/head.o init/main.o \
+		#		$(ARCHIVES) $(DRIVERS) $(MATH) $(LIBS)
+		system:head.o main.o $(ARCHIVES) $(LIBS)
+
+vsprintf.c	forma parte de kernel.o implementa la funcion vsprintf que es 
+		utilizada por la funcion printf.
+		PATH CODE:linux-0.00/Makefile
+		#OBJS  = sched.o system_call.o traps.o asm.o fork.o \
+		#	panic.o printk.o vsprintf.o sys.o exit.o \
+		#	signal.o mktime.o who.o
+		OBJS  = sched.o vsprintf.o
+		kernel.o: $(OBJS)
+
+lib/errno.c	forma parte de la biblioteca lib/lib.a y se incluyo porque 
+		define la variable errno que se usa en la syscall pause (numero 
+		29).
+		PATH CODE:linux-0.00/Makefile
+		lib/lib.a:
+			@make -C lib
+		PATH CODE:linux-0.00/lib/Makefile
+		OBJS  = ctype.o _exit.o open.o close.o errno.o write.o dup.o setsid.o \
+			execve.o wait.o string.o malloc.o
+
+		lib.a: $(OBJS)
+
+La forma en que estoy organizando los archivos esta inspirada en la organiacion de los 
+archivos del sistema operativo xv6, en el cual los archivos .s y los archivos .c estan 
+todos en el mismo directorio de fuentes. En el caso de xv6, los archivos de xv6, 
+archivos de biblioteca y programas de usuario (estos dos ultimos, los de biblioteca y 
+los programas de usuario se usan para crear una imagen de un sistema de archivos que 
+representa algo como la particion home de un sistema linux) estan todos en el mismo 
+directorio. En el caso de este proyecto estoy partiendo de la estructura de directorios 
+de linux-0.11 del repositorio https://github.com/yuanxinyu/Linux-0.11, y planeo colocar 
+los archivos del kernel (en esta version 2017.09.16, bootsect.s, setup.s, head.s, ) en el directorio raiz linux-0.00, los archivos de biblioteca 
+en el directorio lib, los programas de usuario aun no se, pero supongo que los colocare 
+en el mismo directorio raiz linux-0.00.

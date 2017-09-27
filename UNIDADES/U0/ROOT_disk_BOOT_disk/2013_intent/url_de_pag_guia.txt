@@ -1,0 +1,834 @@
+https://l3net.wordpress.com/2013/09/21/how-to-build-a-debian-livecd/
+
+
+How to Build a Debian LiveCD
+
+A live CD or live DVD is a complete bootable Linux operating system loaded from a CD or DVD. Although there are a lots of live Linux CDs, for seemingly every taste and purpose, it might still be useful on occasion to build your own. This guide details the steps to build a bootable live CD/DVD based on Debian “wheezy”.
+
+Step 1 – Installing the necessary software
+These are the software packages you need to install on your Debian system:
+
+# apt-get install xorriso live-build syslinux squashfs-tools
+Step 2 – Create a basic filesystem
+
+Start by creating a new work directory, and bring in a basic Debian filesystem using debootstrap. Depending on your network connection, it will take some time downloading all the necessary packages:
+
+# mkdir ~/livework && cd ~/livework
+# debootstrap --arch=amd64 wheezy chroot
+The new filesystem was created in ~/livework/chroot directory. It is time to chroot into the new filesystem and finish the installation.
+
+
+Step 3 – chroot
+# cd ~/livework
+# chroot chroot
+# mount none -t proc /proc
+# mount none -t sysfs /sys
+# mount none -t devpts /dev/pts
+# export HOME=/root
+# export LC_ALL=C
+# export PS1="\e[01;31m(live):\W \$ \e[00m"
+(live):/ $ cat /etc/mtab
+
+none /proc proc rw 0 0
+none /sys sysfs rw 0 0
+nonw /dev/pts devpts rw 0 0
+
+<img><img/>
+Debian LiveCD chroot
+
+In chroot you need to bring in a Linux kernel and the necessary livecd packages. You can also set up a root password:
+
+(live):/ $ apt-get install dialog dbus
+(live):/ $ dbus-uuidgen > /var/lib/dbus/machine-id
+(live):/ $ apt-get install linux-image-amd64 live-boot
+(live):/ $ passwd
+This is a very basic Debian system. On top of it you can install packages such as vim and ssh (apt-get install vim ssh), a desktop environment (apt-get install lxde), a web browser (apt-get install iceweasel) etc. When you are done, cleanup apt caches and exit chroot.
+
+(live):/ $ apt-get clean
+(live):/ $ rm /var/lib/dbus/machine-id && rm -rf /tmp/*
+(live):/ $ umount /proc /sys /dev/pts
+(live):/ $ exit
+
+
+Step 4 – ISOLINUX
+The CD/DVD image is set up using ISOLINUX. Start by creating a new directory, binary, containing the Linux kernel, a compressed copy of chroot, and isolinux executables:
+
+# cd ~/livework
+# mkdir -p binary/live && mkdir -p binary/isolinux
+# cp chroot/boot/vmlinuz-3.2.0-4-amd64 binary/live/vmlinuz
+# cp chroot/boot/initrd.img-3.2.0-4-amd64 binary/live/initrd
+# mksquashfs chroot binary/live/filesystem.squashfs -comp xz -e boot
+# cp /usr/lib/syslinux/isolinux.bin binary/isolinux/.
+# cp /usr/lib/syslinux/menu.c32 binary/isolinux/.
+/**
+John
+July 10, 2015 at 3:27 am
+I had to apt-get install isolinux
+and modify and /or add the following
+cp /usr/lib/ISOLINUX/isolinux.bin binary/isolinux/
+cp /usr/lib/syslinux/modules/bios/hdt.c32 binary/isolinux/
+cp /usr/lib/syslinux/modules/bios/ldlinux.c32 binary/isolinux/
+cp /usr/lib/syslinux/modules/bios/libcom32.c32 binary/isolinux/
+cp /usr/lib/syslinux/modules/bios/libutil.c32 binary/isolinux/
+cp /usr/lib/syslinux/modules/bios/menu.c32 binary/isolinux/
+*/
+
+Next, an isolinux config file is created:
+
+# cat binary/isolinux/isolinux.cfg
+ui menu.c32
+prompt 0
+menu title Boot Menu
+timeout 300
+
+label live-amd64
+	menu label ^Live (amd64)
+	menu default
+	linux /live/vmlinuz
+ 	append initrd=/live/initrd boot=live persistence quiet
+
+label live-amd64-failsafe
+	menu label ^Live (amd64 failsafe)
+	linux /live/vmlinuz
+	append initrd=/live/initrd boot=live persistence config memtest noapic noapm nodma nomce nolapic nomodeset nosmp nosplash vga=normal
+
+endtext
+
+
+Step 5 – Building the iso image
+
+I use GNU xorriso to build the final iso image. It creates an isohybrid image that can be transferred to a USB stick using dd command.
+
+# cd ~/livework
+# xorriso -as mkisofs -r -J -joliet-long -l -cache-inodes \
+-isohybrid-mbr /usr/lib/syslinux/isohdpfx.bin -partition_offset 16 \
+-A "Debian Live"  -b isolinux/isolinux.bin -c \
+isolinux/boot.cat -no-emul-boot -boot-load-size 4 \
+-boot-info-table -o remaster.iso binary
+
+
+To quickly test the image use qemu (apt-get install qemu).
+
+# qemu-system-x86_64 remaster.iso
+<img><img/>
+LiveCD boot menu in qemu
+
+Transferring the iso image to USB stick
+
+As mentioned above, isohybrid images can be transferred to USB using dd command. To find out what device handles your USB stick you can use hwinfo (apt-get install hwinfo):
+
+# hwinfo --disk --short
+disk:                                                           
+  /dev/sda             HDT722525DLAT80
+  /dev/sdb             WDC WD800JB-00FM
+  /dev/sdc             Generic USB SD Reader
+  /dev/sdd             Generic USB CF Reader
+  /dev/sde             Generic USB SM Reader
+  /dev/sdf             Generic USB MS Reader
+  /dev/sdg             Lexar USB Flash Drive
+
+# dd if=remaster.iso of=/dev/sdg
+
+
+Reboot your computer from the USB stick and you’ll be up and running in no time.
+<img><img/>
+LiveCD running in qemu
+
+qemu-system-x86_64 remaster.iso
+
+A few words about persistence
+
+All iso images build using Debian’s live-boot package have the capability to autodetect a writable storage data area. This data will persist across multiple boot sessions on the same computer. To enable this feature, create a storage file named live-rw with a valid ext2 filesystem and place it on an existing hard drive partition on the computer you are booting:
+
+# dd if=/dev/zero of=live-rw bs=100MB count=1
+# /sbin/mkfs.ext2 -F live-rw
+# mv live-rw /.
+
+In my case I’ve moved live-rw file on my Debian Linux partition. You can also put it on a NTFS partition, at boot time the software will find it and mount it.
+
+
+Conclusion
+
+The iso image in this example has a size of 92MB. It is a basic Debian system as created by debootstrap, with only the necessary livecd executables. From here it will grow as more packages are added and the image is personalized.
+
+I have decided to document my steps in case anyone might find them useful. Please let me know if you run into problems, or if you have any questions or suggestions. I use these steps to build small network appliances, servers, and rescue disks, nothing important. I’ve never went as far as to build a full distribution.
+
+If you are considering it for a more serious project, better try live-build. Debian team uses live-build to build the official Debian CDs. The tool is very powerful and highly configurable, and it goes well beyond what I’ve covered in this example.
+
+
+
+
+71 thoughts on “How to Build a Debian LiveCD”
+
+Pingback: Hallow Demon
+
+
+Tal
+September 24, 2013 at 2:59 pm
+Awesome! This will definately come in handy. Thanks!
+
+Just a few notes though:
+
+I would suggest you change from:
+
+export PS1=”\e[01;31m(live):\W \$ \e[00m”
+
+to something like:
+
+export PS1=”\e[01;31m(live):\W # \e[00m”
+
+(change from $ to #) to show that the user is actually root, not a regular user.
+
+umount /proc && umount /sys && umount /dev/pts
+can just be
+umount /proc /sys /dev/pts
+
+though I guess that’s just personel preference.
+
+You can also change:
+
+mkdir -p binary/live && mkdir -p binary/isolinux
+
+to
+
+mkdir -pv binary/{live,isolinux}
+
+but that’s just getting fancy.
+
+Also, mksquashfs is not installed by default. As you know, it’s part of the squashfs-tools package.
+
+isolinux.bin is part of the syslinux package, which is not installed by default either.
+
+Thanks again!
+
+netblue30 Post author
+September 24, 2013 at 6:09 pm
+Thanks for your suggestions. mksquashfs and syslinux are brought in automatically when you install live-build – at least this is what I remember.
+
+Reply ↓
+
+Tal
+September 24, 2013 at 9:28 pm
+They are not:
+
+https://docs.google.com/file/d/0B5WEH09SO-ipZ0hXTldidC1TbFk/edit?usp=sharing
+
+
+netblue30 Post author
+September 25, 2013 at 10:32 am
+All fixed, thanks!
+
+
+mouseroot
+October 13, 2013 at 6:37 pm
+So ive been trying to get a background image to show up and I just cannot figure it out.
+all online example have yielded the same results…no background splash so if you have any suggestions im all ears
+
+Reply ↓
+
+netblue30 Post author
+October 13, 2013 at 8:38 pm
+You need to use vesamenu.c32 instead of menu.c32. The file has to be exactly 640×480. The documentation is here:
+
+http://www.syslinux.org/wiki/index.php/Comboot/menu.c32
+
+
+
+vastone
+November 7, 2013 at 4:44 pm
+I have successfully used this to build the ISO … I cannot login at all. I went through the steps to change the passwd. Is root the login name? No matter what combination I use, I cannot log in as the passwors is incorrect. Great guide!
+
+Reply ↓
+
+
+netblue30 Post author
+November 7, 2013 at 10:30 pm
+Thanks! Yes, root should be the login name if you have a password configured.
+
+You can also configure automatic login. For this you add –autologin on getty lines in chroot/etc/inittab file:
+
+1:2345:respawn:/sbin/getty –autologin 38400 tty1
+2:23:respawn:/sbin/getty –autologin 38400 tty2
+
+Reply ↓
+
+
+ruce.fan
+July 31, 2015 at 3:08 am
+Hi，do you mean if i don’t set the password, the system will has a automatc login? But it fail on this, authentication is still needed.
+Also, after I modify the inittab, I get a authentication failure error. Is there something else to configue？
+Wish for your help.
+
+
+Marcello DL
+November 25, 2013 at 10:36 am
+Hello, thank you for a very handy tutorial as the full procedure at the debian live site is overkill for my necessities.
+I have doubts about your dd line, in my system you do not get anything out of /dev/null – what works for me is
+dd if=/dev/zero of=live-rw bs=100M count=1
+
+Reply ↓
+
+netblue30 Post author
+November 25, 2013 at 5:11 pm
+Fixed it, thanks!
+
+Reply ↓
+Pingback: Debian-based distribution
+
+farizluqman
+January 8, 2014 at 7:20 pm
+Hello, this is a very useful guide! I’ll credit you in my project for the excellent tutorial.
+
+Anyway, I think instead of directly exiting the chroot environment, clear all the bash history first, then exit:
+
+cat /dev/null > ~/.bash_history && history -c && exit
+
+just my 2 penny 🙂
+
+Reply ↓
+
+netblue30 Post author
+January 8, 2014 at 10:08 pm
+Thanks!
+
+Reply ↓
+Pingback: debian live cd | linux experts
+
+Alma Slape
+March 18, 2014 at 10:33 pm
+I’ve tried so many other half-baked tutorials… your instructions were right on the money !
+
+I installed a full gnome desktop with a user. To access the desktop inside a seperate window…
+I had to do 1 extra step…
+$ mount –bind /tmp /chroot/tmp
+
+Then…
+-Outside the chroot as user: $ Xephyr :1 -screen 1024×768 -ac
+-Inside the chroot as user: $ export DISPLAY=localhost:1
+-Inside the chroot as user: $ gnome-session
+or, if you want ‘classic gnome’, $ gnome-session –session=gnome-classic
+
+Presto ! you can tweak to your heart’s desire, as the desktop will appear when booted.
+
+Reply ↓
+
+netblue30 Post author
+March 19, 2014 at 2:18 pm
+I’ll try out Xephyr, thanks!
+
+Reply ↓
+Pingback: Debian Livesystem bauen « Rprengel's Blog
+
+Mark
+March 26, 2014 at 2:54 am
+Great post.
+Quick question, does anyone know if you can capture kernel modules in the Live-Build? I’m asking because I tried and noticed once I boot with the live image the zfs modules are not loaded. Not only that, I noticed that “/lib/modules/3.2.0-4-amd64/updates/dkms” does not exist in the live image, nor in the build environment. I did install ZFS in chroot and I was able to run commands from it, but it seems it did not get “captured”.
+
+Anyone seen this?
+
+Reply ↓
+
+netblue30 Post author
+March 27, 2014 at 11:31 am
+Thanks!
+
+When everything else fails, add “insmod your_module” in /etc/rc.local. The commands from this file are the last thing run at startup.
+
+Reply ↓
+
+Sennako
+April 21, 2014 at 7:57 am
+There are new machine-id areas used in Debian Testing amd 64…
+systemd is using: /etc/machine-id
+
+Will this change your tutorial for the ‘machine-id’ instruction ?
+
+Thank you.
+
+Reply ↓
+
+netblue30 Post author
+April 21, 2014 at 10:37 am
+I’ll have to wait until debian 8 to test it, I am on wheezy in this moment.
+
+Reply ↓
+Pingback: Basic linux framework tostart systems
+
+ano
+June 10, 2014 at 4:18 am
+Hello, i’v got a problem with u’r how-to :
+[CODE]
+(live):boot $ ls -la
+total 4964
+drwxr-xr-x 2 root root 100 Jun 10 05:19 .
+drwxr-xr-x 22 root root 480 Jun 10 05:19 ..
+-rw-r–r– 1 root root 2111696 Apr 23 04:04 System.map-3.2.0-4-amd64
+-rw-r–r– 1 root root 129206 Apr 23 04:04 config-3.2.0-4-amd64
+-rw-r–r– 1 root root 2837920 Apr 23 04:01 vmlinuz-3.2.0-4-amd64
+[/CODE]
+initrd.img-3.2.0-4-amd64 is not created =/
+but a can find its link in chrooted root dir :
+[CODE]
+(live):/ $ ls -l init*
+lrwxrwxrwx 1 root root 30 Jun 10 05:19 initrd.img -> /boot/initrd.img-3.2.0-4-amd64
+[CODE]
+
+Ur howto is tested with a debian live cd :
+[CODE]
+user@debian:~$ uname -a
+Linux debian 3.2.0-4-amd64 #1 SMP Debian 3.2.57-3 x86_64 GNU/Linux
+[/CODE]
+
+At step 3:
+“(live):/ $ apt-get install linux-image-amd64 live-boot”
+i have this warning several times:
+“I: update-initramfs is disabled (live system is running on read-only media).”
+full return :
+[CODE]
+Reading package lists… Done
+Building dependency tree
+Reading state information… Done
+The following extra packages will be installed:
+busybox firmware-linux-free initramfs-tools klibc-utils libklibc libuuid-perl linux-base
+linux-image-3.2.0-4-amd64 live-boot-doc live-boot-initramfs-tools live-tools rsync uuid-runtime
+Suggested packages:
+linux-image bash-completion linux-doc-3.2 debian-kernel-handbook grub-pc extlinux lilo curlftpfs cryptsetup
+httpfs2 unionfs-fuse debian-installer-launcher perl openssh-client openssh-server
+The following NEW packages will be installed:
+busybox firmware-linux-free initramfs-tools klibc-utils libklibc libuuid-perl linux-base
+linux-image-3.2.0-4-amd64 linux-image-amd64 live-boot live-boot-doc live-boot-initramfs-tools live-tools rsync
+uuid-runtime
+0 upgraded, 15 newly installed, 0 to remove and 0 not upgraded.
+Need to get 24.8 MB of archives.
+After this operation, 109 MB of additional disk space will be used.
+Do you want to continue [Y/n]?
+Get […]
+Fetched 24.8 MB in 39s (621 kB/s)
+Preconfiguring packages …
+Selecting previously unselected package libuuid-perl.
+(Reading database … 9516 files and directories currently installed.)
+Unpacking libuuid-perl (from …/libuuid-perl_0.02-5_amd64.deb) …
+Selecting previously unselected package linux-base.
+Unpacking linux-base (from …/linux-base_3.5_all.deb) …
+Selecting previously unselected package libklibc.
+Unpacking libklibc (from …/libklibc_2.0.1-3.1_amd64.deb) …
+Selecting previously unselected package klibc-utils.
+Unpacking klibc-utils (from …/klibc-utils_2.0.1-3.1_amd64.deb) …
+Selecting previously unselected package initramfs-tools.
+Unpacking initramfs-tools (from …/initramfs-tools_0.109.1_all.deb) …
+Selecting previously unselected package linux-image-3.2.0-4-amd64.
+Unpacking linux-image-3.2.0-4-amd64 (from …/linux-image-3.2.0-4-amd64_3.2.57-3_amd64.deb) …
+Selecting previously unselected package busybox.
+Unpacking busybox (from …/busybox_1%3a1.20.0-7_amd64.deb) …
+Selecting previously unselected package firmware-linux-free.
+Unpacking firmware-linux-free (from …/firmware-linux-free_3.2_all.deb) …
+Selecting previously unselected package linux-image-amd64.
+Unpacking linux-image-amd64 (from …/linux-image-amd64_3.2+46_amd64.deb) …
+Selecting previously unselected package live-boot-initramfs-tools.
+Unpacking live-boot-initramfs-tools (from …/live-boot-initramfs-tools_3.0.1-1_all.deb) …
+Selecting previously unselected package live-boot.
+Unpacking live-boot (from …/live-boot_3.0.1-1_all.deb) …
+Selecting previously unselected package live-boot-doc.
+Unpacking live-boot-doc (from …/live-boot-doc_3.0.1-1_all.deb) …
+Selecting previously unselected package live-tools.
+Unpacking live-tools (from …/live-tools_3.0.20-1_all.deb) …
+Selecting previously unselected package rsync.
+Unpacking rsync (from …/rsync_3.0.9-4_amd64.deb) …
+Selecting previously unselected package uuid-runtime.
+Unpacking uuid-runtime (from …/uuid-runtime_2.20.1-5.3_amd64.deb) …
+Processing triggers for man-db …
+Setting up libuuid-perl (0.02-5) …
+Setting up linux-base (3.5) …
+Setting up libklibc (2.0.1-3.1) …
+Setting up klibc-utils (2.0.1-3.1) …
+Setting up initramfs-tools (0.109.1) …
+I: update-initramfs is disabled (live system is running on read-only media).
+Setting up linux-image-3.2.0-4-amd64 (3.2.57-3) …
+Running depmod.
+Examining /etc/kernel/postinst.d.
+run-parts: executing /etc/kernel/postinst.d/initramfs-tools 3.2.0-4-amd64 /boot/vmlinuz-3.2.0-4-amd64
+I: update-initramfs is disabled (live system is running on read-only media).
+Setting up busybox (1:1.20.0-7) …
+Setting up firmware-linux-free (3.2) …
+I: update-initramfs is disabled (live system is running on read-only media).
+Setting up linux-image-amd64 (3.2+46) …
+Setting up live-boot-initramfs-tools (3.0.1-1) …
+I: update-initramfs is disabled (live system is running on read-only media).
+Setting up live-boot (3.0.1-1) …
+Setting up live-boot-doc (3.0.1-1) …
+Setting up live-tools (3.0.20-1) …
+Setting up rsync (3.0.9-4) …
+update-rc.d: using dependency based boot sequencing
+Setting up uuid-runtime (2.20.1-5.3) …
+
+If U can help =)
+
+Reply ↓
+
+netblue30 Post author
+June 10, 2014 at 10:40 am
+> At step 3:
+> “(live):/ $ apt-get install linux-image-amd64 live-boot”
+> i have this warning several times:
+> “I: update-initramfs is disabled (live system is running on read-only media).”
+
+As far as I understand the problem, you are trying to update on a filesystem mounted read-only. apt-get cannot write your new package.
+
+> Ur howto is tested with a debian live cd :
+
+That’s bad, it will not work. You need a read-write filesystem, the live cd is read-only.
+
+Reply ↓
+
+ano
+June 10, 2014 at 11:15 am
+ok thx a lot for ur answer =)
+
+Reply ↓
+
+netblue30 Post author
+June 10, 2014 at 11:21 am
+You’re welcome
+
+Reply ↓
+
+kirankankipati
+July 31, 2014 at 4:51 am
+Custom Debian wheezy ISO – For TrafficSqueezer
+
+I want to make custom Debian wheezy based live ISO with my TrafficSqueezer stuff in it. This allows users to directly use this Live ISO directly as a WAN optimization device without installation.
+
+TrafficSqueezer is a kernel based solution, so I need to boot this ISO with my custom kernel. For gui TrafficSqueezer is based on PHP/Apache/MySQL. So for GUI the live ISO should contain PHP-Apache, PHP-MySQL, Apache, as well MySQL DB,tables pre-installed and set.
+
+Can anyone help me or volunteer in this process please ?
+
+I tried doing with Ubuntu 14.04, but so far no luck. It fails to boot, and I get no assistance from anyone. I can understand Ubuntu is backed up by commercial component. So switching towards Debian. Some 6 years ago, I successfully did custom Knoppix ISOs. But now I completely forgot its steps and lost the TODO steps how i did the same.
+
+I need someone who i can interact and build the ISO.
+
+cheers, Kiran Founder: TrafficSqueezer
+
+Reply ↓
+
+G
+October 10, 2014 at 5:23 pm
+I got to the step for copying isolinux and then was jammed up ..
+# cp /usr/lib/syslinux/isolinux.bin binary/isolinux/. — cp: cannot stat isolinux.bin: No such file or directory.
+
+Reply ↓
+
+netblue30 Post author
+October 11, 2014 at 11:02 am
+Do you have syslinux installed?
+
+apt-get install syslinux
+
+Reply ↓
+
+Lucia
+November 12, 2014 at 8:25 pm
+I also got the same error about missing isolinux.bin and menu.c32. Solved them by installing “isolinux” and “syslinux-common” packages. I built the remaster.iso, but failed to load it up in qemu. It gives error “cannot find ldlinux.32”
+
+Reply ↓
+
+netblue30 Post author
+November 13, 2014 at 9:14 pm
+Seems to be working here. I’ve just built a new image and run it on qemu on a brand new Debian “wheezy” machine. Are you trying it on Debian “jessie”?
+
+Reply ↓
+
+davinder
+November 14, 2014 at 8:36 am
+Thank you for this excellent and well written tutorial. I’m definitely a beginner and was able to follow it and create my own bootable Debian USB. The only problem is that the physical media (the usb) is mounted as a read-only. The reason this is a problem is because I’d like to freely transfer files to the root of the usb and be able to take that usb and read the contents of it on a windows pc.
+
+Right now, it’s mounted as:
+/dev/sda1 on /lib/live/mount/medium type iso9660 (ro,noatime)
+
+Is there anyway to make that read-writable? I’m able to see the contents and read them but can’t write or save files to it, any help is much appreciated.
+
+Reply ↓
+
+netblue30 Post author
+November 15, 2014 at 12:46 pm
+Instead of dd command in the article, transfer the iso image to USB stick using a tool such as usb-creator or unetbootin. You can do the transfer on both Windows and Linux.
+
+usb-creator: http://www.linuxliveusb.com/
+unetbootin: http://unetbootin.sourceforge.net/
+
+Reply ↓
+
+davinder
+November 18, 2014 at 9:36 am
+I’ve tried this and still get the same thing, can’t write back to the physical USB stick as it’s mounted as read-only. Is it possible that I’m missing something in the xorriso command?
+
+
+Subba Rao
+November 21, 2014 at 11:39 am
+Thank you for these instructions! I want to create an ISO image with custom tools which I could install on a system. Where do I need to change in your instructions for additional tools and install to HD options? Thank you in advance.
+
+Reply ↓
+
+netblue30 Post author
+November 21, 2014 at 12:31 pm
+Look at live-build project:
+
+http://live.debian.net/manual/3.x/html/live-manual.en.html
+
+It also has support to create install disks.
+
+Reply ↓
+
+Daniel Costa
+January 6, 2015 at 3:20 pm
+Thank you for sharing this knowledge! Great job!
+
+What about EFI support? Do you have any solution? Probably you just need to use eltorito to generate compatible EFI bootable ISO, but, I am having trouble. If you have any solution please post Here!
+
+Reply ↓
+
+Vishnu Gunasekaran
+January 25, 2015 at 12:34 pm
+Thanks for sharing. You’re awesome 🙂
+
+I need a clarification: your instructions do not specify whether packages of wheezy-backports can be installed via apt-get? The reason is I need the latest backported kernel for my hardware instead of the one supplied by the official release version.
+
+Also can I perform apt-get update && apt-get upgrade to ensure my LiveCD has the most recent security fixes before I proceed to create it?
+
+Reply ↓
+
+netblue30 Post author
+January 25, 2015 at 1:50 pm
+Thanks!
+
+Yes, you can use backports to install a new kernel or any other piece of software from backports. You can also do apt-get update/upgrade to keep your build up to date.
+
+Reply ↓
+
+Vishnu Gunasekaran
+January 25, 2015 at 6:32 pm
+Hi,
+
+Would you like to share with us how to create a customized installer CD/USB for Debian Wheezy containing only the packages plus backports that we wish to have?
+
+I have read the Debian Wiki and a tutorial on how to use Simple-CDD to do it. But I am lost.
+
+A step-by-step guide would be most helpful.
+
+Reply ↓
+
+netblue30 Post author
+January 26, 2015 at 1:25 pm
+I’ll have to look into it. I know there is installer support in live-build tools (http://live.debian.net/manual/3.x/html/live-manual.en.html).
+
+Reply ↓
+
+Vishnu Gunasekaran
+January 27, 2015 at 9:13 am
+The manual whose URL you provided in your reply contains too much technical jargon for an average guy like me to understand. That is why a step-by-step guide such as the one you wrote on “How to Build a Debian LiveCD” would be helpful.
+
+
+Vandera
+May 21, 2015 at 3:27 pm
+Hey! Thank you so much for this article! It is a fantastic starting point, where you can build your own Linux Live nearly from scratch on a extremely easy way! Again, thanks and keep this great work. Best regards
+
+Reply ↓
+
+netblue30 Post author
+May 22, 2015 at 12:04 am
+You’re welcome!
+
+Reply ↓
+
+bernd bellmann
+May 26, 2015 at 8:07 pm
+A very great instruction , it was a great idea to write such great instruction for burning own distris on debian , thanks very much thank you for the work
+
+Reply ↓
+
+netblue30 Post author
+May 26, 2015 at 11:36 pm
+You’re welcome!
+
+Reply ↓
+
+ulliroyal
+June 26, 2015 at 12:14 am
+Thanks a bunch, also for help in advance:
+Something changed with syslinux in jessie/stretch.
+The only syslinux is in
+/usr/lib/ISOLINUX/isolinux.bin
+and there are several “menu.c32” now.
+I could not get to start the qemu/kvm of the remaster.iso.
+Message:
+Failed to load ldlinux.c32
+boot failed: press any key to retry…
+
+I am still searching for a proper workflow
+
+Reply ↓
+
+ulliroyal
+June 26, 2015 at 12:18 am
+should read:
+The only isolinux.bin is in
+/usr/lib/ISOLINUX/isolinux.bin
+(All those tests confuse me)
+
+Reply ↓
+
+indigomac08
+October 6, 2015 at 2:36 am
+Under Debian 8, the last part of these instructions (isolinux.bin, menu.c32) is sadly no longer working. My solution was to do a package search for the previous stable release, and from there, I found and simply extracted the syslinux folder from the syslinux-common_4.02+dfsg-7_all.deb package (the syslinux folder sits in /usr/lib inside data.tar.gz). All the resources this article points to should be in that folder. So, if you extracted syslinux to your home folder, just change the path, where = your actual home folder to /syslinux/isolinux.bin, etc. I’m sure there are other solutions (such as that it moved to a different spot), so for now, that is what worked and what I’d recommend myself. Or, if you would dare to try it, you could of course point to /usr/lib as root and copy over what you need, but I wouldn’t recommend mixing old with new files to keep things clean. Hope that helps… (to the author: Awesome guide! Thank you for writing it!)
+
+
+netblue30 Post author
+October 6, 2015 at 12:04 pm
+Thanks, I’ll have to update the post, things have changed in Jessie.
+
+
+netblue30 Post author
+June 26, 2015 at 12:29 am
+I’ll have to take a look. The article was written on Wheezy, I’ll do a test on Jessie. Thanks!
+
+Reply ↓
+
+ulliroyal
+June 27, 2015 at 10:04 am
+Thanks man !!
+Since I’m completely driven by the idea to bring friendly Freie Software to my friends relatives and neighbours I hope this can be the way of the future:
+To produce a bootable usb stick out of the rootfs of a lxc (linuxcontainers.org) installed debian testing-iso.
+In 5 easy steps;)
+I found out that sweet debian runs on almost everything my friends have at home except mobiles.
+
+Longing for your hints on that
+ulliroyal
+
+
+John
+July 10, 2015 at 3:27 am
+I had to apt-get install isolinux
+and modify and /or add the following
+cp /usr/lib/ISOLINUX/isolinux.bin binary/isolinux/
+cp /usr/lib/syslinux/modules/bios/hdt.c32 binary/isolinux/
+cp /usr/lib/syslinux/modules/bios/ldlinux.c32 binary/isolinux/
+cp /usr/lib/syslinux/modules/bios/libcom32.c32 binary/isolinux/
+cp /usr/lib/syslinux/modules/bios/libutil.c32 binary/isolinux/
+cp /usr/lib/syslinux/modules/bios/menu.c32 binary/isolinux/
+
+Reply ↓
+
+Norm Finlay
+October 2, 2015 at 12:44 pm
+Things were going along well, but the mksquashfs command does not do any work. The file filesystem.squashfs gets created and just sits at 0 bytes. I was expecting the cpu to get busy compressing things. I must have made a dumb mistake on that command….
+
+Reply ↓
+
+Norm Finlay
+October 2, 2015 at 3:35 pm
+No idea why, but rebooting my machine allowed the mksquashfs command to run fine….
+
+Reply ↓
+Pingback: limelime/cust-live-deb – GITROOM
+
+MarioC
+February 12, 2016 at 8:57 am
+Thank you for this excellent and well written tutorial.
+I have a problem. I changed in the chroot directory “/etc/network/interfaces” to have a fixed IP. But after build the image, always boot as DHCP.
+Is there any way to fix this?
+
+Reply ↓
+
+netblue30 Post author
+February 13, 2016 at 12:41 pm
+I’ll try it out here, it should work!
+
+Reply ↓
+
+MarioC
+February 15, 2016 at 7:16 am
+Ok. I found a solution. If I add “ip=frommedia” (without quotes) parameter in isolinux.cfg works fine.
+
+
+bits&bits
+March 22, 2016 at 6:40 am
+Hi
+I have follow your instruction and the result is:
+“Writing to ‘stdio:remaster.iso’ completed successfully.”
+
+But i can not work well with qemu. the result is:
+(process:22542): GLib-WARNING **: /build/glib2.0-2.46.2/./glib/gmem.c:482: custom memory allocation vtable not supported
+No protocol specified
+Could not initialize SDL(No available video device) – exiting
+
+I am using Debian Jessie
+
+can i write remaster.iso direct to HDD rather than stdio
+
+Reply ↓
+
+bits&bits
+March 22, 2016 at 7:13 am
+Hi
+i found the problem
+QEMU is not working well with my intel processor.
+no problem with the remaster.iso
+Thank you
+
+Reply ↓
+
+Andrew
+May 25, 2016 at 11:23 am
+Hello,
+
+I need to make this ISO image EUFI bootable. What should I do to achieve this?
+
+Thanks,
+Andrew
+
+Reply ↓
+
+netblue30 Post author
+May 27, 2016 at 11:06 am
+I’ll have to look into it.
+
+Reply ↓
+
+Andrew
+May 27, 2016 at 3:09 pm
+I tried to install apt-get grub-efi inside but no luck and I couldn’t make it working 😦 would be wonderful if you cn have a look. thanks!
+
+
+Lucien Burrell
+December 14, 2016 at 8:17 am
+Hiya very cool web site!! Man .. Excellent .. Amazing .. I will bookmark your website and take the feeds additionally…I’m satisfied to seek out a lot of useful info here within the put up, we want work out more strategies on this regard, thanks for sharing.
+
+Reply ↓
+
+Craig
+April 30, 2017 at 8:03 am
+Hey really good effort, there is a much easier way to build a debian live iso, you have already install the live-build package, this is the ones the developers use to build their iso’s from scratch. I use this myself to build my own live iso’s with all the apps that I want and remove the ones I don’t. Setup the desktops how I want it with settings, backgroud images etc… Command are quit easy, for best results do this on the same distro that you want to make
+
+mkdir build
+cd build
+lb config -a amd64 -b iso-hybrid -d jessie
+
+This will setup all the directories and conf files, then this to build it.
+
+sudo lb build
+
+This will build a minimal booting iso, you wont do much with it, but you can add all apps like xorg and your favorite DE like Mate,KDE,Gnome3 etc to the config scripts and rerun.
+
+This link will give you the info you need
+https://debian-live.alioth.debian.org/
+
+Reply ↓
+
+netblue30 Post author
+May 1, 2017 at 3:57 pm
+thank you for the info
+
+Reply ↓
+
+
+
+
