@@ -1,0 +1,68 @@
+Dependencies for Project 'RTOS_LM3S_1968_OLED', Target 'RTOS_LM3S_1968_OLED': (DO NOT MODIFY !)
+F (.\RTE\Device\LM3S1968\osasm.s)(0x4E43FED4)(--cpu Cortex-M3 --pd "__EVAL SETA 1" -g --apcs=interwork --pd "__MICROLIB SETA 1"-I D:\Usuario\2015_08_A_2015_12\LM3S1968\RTOS_LM3S_1968_OLED\RTE-I C:\Keil_v5\ARM\PACK\ARM\CMSIS\4.5.0\CMSIS\Include-I C:\Keil_v5\ARM\PACK\Keil\LM3S_DFP\1.1.0\Device\Include--pd "__UVISION_VERSION SETA 516" --pd "_RTE_ SETA 1" --pd "LM3S1968 SETA 1"--list .\listings\osasm.lst --xref -o .\objects\osasm.o --depend .\objects\osasm.d)
+F (.\RTE\Device\LM3S1968\os.c)(0x568098AA)(-c --cpu Cortex-M3 -D__EVAL -D__MICROLIB -g -O0 --apcs=interwork --split_sections-I D:\Usuario\2015_08_A_2015_12\LM3S1968\RTOS_LM3S_1968_OLED\RTE-I C:\Keil_v5\ARM\PACK\ARM\CMSIS\4.5.0\CMSIS\Include-I C:\Keil_v5\ARM\PACK\Keil\LM3S_DFP\1.1.0\Device\Include-D__UVISION_VERSION="516" -D_RTE_ -DLM3S1968-o .\objects\os.o --omf_browse .\objects\os.crf --depend .\objects\os.d)
+I (C:\Keil_v5\ARM\ARMCC\include\stdio.h)(0x55AFACC2)
+I (RTE\Device\LM3S1968\os.h)(0x56808BF6)
+I (RTE\Device\LM3S1968\Output.h)(0x567CAB29)
+I (RTE\Device\LM3S1968\inc/hw_types.h)(0x567CB049)
+I (RTE\Device\LM3S1968\driverlib/sysctl.h)(0x4C6185EA)
+F (.\RTE\Device\LM3S1968\user.c)(0x56903936)(-c --cpu Cortex-M3 -D__EVAL -D__MICROLIB -g -O0 --apcs=interwork --split_sections-I D:\Usuario\2015_08_A_2015_12\LM3S1968\RTOS_LM3S_1968_OLED\RTE-I C:\Keil_v5\ARM\PACK\ARM\CMSIS\4.5.0\CMSIS\Include-I C:\Keil_v5\ARM\PACK\Keil\LM3S_DFP\1.1.0\Device\Include-D__UVISION_VERSION="516" -D_RTE_ -DLM3S1968-o .\objects\user.o --omf_browse .\objects\user.crf --depend .\objects\user.d)
+I (C:\Keil_v5\ARM\ARMCC\include\stdio.h)(0x55AFACC2)
+I (RTE\Device\LM3S1968\Output.h)(0x567CAB29)
+I (RTE\Device\LM3S1968\inc/hw_types.h)(0x567CB049)
+I (RTE\Device\LM3S1968\os.h)(0x56808BF6)
+F (.\RTE\Device\LM3S1968\cpu.c)(0x4C6185EA)(-c --cpu Cortex-M3 -D__EVAL -D__MICROLIB -g -O0 --apcs=interwork --split_sections-I D:\Usuario\2015_08_A_2015_12\LM3S1968\RTOS_LM3S_1968_OLED\RTE-I C:\Keil_v5\ARM\PACK\ARM\CMSIS\4.5.0\CMSIS\Include-I C:\Keil_v5\ARM\PACK\Keil\LM3S_DFP\1.1.0\Device\Include-D__UVISION_VERSION="516" -D_RTE_ -DLM3S1968-o .\objects\cpu.o --omf_browse .\objects\cpu.crf --depend .\objects\cpu.d)
+I (RTE\Device\LM3S1968\driverlib/cpu.h)(0x4C6185EA)
+F (.\RTE\Device\LM3S1968\interrupt.c)(0x4C6185EA)(-c --cpu Cortex-M3 -D__EVAL -D__MICROLIB -g -O0 --apcs=interwork --split_sections-I D:\Usuario\2015_08_A_2015_12\LM3S1968\RTOS_LM3S_1968_OLED\RTE-I C:\Keil_v5\ARM\PACK\ARM\CMSIS\4.5.0\CMSIS\Include-I C:\Keil_v5\ARM\PACK\Keil\LM3S_DFP\1.1.0\Device\Include-D__UVISION_VERSION="516" -D_RTE_ -DLM3S1968-o .\objects\interrupt.o --omf_browse .\objects\interrupt.crf --depend .\objects\interrupt.d)
+I (RTE\Device\LM3S1968\inc/hw_ints.h)(0x567CB049)
+I (RTE\Device\LM3S1968\inc/hw_nvic.h)(0x567CB049)
+I (RTE\Device\LM3S1968\inc/hw_types.h)(0x567CB049)
+I (RTE\Device\LM3S1968\driverlib/cpu.h)(0x4C6185EA)
+I (RTE\Device\LM3S1968\driverlib/debug.h)(0x4C6185EA)
+I (RTE\Device\LM3S1968\driverlib/interrupt.h)(0x4C6185EA)
+F (.\RTE\Device\LM3S1968\sysctl.c)(0x4C6185EA)(-c --cpu Cortex-M3 -D__EVAL -D__MICROLIB -g -O0 --apcs=interwork --split_sections-I D:\Usuario\2015_08_A_2015_12\LM3S1968\RTOS_LM3S_1968_OLED\RTE-I C:\Keil_v5\ARM\PACK\ARM\CMSIS\4.5.0\CMSIS\Include-I C:\Keil_v5\ARM\PACK\Keil\LM3S_DFP\1.1.0\Device\Include-D__UVISION_VERSION="516" -D_RTE_ -DLM3S1968-o .\objects\sysctl.o --omf_browse .\objects\sysctl.crf --depend .\objects\sysctl.d)
+I (RTE\Device\LM3S1968\inc/hw_ints.h)(0x567CB049)
+I (RTE\Device\LM3S1968\inc/hw_nvic.h)(0x567CB049)
+I (RTE\Device\LM3S1968\inc/hw_sysctl.h)(0x567CB049)
+I (RTE\Device\LM3S1968\inc/hw_types.h)(0x567CB049)
+I (RTE\Device\LM3S1968\driverlib/cpu.h)(0x4C6185EA)
+I (RTE\Device\LM3S1968\driverlib/debug.h)(0x4C6185EA)
+I (RTE\Device\LM3S1968\driverlib/interrupt.h)(0x4C6185EA)
+I (RTE\Device\LM3S1968\driverlib/sysctl.h)(0x4C6185EA)
+F (.\RTE\Device\LM3S1968\gpio.c)(0x4C6185EA)(-c --cpu Cortex-M3 -D__EVAL -D__MICROLIB -g -O0 --apcs=interwork --split_sections-I D:\Usuario\2015_08_A_2015_12\LM3S1968\RTOS_LM3S_1968_OLED\RTE-I C:\Keil_v5\ARM\PACK\ARM\CMSIS\4.5.0\CMSIS\Include-I C:\Keil_v5\ARM\PACK\Keil\LM3S_DFP\1.1.0\Device\Include-D__UVISION_VERSION="516" -D_RTE_ -DLM3S1968-o .\objects\gpio.o --omf_browse .\objects\gpio.crf --depend .\objects\gpio.d)
+I (RTE\Device\LM3S1968\inc/hw_gpio.h)(0x567CB049)
+I (RTE\Device\LM3S1968\inc/hw_ints.h)(0x567CB049)
+I (RTE\Device\LM3S1968\inc/hw_memmap.h)(0x567CB049)
+I (RTE\Device\LM3S1968\inc/hw_sysctl.h)(0x567CB049)
+I (RTE\Device\LM3S1968\inc/hw_types.h)(0x567CB049)
+I (RTE\Device\LM3S1968\driverlib/debug.h)(0x4C6185EA)
+I (RTE\Device\LM3S1968\driverlib/gpio.h)(0x4C6185EA)
+I (RTE\Device\LM3S1968\driverlib/interrupt.h)(0x4C6185EA)
+F (.\RTE\Device\LM3S1968\Output.c)(0x567F6037)(-c --cpu Cortex-M3 -D__EVAL -D__MICROLIB -g -O0 --apcs=interwork --split_sections-I D:\Usuario\2015_08_A_2015_12\LM3S1968\RTOS_LM3S_1968_OLED\RTE-I C:\Keil_v5\ARM\PACK\ARM\CMSIS\4.5.0\CMSIS\Include-I C:\Keil_v5\ARM\PACK\Keil\LM3S_DFP\1.1.0\Device\Include-D__UVISION_VERSION="516" -D_RTE_ -DLM3S1968-o .\objects\output.o --omf_browse .\objects\output.crf --depend .\objects\output.d)
+I (C:\Keil_v5\ARM\ARMCC\include\stdio.h)(0x55AFACC2)
+I (RTE\Device\LM3S1968\rit128x96x4.h)(0x567CAB29)
+I (RTE\Device\LM3S1968\Output.h)(0x567CAB29)
+I (RTE\Device\LM3S1968\inc/hw_types.h)(0x567CB049)
+I (RTE\Device\LM3S1968\driverlib/debug.h)(0x4C6185EA)
+I (RTE\Device\LM3S1968\driverlib/sysctl.h)(0x4C6185EA)
+I (RTE\Device\LM3S1968\driverlib/rit128x96x4.h)(0x567E4DB4)
+F (.\RTE\Device\LM3S1968\rit128x96x4.c)(0x567DFBF0)(-c --cpu Cortex-M3 -D__EVAL -D__MICROLIB -g -O0 --apcs=interwork --split_sections-I D:\Usuario\2015_08_A_2015_12\LM3S1968\RTOS_LM3S_1968_OLED\RTE-I C:\Keil_v5\ARM\PACK\ARM\CMSIS\4.5.0\CMSIS\Include-I C:\Keil_v5\ARM\PACK\Keil\LM3S_DFP\1.1.0\Device\Include-D__UVISION_VERSION="516" -D_RTE_ -DLM3S1968-o .\objects\rit128x96x4.o --omf_browse .\objects\rit128x96x4.crf --depend .\objects\rit128x96x4.d)
+I (RTE\Device\LM3S1968\inc/hw_ssi.h)(0x567CB049)
+I (RTE\Device\LM3S1968\inc/hw_memmap.h)(0x567CB049)
+I (RTE\Device\LM3S1968\inc/hw_sysctl.h)(0x567CB049)
+I (RTE\Device\LM3S1968\inc/hw_types.h)(0x567CB049)
+I (RTE\Device\LM3S1968\driverlib/debug.h)(0x4C6185EA)
+I (RTE\Device\LM3S1968\driverlib/gpio.h)(0x4C6185EA)
+I (RTE\Device\LM3S1968\driverlib/ssi.h)(0x567E38C9)
+I (RTE\Device\LM3S1968\driverlib/sysctl.h)(0x4C6185EA)
+I (RTE\Device\LM3S1968\rit128x96x4.h)(0x567CAB29)
+F (.\RTE\Device\LM3S1968\ssi.c)(0x4C6185EA)(-c --cpu Cortex-M3 -D__EVAL -D__MICROLIB -g -O0 --apcs=interwork --split_sections-I D:\Usuario\2015_08_A_2015_12\LM3S1968\RTOS_LM3S_1968_OLED\RTE-I C:\Keil_v5\ARM\PACK\ARM\CMSIS\4.5.0\CMSIS\Include-I C:\Keil_v5\ARM\PACK\Keil\LM3S_DFP\1.1.0\Device\Include-D__UVISION_VERSION="516" -D_RTE_ -DLM3S1968-o .\objects\ssi.o --omf_browse .\objects\ssi.crf --depend .\objects\ssi.d)
+I (RTE\Device\LM3S1968\inc/hw_ints.h)(0x567CB049)
+I (RTE\Device\LM3S1968\inc/hw_memmap.h)(0x567CB049)
+I (RTE\Device\LM3S1968\inc/hw_ssi.h)(0x567CB049)
+I (RTE\Device\LM3S1968\inc/hw_types.h)(0x567CB049)
+I (RTE\Device\LM3S1968\driverlib/debug.h)(0x4C6185EA)
+I (RTE\Device\LM3S1968\driverlib/interrupt.h)(0x4C6185EA)
+I (RTE\Device\LM3S1968\driverlib/ssi.h)(0x567E38C9)
+I (RTE\Device\LM3S1968\driverlib/sysctl.h)(0x4C6185EA)
+F (RTE\Device\LM3S1968\Startup.s)(0x56809B49)(--cpu Cortex-M3 --pd "__EVAL SETA 1" -g --apcs=interwork --pd "__MICROLIB SETA 1"-I D:\Usuario\2015_08_A_2015_12\LM3S1968\RTOS_LM3S_1968_OLED\RTE-I C:\Keil_v5\ARM\PACK\ARM\CMSIS\4.5.0\CMSIS\Include-I C:\Keil_v5\ARM\PACK\Keil\LM3S_DFP\1.1.0\Device\Include--pd "__UVISION_VERSION SETA 516" --pd "_RTE_ SETA 1" --pd "LM3S1968 SETA 1"--list .\listings\startup.lst --xref -o .\objects\startup.o --depend .\objects\startup.d)
