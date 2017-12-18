@@ -1,0 +1,79 @@
+2. Una serie de argumentos de línea de comandos, terminado por
+un apuntador a NULL. El nombre del programa asociado al proce-
+so que ejecuta execl suele ser el primer argumento de esta serie.
+La llamada execlp tiene los mismos parámetros que execl, pero
+hace uso de la variable de entorno PATH para buscar el ejecutable
+del proceso. Por otra parte, execle es también similar a execl, pero
+añade un parámetro adicional que representa el nuevo ambiente del
+programa a ejecutar. Finalmente, las llamadas execv difieren en la
+forma de pasar los argumentos de línea de comandos, ya que hacen
+uso de una sintaxis basada en arrays.
+El siguiente listado de código muestra la estructura de un progra-
+ma encargado de la creación de una serie de procesos mediante la
+combinación de fork() y execl() dentro de una estructura de bucle.
+Como se puede apreciar, el programa recoge por línea de órdenes el
+número de procesos que se crearán posteriormente 2 . Note cómo se ha-
+ce uso de una estructura condicional para diferenciar entre el código
+asociado al proceso padre y al proceso hijo. Para ello, el valor devuelto
+por fork(), almacenado en la variable childpid, actúa de discriminante.
+
+En el case 0 de la sentencia switch (línea  12  ) se ejecuta el código
+del hijo. Recuerde que fork() devuelve 0 al proceso hijo, por lo que en
+ese caso habrá que asociar el código del proceso hijo. En este ejemplo,
+dicho código reside en una nueva unidad ejecutable, la cual se en-
+cuentra en el directorio exec y se denomina hijo. Esta información es
+la que se usa cuando se llama a execl(). Note cómo este nuevo proceso
+acepta por línea de órdenes el número de procesos
+ creados (argv[1]),
+recogido previamente por el proceso padre (línea  13  ).
+padre
+h 1
+h 2
+...
+h n
+Figura 1.6: Representación
+gráfica de la creación de va-
+rios procesos hijo a partir de
+uno padre.
+Compilación
+Listado 1.6: Uso de fork+exec
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+#include <sys/types.h>
+#include <unistd.h>
+#include <stdlib.h>
+#include <stdio.h>
+
+int main (int argc, char *argv[]) {
+  pid_t childpid;
+  int n = atoi(argv[1]), i;
+  for (i = 1; i <= n; i++)
+    switch(childpid = fork()) {
+      case 0: // Código del hijo.
+        execl("./exec/hijo", "hijo", argv[1], NULL);
+        break; // Para evitar entrar en el for.
+    }
+    // Se obvia la espera a los procesos
+    // y la captura de eventos de teclado.
+    return 0;
+}
+2 Por
