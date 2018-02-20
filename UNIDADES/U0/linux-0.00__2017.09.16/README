@@ -54,7 +54,8 @@ Based on the code in the repository https://github.com/issamabd/linux-0.00:
 #
 # License: GPL
 
-En esta version se utilizan isolamente: bootsect.s, setup.s, head.s, main.c, sched.c, vsprintf.c y lib/errno.c
+En esta version se utilizan isolamente: bootsect.s, setup.s, head.s, main.c, 
+sched.c, vsprintf.c y lib/errno.c
 
 bootsect.s	el sector de booteo de la Imagen Image
 		PATH CODE:linux-0.00/tools/build.sh
@@ -115,6 +116,7 @@ los programas de usuario se usan para crear una imagen de un sistema de archivos
 representa algo como la particion home de un sistema linux) estan todos en el mismo 
 directorio. En el caso de este proyecto estoy partiendo de la estructura de directorios 
 de linux-0.11 del repositorio https://github.com/yuanxinyu/Linux-0.11, y planeo colocar 
-los archivos del kernel (en esta version 2017.09.16, bootsect.s, setup.s, head.s, ) en el directorio raiz linux-0.00, los archivos de biblioteca 
-en el directorio lib, los programas de usuario aun no se, pero supongo que los colocare 
-en el mismo directorio raiz linux-0.00.
+los archivos del kernel (en esta version 2017.09.16, bootsect.s, setup.s, head.s, ) en 
+el directorio raiz linux-0.00, los archivos de biblioteca en el directorio lib, los 
+programas de usuario aun no se, pero supongo que los colocare en el mismo directorio 
+raiz linux-0.00.
