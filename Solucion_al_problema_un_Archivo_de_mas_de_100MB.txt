@@ -1,0 +1,7 @@
+COMANDO:
+
+git filter-branch -f --index-filter 'git rm --cached --ignore-unmatch META_PRACTICAS/PRAC00_ESSENTIAL_LD/test/b.bin'
+
+
+URL donde encontr\'e el comando:
+https://medium.com/@mrkdsgn/fixing-the-gh001-large-files-detected-you-may-want-to-try-git-large-file-storage-43336b983272
