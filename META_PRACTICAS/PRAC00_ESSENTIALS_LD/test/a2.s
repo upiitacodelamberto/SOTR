@@ -1,4 +1,5 @@
 .section abc, "a"
+.globl i
 i:
   .byte 4
   .byte 5
