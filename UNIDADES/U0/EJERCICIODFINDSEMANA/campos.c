@@ -48,13 +48,17 @@ union paraInt{         /*Otro ejemplo de uso de una union se puede ver en    */
 void show_bits(int);
 
 long main(){
-  int intA=2012026905;
+  int intA=33;
+  printf("intA=%d\n",intA);
   show_bits(intA);
   printf("\n");
   Int IntVar=*((Int*)(&intA));
   printf("IntVar=%d\n",*((int*)(&IntVar)));
   printf("byte0=%x\tbyte1=%x\tbyte2=%x\tbyte3=%x\n",
          IntVar.byte0,IntVar.byte1,IntVar.byte2,IntVar.byte3);
+  printf("byte0=%d\tbyte1=%d\tbyte2=%d\tbyte3=%d\n",
+         IntVar.byte0,IntVar.byte1,IntVar.byte2,IntVar.byte3);
+#ifdef FEB_28
   union paraInt union_para_Int;
   union_para_Int.IntV=IntVar; 
   printf("&byte0=%x\t&byte1=%x\t&byte2=%x\t&byte3=%x\n",
@@ -140,8 +144,9 @@ long main(){
     printf("power=%x\t",MyF.power);
     printf("mantisa=%x\n",MyF.mantisa);
   }
-#ifdef SEPT_6
-#endif /* SEPT_6 */
+//#ifdef SEPT_6
+//#endif /* SEPT_6 */
+#endif
   return 0;
 }//end main()
 

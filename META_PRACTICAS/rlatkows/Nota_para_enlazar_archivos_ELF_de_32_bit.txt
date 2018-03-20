@@ -1,0 +1,13 @@
+Instalar el paquete libc6-dev-i386
+Instalar el paquete gcc-multilib parav poder construir el ejecutable hello2
+con el comando:
+gcc -m32 hello2.o -o hello2
+
+NOTA: Observe que si usamos:
+ld -melf_i386 -e main -o hello2 hello2.o -lc
+se crea el archivo hello2, pero al tratar de ejecutarlo con:
+./hello2
+Linux dice que no encuentra el archivo hello2   
+
+
+POR QUE???  (2018.03.13)
