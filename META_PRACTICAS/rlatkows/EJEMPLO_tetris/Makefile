@@ -7,8 +7,8 @@ SYMS =  -defsym instructionsX=12
 SYMS += -defsym instructionsY=19
 SYMS += -defsym width=10
 SYMS += -defsym xoffset=3
-#|SYMS += -defsym height=16
-SYMS += -defsym height=24
+#SYMS += -defsym height=16
+SYMS += -defsym height=20
 SYMS += -defsym yoffset=2
 SYMS += -defsym wait=255
 SYMS += -defsym scoredrop=2
