@@ -1,0 +1,11 @@
+Primero se debe construir el kernel kernelmemfs, despues 
+se copia kernelmemfs al directorio MAKEFILE_GRUB_Legacy_Kernel_elf/
+cd xv6-public/
+make fs.img
+make kernelmemfs
+cp -vi kernelmemfs ../MAKEFILE_GRUB_Legacy_Kernel_elf/kernel.elf
+cd ../MAKEFILE_GRUB_Legacy_Kernel_elf/
+make os.iso     (o solo make ya que se ha modificado el Makefile)
+Se puede revisar en qemu la ejecucion del archivo iso con:
+qemu-system-i386 -cdrom os.iso -m 512
+
