@@ -1,0 +1,44 @@
+REF:
+http://loadanswer.com/question/222375/how-do-i-add-a-system-call-utility-in-xv6
+
+To add a system call that can be called in xv6's shell, you should so something with the five files
+
+    sysproc.c add the real implementation of your method here
+    syscall.h define the position of the system call vector that connect to your implementation
+    user.h define the function that can be called through the shell
+    syscall.c external define the function that connect the shell and the kernel, use the position defined in syscall.h to add the function to the system call vector
+
+    usys.S use the macro to define connect the call of user to the system call function
+
+    defs.h add a forward declaration for your new system call (edited by itzhaki)
+
+
+/**************************************************************************/
+
+
+REF:
+https://news.ycombinator.com/item?id=8852498
+	
+	
+csense 298 days ago
+
+> NASM uses the so-called Intel syntax while GNU uses the AT&T syntax
+
+Which is a great reason not to ever use GNU assembler for anything.
+
+> we will be using the GNU assembler.
+
+AAAAAAGGGGGHHHHHHHHH
+
+-----
+	
+	
+e12e 298 days ago
+
+While I think most people/projects use at&t syntax with gas, it actually seems to support intel syntax pretty well, see eg:
+
+https://github.com/0xAX/asm/pull/2/files
+
+I used to think it was "nasm or nothing" - but gas+intel seems rather pleasant too
+
+
